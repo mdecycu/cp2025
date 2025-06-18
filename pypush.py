@@ -6,7 +6,7 @@ token = os.getenv("token")
 repo_path = "./"
 
 # Remote URL to push to
-remote_url = "https://"+token+"@github.com/mdecycu/cad2025.git"  # or use SSH URL
+remote_url = "https://"+token+"@github.com/mdecycu/cp2025.git"  # or use SSH URL
 
 # Run git push to the remote URL
 result = subprocess.run(
