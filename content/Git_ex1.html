@@ -131,7 +131,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='About.html'>About</a><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='Git.html'>Git</a><ul class='dropdown'><li><a href='Git_ex1.html'>Git_ex1</a><li><a href='Git_ex2.html'>Git_ex2</a></li></ul><li><a href='Python.html'>Python</a><li class='has-children'><a href='Javascript.html'>Javascript</a><ul class='dropdown'><li><a href='HTML and CSS.html'>HTML and CSS</a></li></li></ul></ul><li><a href='Reeborg.html'>Reeborg</a><li><a href='Brython.html'>Brython</a></li>
+                     <li><a href='About.html'>About</a><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='Git.html'>Git</a><ul class='dropdown'><li><a href='Git_ex1.html'>Git_ex1</a><li><a href='Git_ex2.html'>Git_ex2</a></li></ul><li class='has-children'><a href='Python.html'>Python</a><ul class='dropdown'><li><a href='Python_ex1.html'>Python_ex1</a></li></ul><li class='has-children'><a href='Javascript.html'>Javascript</a><ul class='dropdown'><li><a href='HTML and CSS.html'>HTML and CSS</a></li></li></ul></ul><li><a href='Reeborg.html'>Reeborg</a><li><a href='Brython.html'>Brython</a></li>
                       </ul>
                 </nav>
               </div>
@@ -151,27 +151,65 @@ move()
 turn_left()
 move()
 if object_here():
-    take()</pre>
+    take()
+</pre>
 <h4>階段二：加入函式與三人協同開發</h4>
 <div class="collab"><strong>協作情境：</strong>三位組員（A、B、C）各自開發一段行走任務，然後將重複動作寫成函式，合併到專案。</div>
 <ol>
 <li><strong>組員 A:</strong> 讓機器人前進 3 格
 <pre>for i in range(3):
     move()
-      </pre>
+</pre>
 </li>
 <li><strong>組員 B:</strong> 機器人轉 2 次左
 <pre>for i in range(2):
     turn_left()
-      </pre>
+</pre>
 </li>
 <li><strong>組員 C:</strong> 機器人檢查物件並撿取
 <pre>if object_here():
     take()
-      </pre>
+</pre>
 </li>
 </ol>
 <p><span class="tip">協作流程：</span>三人各自建立分支（feature/A, feature/B, feature/C），在 GitHub 上合併 Pull Request，最後由主分支整合。</p>
+<h4>Git 基本指令與說明</h4>
+<ul>
+<li><strong>Step 1：初始化本地倉庫</strong>
+<pre>git init
+    </pre>
+<span>在專案資料夾裡執行，建立 Git 管理的本地倉庫。</span></li>
+<li><strong>Step 2：加入遠端 GitHub 倉庫</strong>
+<pre>git remote add origin https://github.com/你的帳號或組織/專案名稱.git
+    </pre>
+<span>將本地倉庫連結到 GitHub 上的遠端 repository。</span></li>
+<li><strong>Step 3：建立並切換到功能分支</strong>
+<pre>git checkout -b feature/A        # 組員A
+git checkout -b feature/B        # 組員B
+git checkout -b feature/C        # 組員C
+    </pre>
+<span>每位組員建立自己的功能分支，分工開發。</span></li>
+<li><strong>Step 4：修改程式並加入暫存區</strong>
+<pre>git add reeborg.py
+    </pre>
+<span>將變更過的檔案加入暫存區，準備提交。</span></li>
+<li><strong>Step 5：提交更動</strong>
+<pre>git commit -m "描述這次開發的內容"
+    </pre>
+<span>將暫存區的變更提交到本地倉庫。</span></li>
+<li><strong>Step 6：推送分支到 GitHub</strong>
+<pre>git push -u origin feature/A        # 組員A
+git push -u origin feature/B        # 組員B
+git push -u origin feature/C        # 組員C
+    </pre>
+<span>把每個人的分支推到遠端 GitHub。</span></li>
+<li><strong>Step 7：建立 Pull Request 並審查合併</strong> <br/> <span>到 GitHub 網站上建立 Pull Request（PR），請其他組員 code review，審查無誤後合併到主分支（main）。</span></li>
+<li><strong>Step 8：將最新主分支同步回本地</strong>
+<pre>git checkout main
+git pull
+    </pre>
+<span>確保本地 main 跟遠端同步。</span></li>
+</ul>
 <h4>加入共用函式</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def turn(times):
     for i in range(times):
@@ -180,14 +218,15 @@ if object_here():
 def new_move(steps):
     for i in range(steps):
         move()
-  </pre>
+</pre>
 <pre>階段三：重構與加入迴圈、條件與函式應用</pre>
 <p>將重複採收動作寫成 <code>harvest_one_row()</code> 函式，結合前進與轉彎，流程更清晰。</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def harvest_one_row():
     while object_here():
         take()
     else:
-        move()</pre>
+        move()
+</pre>
 <h4>階段四：導入 class，建立泛用 Reeborg 機器人控制架構</h4>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">class ReeborgBot:
     def turn(self, times):
@@ -217,14 +256,14 @@ bot.move_steps(2)
 turn_left()
 bot.move_steps(2)
 bot.harvest_field(3, 6)
-  </pre>
+</pre>
 <pre>協作開發流程與 Git/GitHub 應用摘要</pre>
 <ol>
-<li>使用 <strong>git init</strong> 建立本地專案。</li>
-<li>三位組員各自建立分支（如 feature/A），開發專屬功能。</li>
-<li>透過 <strong>git add</strong>、<strong>git commit</strong>、<strong>git push</strong> 上傳到 GitHub。</li>
-<li>在 GitHub 建立 Pull Request，進行 code review 與合併。</li>
-<li>遇重複邏輯，抽象為函式，逐步重構與優化。</li>
+<li><b>git init</b>：建立本地專案。</li>
+<li><b>git branch feature/A</b>、<b>git branch feature/B</b>、<b>git branch feature/C</b>：三位組員各自建立分支（或用 <b>git checkout -b</b> 一次完成）。</li>
+<li><b>git add</b>、<b>git commit</b>、<b>git push</b>：將各自更動上傳到 GitHub。</li>
+<li><b>Pull Request</b>：在 GitHub 建立 PR，進行 code review 與合併。</li>
+<li>遇重複邏輯，抽象為函式，用新分支推送與合併。</li>
 <li>最後導入 class，建立泛用控制架構，提升可維護性與擴充性。</li>
 </ol>
 <h4>結語</h4>

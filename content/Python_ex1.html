@@ -142,300 +142,290 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">Git_ex1 << <a href='Git_ex1.html'>Previous</a> <a href='Python.html'>Next</a> >> Python<br /><h1>Git_ex2</h1>
-<h4>三人協同開發 Reeborg 程式：Git/GitHub 詳細流程與指令</h4>
-<h4>專案設計演進與協作分工</h4>
+    <div id="tipue_search_content">Python << <a href='Python.html'>Previous</a> <a href='Javascript.html'>Next</a> >> Javascript<br /><h1>Python_ex1</h1>
+<h4>Python 初學者學習指引</h4>
+<section>
+<h4>一、學習步驟建議</h4>
 <ol>
-<li><b>階段一：初始設計（三人各自撰寫基本功能）</b>
+<li>認識 Python 的應用與特色。</li>
+<li>選擇合適的學習平台，例如 <a href="https://reeborg.ca" target="_blank">Reeborg’s World</a>。</li>
+<li>熟悉 Python 的基本語法與執行方式。</li>
+<li>從簡單題目逐步挑戰更進階的練習。</li>
+<li>多做實作練習，並觀察程式執行結果。</li>
+</ol>
+</section>
+<section>
+<h4>二、Python 必學基本語法</h4>
 <ul>
-<li>Alice：負責機器人移動與左轉基本動作</li>
-<li>Bob：設計撿取物件的邏輯</li>
-<li>Carol：設計主程式流程與方向判斷</li>
-</ul>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Alice
-move()
-move()
-turn_left()
-move()
-
-# Bob
-if object_here():
-    take()
-
-# Carol
-while not is_facing_north():
-    turn_left()
-    </pre>
-<p><b>git 指令：</b></p>
-<ul>
-<ul>
-<li>三人各自建立分支並上傳初步程式片段</li>
-</ul>
-</ul>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git checkout -b feature/move  # Alice
-git checkout -b feature/take  # Bob
-git checkout -b feature/dir   # Carol
-
-git add reeborg.py
-git commit -m "初步功能"
-git push -u origin feature/move  # Alice
-git push -u origin feature/take  # Bob
-git push -u origin feature/dir   # Carol</pre>
+<li><strong>變數與資料型態：</strong>
+<pre><code>x = 10
+name = "Alice"
+is_ok = True</code></pre>
 </li>
-<li><b>階段二：重複迴圈設計（逐步將動作包裝為迴圈）</b>
+<li><strong>輸出：</strong>
+<pre><code>print("Hello, world!")</code></pre>
+</li>
+<li><strong>運算子：</strong>
 <ul>
-<li>Alice：將移動與轉向包裝進 for 迴圈</li>
-<li>Bob：將撿取物件行為放入 while 迴圈</li>
+<li>數學運算：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>//</code>、<code>%</code></li>
+<li>比較運算：<code>==</code>、<code>!=</code>、<code>&gt;</code>、<code>&lt;</code></li>
+<li>邏輯運算：<code>and</code>、<code>or</code>、<code>not</code></li>
 </ul>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># Alice
-for i in range(3):
+</li>
+<li><strong>條件判斷：</strong>
+<pre><code>if x &gt; 0:
+    print("正數")
+else:
+    print("非正數")</code></pre>
+</li>
+<li><strong>迴圈：</strong>
+<pre><code>while 條件:
+    # 重複執行內容
+</code></pre>
+</li>
+<li><strong>函式：</strong>
+<pre><code>def greet():
+    print("Hi!")</code></pre>
+</li>
+<li><strong>縮排與註解：</strong>
+<pre><code># 這是註解
+if True:
+    print("這行有縮排")</code></pre>
+</li>
+</ul>
+</section>
+<section>
+<h4>三、Reeborg’s World 學習重點</h4>
+<ul>
+<li><strong>基本指令：</strong>
+<ul>
+<li><code>move()</code>：前進一格</li>
+<li><code>turn_left()</code>：左轉</li>
+<li><code>take()</code>：撿起物品</li>
+<li><code>put()</code>：放下物品</li>
+</ul>
+</li>
+<li><strong>感測與判斷：</strong>
+<ul>
+<li><code>front_is_clear()</code>：前方有路</li>
+<li><code>wall_in_front()</code>：前方有牆</li>
+<li><code>object_here()</code>：目前格子有物品</li>
+</ul>
+</li>
+<li><strong>條件與迴圈應用：</strong>
+<pre><code>if front_is_clear():
     move()
-
-for i in range(2):
+else:
     turn_left()
 
-# Bob
-while object_here():
-    take()
-    </pre>
-<p><b>git 指令：</b></p>
-<ul>
-<ul>
-<li>各自於分支更新程式並提交</li>
-</ul>
-</ul>
-<pre>git add reeborg.py
-git commit -m "加入重複迴圈"
-git push
-      </pre>
+while not at_goal():
+    move()</code></pre>
 </li>
-<li><b>階段三：Function 封裝設計（將重複邏輯抽象為函式）</b>
-<ul>
-<li>Alice：設計 <code>new_move</code>、<code>turn</code>、<code>turn_right</code></li>
-<li>Bob：設計 <code>harvest_one_row</code>，用 global 記錄物件數</li>
-<li>Carol：設計 <code>is_facing_east</code> 與主流程</li>
+<li><strong>自訂函式：</strong>
+<pre><code>def turn_right():
+    turn_left()
+    turn_left()
+    turn_left()</code></pre>
+</li>
 </ul>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def turn(n):
-    for i in range(n):
-        turn_left()
+</section>
+<section>
+<h4>四、小結</h4>
+<ul>
+<li>先學會基本語法與程式邏輯，再用 Reeborg 練習解題。</li>
+<li>多做題目，觀察執行結果與錯誤訊息，提升解決問題能力。</li>
+<li>熟悉條件判斷、迴圈、函式，是學好 Python 的基礎。</li>
+</ul>
+</section>
+<hr/>
+<h4>Python 初學者超詳細學習指引<br/><small>（以 Reeborg 機器人練習為例）</small></h4>
+<section>
+<h4>一、Python 學習流程與心法</h4>
+<ol>
+<li><strong>認識 Python</strong>
+<ul>
+<li>Python 是一種簡潔、易讀、用途廣泛的程式語言。</li>
+<li>常用於資料分析、人工智慧、網頁開發、自動化等領域。</li>
+<li>學好基礎語法，日後可延伸應用到許多不同領域。</li>
+</ul>
+</li>
+<li><strong>選擇學習工具</strong>
+<ul>
+<li>初學推薦 <a href="https://reeborg.ca/" target="_blank">Reeborg’s World</a>，直接練習程式，免安裝。</li>
+<li>也可用 Python 官方網站下載安裝，或用線上編輯器（如 repl.it、Google Colab）。</li>
+</ul>
+</li>
+<li><strong>循序漸進學習</strong>
+<ul>
+<li>先熟悉「變數、運算子、條件、迴圈、函式」等核心語法。</li>
+<li>搭配 Reeborg 關卡，練習邏輯與解題。</li>
+<li>寫程式要勇於嘗試與修正，錯誤是學習的起點！</li>
+</ul>
+</li>
+<li><strong>主動多練習、多觀察、多思考</strong>
+<ul>
+<li>練習題目與挑戰，能讓你熟悉語法、訓練邏輯。</li>
+<li>觀察程式執行過程與錯誤訊息，學會除錯（debug）。</li>
+<li>遇到卡關時，試著將問題拆解成小步驟。</li>
+</ul>
+</li>
+</ol>
+</section>
+<section>
+<h4>二、Python 基本語法說明與範例</h4>
+<table>
+<tbody>
+<tr>
+<th>語法主題</th>
+<th>說明</th>
+<th>範例</th>
+</tr>
+<tr>
+<td>變數</td>
+<td>儲存資料（數字、文字、布林值等）</td>
+<td><code>x = 5<br/>name = "Tom"<br/>is_ok = True</code></td>
+</tr>
+<tr>
+<td>資料型態</td>
+<td>整數 <code>int</code>、小數 <code>float</code>、字串 <code>str</code>、布林 <code>bool</code></td>
+<td><code>a = 7<br/>b = 3.14<br/>c = "Hello"<br/>d = False</code></td>
+</tr>
+<tr>
+<td>輸出</td>
+<td>用 <code>print()</code> 顯示資訊</td>
+<td><code>print("Hello world!")<br/>print(x + 2)</code></td>
+</tr>
+<tr>
+<td>運算子</td>
+<td>數學、比較、邏輯運算</td>
+<td><code> # 數學<br/> y = x + 1<br/> # 比較<br/> x &gt; 3<br/> # 邏輯<br/> True and False </code></td>
+</tr>
+<tr>
+<td>條件判斷</td>
+<td>根據條件執行不同程式碼</td>
+<td><code> if x &gt; 0:<br/>   print("正數")<br/> else:<br/>   print("負數或零") </code></td>
+</tr>
+<tr>
+<td>迴圈 (while)</td>
+<td>重複執行，直到條件不成立</td>
+<td><code> count = 0<br/> while count &lt; 3:<br/>   print(count)<br/>   count += 1 </code></td>
+</tr>
+<tr>
+<td>for 迴圈（了解即可）</td>
+<td>依序處理序列資料</td>
+<td><code> for i in range(5):<br/>   print(i) </code></td>
+</tr>
+<tr>
+<td>函式</td>
+<td>將重複動作打包，方便重用</td>
+<td><code> def say_hello():<br/>   print("Hello!")<br/> say_hello() </code></td>
+</tr>
+<tr>
+<td>縮排與註解</td>
+<td>Python 用縮排分區塊，註解用 <code>#</code></td>
+<td><code> # 這是註解<br/> if True:<br/>   print("有縮排") </code></td>
+</tr>
+</tbody>
+</table>
+<div class="tip"><strong>小提醒：</strong> Python 不用分號，且縮排必須統一（通常 4 個空格）。</div>
+</section>
+<section>
+<h4>三、Reeborg's World 機器人操作重點</h4>
+<ul>
+<li><strong>基本指令</strong>
+<ul>
+<li><code>move()</code>：前進一格</li>
+<li><code>turn_left()</code>：左轉 90 度</li>
+<li><code>take()</code>：撿起物品</li>
+<li><code>put()</code>：放下物品</li>
+</ul>
+</li>
+<li><strong>判斷世界狀態的感測器</strong>
+<ul>
+<li><code>front_is_clear()</code>：前方有路</li>
+<li><code>wall_in_front()</code>：前方有牆</li>
+<li><code>right_is_clear()</code>：右方有路</li>
+<li><code>wall_on_right()</code>：右方有牆</li>
+<li><code>object_here()</code>：目前格子有物品</li>
+<li><code>at_goal()</code>：到達終點</li>
+</ul>
+</li>
+<li><strong>條件判斷/迴圈應用</strong>
+<pre><code>
+if front_is_clear():
+    move()
+else:
+    turn_left()
 
+while not at_goal():
+    move()
+                </code></pre>
+</li>
+<li><strong>自訂函式（提升可讀性與重用）</strong>
+<pre><code>
 def turn_right():
     for i in range(3):
         turn_left()
 
-def new_move(n):
-    for i in range(n):
-        move()
+def pick_and_move():
+    take()
+    move()
 
-def harvest_one_row():
-    global object_taken
-    while object_here() and object_taken &lt; 36:
-        take()
-        object_taken += 1
-    if object_taken &lt; 36:
-        move()
-
-def is_facing_east():
-    count = 0
-    while not is_facing_north():
-        turn_left()
-        count += 1
-        if count == 4:
-            break
-    turn(3)
-    return True
-    </pre>
-<p><b>git 指令：</b></p>
-<ul>
-<ul>
-<li>各自於分支完成函式開發</li>
-</ul>
-</ul>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git add reeborg.py
-git commit -m "完成 function 封裝"
-git push</pre>
+# 呼叫自訂函式
+turn_right()
+                </code></pre>
 </li>
-<li><b>階段四：導入 class-based 設計（最終彈性架構）</b>
-<ul>
-<li>Alice、Bob、Carol 協作將函式整合為 class，提升可維護性</li>
-</ul>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">class ReeborgBot:
-    def __init__(self):
-        self.object_taken = 0
-
-    def turn(self, n):
-        for i in range(n):
-            turn_left()
-    
-    def turn_right(self):
-        for i in range(3):
-            turn_left()
-
-    def new_move(self, n):
-        for i in range(n):
-            move()
-    
-    def harvest_one_row(self):
-        while object_here() and self.object_taken &lt; 36:
-            take()
-            self.object_taken += 1
-        if self.object_taken &lt; 36:
-            move()
-    
-    def is_facing_east(self):
-        count = 0
-        while not is_facing_north():
-            turn_left()
-            count += 1
-            if count == 4:
-                break
-        self.turn(3)
-        return True
-
-    def harvest_field(self):
-        self.new_move(2)
-        self.turn(1)
-        self.new_move(2)
-        done = False
-        while self.is_facing_east() and not done:
-            for _ in range(2):
-                for _ in range(6):
-                    self.harvest_one_row()
-                    if self.object_taken &gt;= 36:
-                        done = True
-                        break
-                if done: break
-                for _ in range(2):
-                    self.turn(1)
-                    move()
-                for _ in range(6):
-                    self.harvest_one_row()
-                    if self.object_taken &gt;= 36:
-                        done = True
-                        break
-                if done: break
-                for _ in range(2):
-                    self.turn_right()
-                    move()
-            if self.object_taken &gt;= 36:
-                print("task completed!")
-                break
-
-# 使用範例
-bot = ReeborgBot()
-bot.harvest_field()
-    </pre>
-<p><b>git 指令：</b></p>
-<ul>
-<ul>
-<li>協作於 feature/class-based 分支整合 class 架構</li>
-</ul>
-</ul>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git checkout -b feature/class-based
-# 合併 Alice/Bob/Carol 分支或直接在此分支重構
-git add reeborg.py
-git commit -m "整合 class-based 架構"
-git push -u origin feature/class-based</pre>
-</li>
-</ol>
-<h4>專案開發分工摘要表</h4>
-<table>
-<tbody>
-<tr>
-<th>組員</th>
-<th>負責內容</th>
-<th>Git 分支名稱</th>
-</tr>
-<tr>
-<td>Alice</td>
-<td>基本移動與轉向（<code>new_move</code>、<code>turn</code>、<code>turn_right</code>）</td>
-<td>feature/move-turn</td>
-</tr>
-<tr>
-<td>Bob</td>
-<td>收成邏輯（<code>harvest_one_row</code>、<code>object_taken</code>）</td>
-<td>feature/harvest</td>
-</tr>
-<tr>
-<td>Carol</td>
-<td>方向判斷與主流程（<code>is_facing_east</code>、主執行流程）</td>
-<td>feature/main-loop</td>
-</tr>
-</tbody>
-</table>
-<h4>GitHub 操作 Step by Step</h4>
+<li><strong>解題流程建議</strong>
 <ol>
-<li><b>由一位組員（如 Alice）新建 repo</b>（如 <code>reeborg-harvest</code>）</li>
-<li><b>本地初始化：</b>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git clone https://github.com/your-org/reeborg-harvest.git
-cd reeborg-harvest</pre>
-</li>
-<li><b>建立主分支 main：</b>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git checkout -b main
-git push -u origin main</pre>
-</li>
-<li><b>三位組員各自分出功能分支：</b>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git checkout -b feature/move-turn      # Alice
-git checkout -b feature/harvest        # Bob
-git checkout -b feature/main-loop      # Carol</pre>
-</li>
-<li><b>推送分支到遠端：</b>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git push -u origin feature/move-turn      # Alice
-git push -u origin feature/harvest        # Bob
-git push -u origin feature/main-loop      # Carol</pre>
-</li>
-<li><b>組員於各自分支開發程式並提交：</b>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git add reeborg.py
-git commit -m "功能/重構/修正說明"
-git push</pre>
-</li>
-<li><b>建立 Pull Request（PR）並 Code Review：</b>
-<ul>
-<li>於 GitHub 建立 PR，標明合併分支、審查人員、功能說明</li>
-<li>進行 code review，提出建議與修正</li>
-<li>審查通過後合併 PR（Merge pull request）</li>
-</ul>
-</li>
-<li><b>main 分支同步至本地：</b>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git checkout main
-git pull</pre>
-</li>
+<li>仔細閱讀題目與世界設定。</li>
+<li>思考機器人要完成哪些步驟（可先畫流程圖）。</li>
+<li>將步驟拆解成小動作，分別寫成程式。</li>
+<li>適時用 <code>if</code> 或 <code>while</code> 控制流程。</li>
+<li>多嘗試、多觀察，多用 print 或步步執行除錯。</li>
 </ol>
-<h4>後續協作建議</h4>
-<ul>
-<ul>
-<li>每次新增功能或修正前，請先拉新分支，勿直接在 main 分支作業：</li>
+</li>
 </ul>
-</ul>
-<pre>git checkout -b feature/新功能</pre>
+<div class="warning"><strong>常見錯誤：</strong>
 <ul>
+<li>少寫小括號（如 <code>move</code> 寫成 <code>move()</code>）。</li>
+<li>縮排錯誤導致語法錯。</li>
+<li>無窮迴圈（如 while 條件永遠為真）。</li>
+</ul>
+</div>
+</section>
+<section>
+<h4>四、進階建議與常見問題</h4>
 <ul>
-<li>合併前先同步主分支，解決衝突後再 push：</li>
-</ul>
-</ul>
-<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">git pull origin main
-# 如有衝突，解決後再
-git add .
-git commit -m "解決衝突"
-git push</pre>
+<li><strong>多加練習</strong>
 <ul>
-<li>在 Pull Request 詳細描述修改內容與測試方式，方便審查。</li>
-<li>善用 <code>git log</code>、<code>git status</code>、<code>git diff</code> 檢查歷史與變更。</li>
+<li>完成 Reeborg 的所有世界（關卡）。</li>
+<li>嘗試設計自己的世界與題目。</li>
 </ul>
-<h4>常用 Git 指令說明</h4>
+</li>
+<li><strong>閱讀程式碼，互相學習</strong>
 <ul>
-<li><code>git checkout -b 分支名</code>：從目前分支新建並切換到分支</li>
-<li><code>git add 檔名</code>：加入暫存區，準備提交</li>
-<li><code>git commit -m "訊息"</code>：提交更動，寫下本次修改說明</li>
-<li><code>git push -u origin 分支名</code>：推送分支到遠端</li>
-<li><code>git pull</code>：拉下遠端最新更動並合併</li>
-<li><code>git merge 分支名</code>：將指定分支合併到目前分支</li>
-<li><code>git status</code>：顯示目前狀態、尚未提交的變更</li>
-<li><code>git log</code>：查詢提交歷史</li>
-<li><code>git diff</code>：顯示檔案內容變更差異</li>
+<li>觀摩別人解法，了解不同邏輯。</li>
+<li>勇於提問與討論（如參加線上社群）。</li>
 </ul>
-<h4>結論</h4>
-<p>本範例展現 Reeborg 機器人從最簡單設計、逐步進化至 class-based 架構的過程，以及三人協同開發的 Git/GitHub 分支工作流。遵循此流程能大幅提升團隊協作、程式碼品質與可維護性。</p><br />Git_ex1 << <a href='Git_ex1.html'>Previous</a> <a href='Python.html'>Next</a> >> Python</div>
+</li>
+<li><strong>養成良好習慣</strong>
+<ul>
+<li>適當註解，提高可讀性。</li>
+<li>命名有意義的變數與函式。</li>
+</ul>
+</li>
+</ul>
+</section>
+<section>
+<h4>五、完整學習流程小結</h4>
+<ol>
+<li>學會 Python 基本文法、邏輯思考。</li>
+<li>熟練 Reeborg 指令、感測器、流程控制。</li>
+<li>多練習、多觀察、多修正。</li>
+<li>培養拆解問題、設計函式的能力。</li>
+<li>主動探索更多應用與進階技巧。</li>
+</ol>
+</section><br />Python << <a href='Python.html'>Previous</a> <a href='Javascript.html'>Next</a> >> Javascript</div>
         
     <!-- footer -->
       <div class="container">
