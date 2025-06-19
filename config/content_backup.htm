@@ -1159,7 +1159,40 @@ h1 {
 <p style="padding-left: 30px;"><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
 <p></p>
 <h2>ex1</h2>
-<h1>Brython</h1>
+<p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a> 是已知的機器人採收紅蘿蔔的程式，經由以下與 Copilot 的對話，希望透過 Python Class 的編寫解決特定範圍農作物採收的程式。</p>
+<p>問句:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">以下是 Reeborg 一個用來採收紅蘿蔔的程式, 目前位於 (3,3) 到 (8,8) 的區域中各座標點, 各有一個紅羅蔔等待採收, 現在想要建立一個 harvest() class, 可以利用 (3,3), (8,8)作為標定有農作物必須採收的兩個區域對角點座標, 而程式可以利用此一 harvest 類別生成案例完成採收的任務: def turn(int):
+    for i in range(int):
+        turn_left()
+        
+def new_move(int):
+    for i in range(int):
+        move()
+        
+def harvest_one_row():
+    while object_here():
+        take()
+    else:
+        move()
+# move to the field
+new_move(2)
+turn_left()
+new_move(2)
+
+for i in range(3):
+    while is_facing_north():
+        for i in range(6):
+            harvest_one_row()
+        for i in range(2):
+            turn(3)
+            move() 
+    else:
+        for i in range(6):
+            harvest_one_row()
+        for i in range(2):
+            turn_left()
+            move()</pre>
+<p>AI 回答: <a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_class_ex1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_class_ex1.py</a> </p><h1>Brython</h1>
 <p><button id="add1to100">1 add to 100</button></p>
 <!-- 導入 brython 程式庫 -->
 <p>
