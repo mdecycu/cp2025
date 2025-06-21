@@ -7,7 +7,7 @@
 <p style="padding-left: 30px;">如何維持教室整齊清潔?</p>
 <p style="padding-left: 60px;">學員定期打掃 (由助教安排) </p>
 <p style="padding-left: 60px;">學員自律</p>
-<p style="padding-left: 30px;">如何善用教室硬體?</p>
+<p style="padding-left: 30px;">如何善用教室與工作站室硬體?</p>
 <p style="padding-left: 60px;">電腦設定</p>
 <p style="padding-left: 60px;">網路連線</p>
 <p style="padding-left: 60px;">課餘時間預約 (由助教安排) </p>
@@ -1152,6 +1152,89 @@ h1 {
 <li>Bootstrap、Tailwind CSS 等框架</li>
 <li>網頁無障礙（a11y）設計</li>
 </ul>
+<h2>Project</h2>
+<p>請協助撰寫一個 Python Flask 網頁應用程式，前端表單需包含：<br/><br/>1. 一個「通關密碼」輸入欄位（用於驗證操作權限）<br/>2. 一個可自訂 email 帳號（@ 符號前）的數字欄位<br/>3. 一個用於設定新電子郵箱密碼的欄位<br/><br/>使用者填寫上述欄位並提交表單後，系統應自動於 Google Workspace 平台建立對應的 email 帳號。</p>
+<hr/>
+<p>專案提案書：自動化 Google Workspace 帳號建立 Flask 應用程式<br/><br/>一、專案背景與目標<br/><br/>隨著組織規模成長，IT 部門需經常協助新員工建立 Google Workspace（G Suite）電子郵箱帳號。為提升效率、降低人為疏失及強化資安控管，本專案擬開發一個簡易 Web 應用程式，允許經授權者透過表單操作，自動於 Google Workspace 建立新 email 帳號。<br/><br/>二、需求說明</p>
+<p>1. 前端表單功能：<br/>   - 通關密碼欄位（授權驗證）<br/>   - 可自訂 email @ 前數字欄位<br/>   - 電子郵箱密碼欄位<br/>   - 按下送出後，系統自動於 Google Workspace 建立對應帳號<br/><br/>2. 安全性設計： <br/>   - 必須驗證通關密碼<br/>   - 僅允許授權人員操作<br/>   - 檢查 email 格式與密碼強度<br/>   - 禁止重複帳號建立<br/>   - 僅允許數字做為帳號前綴<br/><br/>三、技術規劃<br/><br/>1. 技術需求<br/><br/>- Python 3.x<br/>- Flask — 前後端 Web 框架<br/>- google-api-python-client — Google Workspace API 操作<br/>- google-auth — 驗證與授權<br/>- Jinja2 — 表單模板（隨 Flask 內建）<br/>- pip — Python 套件管理<br/><br/>2. 開發與部署環境<br/><br/>- 建議部署於安全的內部伺服器或 Docker 容器<br/>- 僅開放組織內部網路存取<br/><br/>四、安裝說明<br/><br/>1. Python 套件安裝<br/><br/>請於專案目錄下執行：</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">pip install Flask google-api-python-client google-auth</pre>
+<p>如需管理虛擬環境，建議搭配 venv 或 conda 使用。<br/><br/>2. Google Workspace API 準備<br/><br/>1. 建立 Google Cloud Platform 專案並啟用 Admin SDK API<br/>2. 建立 Service Account，下載憑證檔（JSON）<br/>3. 設定 Domain-wide Delegation（網域代理授權）<br/>4. 於 Google Workspace 管理控制台授權 API 的 OAuth2 Scope：<br/>   - https://www.googleapis.com/auth/admin.directory.user<br/><br/>五、各階段程式碼設計<br/><br/>1. 表單頁面（Flask/Jinja2）<br/><br/>python name=templates/form.html</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!doctype html&gt;
+&lt;title&gt;建立 Google Workspace 帳號&lt;/title&gt;
+&lt;h2&gt;建立 Google Workspace 帳號&lt;/h2&gt;
+&lt;form method="POST"&gt;
+  &lt;label&gt;通關密碼：&lt;input type="password" name="secret" required&gt;&lt;/label&gt;&lt;br&gt;
+  &lt;label&gt;Email @ 前數字：&lt;input type="text" name="prefix" pattern="\\d+" required&gt;&lt;/label&gt;&lt;br&gt;
+  &lt;label&gt;新帳號密碼：&lt;input type="password" name="account_password" required&gt;&lt;/label&gt;&lt;br&gt;
+  &lt;input type="submit" value="送出"&gt;
+&lt;/form&gt;
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    &lt;ul&gt;
+    {% for message in messages %}
+      &lt;li&gt;{{ message }}&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+  {% endif %}
+{% endwith %}</pre>
+<p><br/>2. Flask 應用程式主體<br/><br/>python name=app.py</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from flask import Flask, render_template, request, redirect, url_for, flash
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import os
+
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
+# 組態設定
+DOMAIN = "yourdomain.com"
+ADMIN_EMAIL = "admin@yourdomain.com"
+SERVICE_ACCOUNT_FILE = "service.json"
+PASSWORD_SECRET = "your-password"
+SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
+
+def create_user(email_prefix, password):
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    delegated_credentials = credentials.with_subject(ADMIN_EMAIL)
+    service = build('admin', 'directory_v1', credentials=delegated_credentials)
+    user_body = {
+        "primaryEmail": f"{email_prefix}@{DOMAIN}",
+        "name": {
+            "givenName": email_prefix,
+            "familyName": "User"
+        },
+        "password": password
+    }
+    user = service.users().insert(body=user_body).execute()
+    return user
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        secret = request.form['secret']
+        prefix = request.form['prefix']
+        account_password = request.form['account_password']
+
+        # 權限驗證
+        if secret != PASSWORD_SECRET:
+            flash("通關密碼錯誤！")
+            return redirect(url_for('index'))
+        if not prefix.isdigit():
+            flash("Email @ 前面僅允許數字")
+            return redirect(url_for('index'))
+        try:
+            result = create_user(prefix, account_password)
+            flash(f"帳號建立成功: {result['primaryEmail']}")
+        except Exception as e:
+            flash(f"建立帳號失敗: {str(e)}")
+        return redirect(url_for('index'))
+    return render_template('form.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)</pre>
+<p><br/>3. 進階安全考量建議<br/><br/>- 密碼建議採用強度檢查（可用 Python 密碼強度套件輔助）<br/>- 增加帳號是否已存在的查核（可用 Google Workspace API 查詢帳號）<br/>- 日誌記錄所有操作，便於稽核<br/>- 部署於 HTTPS 環境<br/>- 建議將通關密碼與 API 金鑰資訊寫於環境變數或安全檔案，避免硬編碼<br/><br/>六、操作說明<br/><br/>1. 啟動服務<br/><br/>python app.py<br/><br/>預設於 http://localhost:5000 提供服務。<br/><br/>2. 使用流程<br/><br/>1. 開啟瀏覽器進入應用頁面<br/>2. 輸入通關密碼<br/>3. 輸入欲建立 email 的數字帳號前綴（如 123）<br/>4. 設定對應帳號密碼<br/>5. 按下送出，成功後將顯示建立結果<br/><br/>七、時程規劃（建議）<br/><br/>| 階段        | 工作項目               | 預計工期 |<br/>| ----------- | ---------------------- | -------- |<br/>| 需求確認    | 討論細節與權限         | 1 天     |<br/>| 環境建置    | API/Flask/金鑰設定     | 1 天     |<br/>| 程式開發    | 表單與自動化功能撰寫   | 2 天     |<br/>| 測試驗證    | 各種狀況測試與修正     | 1 天     |<br/>| 上線部署    | 內部伺服器或容器部署   | 1 天     |<br/>| 文件彙整    | 操作手冊與維運說明     | 1 天     |<br/><br/>八、結論<br/><br/>本專案將顯著提升 IT 人員建立 Google Workspace 帳號的效率與一致性，同時兼顧資訊安全。未來可依需求擴充驗證機制或加入更多自動化管理功能，如帳號停用、密碼重設等。<br/><br/>---</p><h3>API</h3>
+<p></p>
 <h1>Reeborg</h1>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a></p>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py</a> </p>
@@ -1164,8 +1247,7 @@ h1 {
 <p style="padding-left: 30px;"><a href="https://127.0.0.1:8442/reeborg/?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
 <p>For Github Pages:</p>
 <p style="padding-left: 30px;"><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
-<p></p>
-<h2>ex1</h2>
+<p></p><h2>ex1</h2>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a> 是已知的機器人採收紅蘿蔔的程式，經由以下與 Copilot 的對話，希望透過 Python Class 的編寫解決特定範圍農作物採收的程式。</p>
 <p>問句:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">以下是 Reeborg 一個用來採收紅蘿蔔的程式, 目前位於 (3,3) 到 (8,8) 的區域中各座標點, 各有一個紅羅蔔等待採收, 現在想要建立一個 harvest() class, 可以利用 (3,3), (8,8)作為標定有農作物必須採收的兩個區域對角點座標, 而程式可以利用此一 harvest 類別生成案例完成採收的任務: def turn(int):
