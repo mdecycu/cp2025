@@ -1300,10 +1300,367 @@ if __name__ == '__main__':
 </tr>
 </tbody>
 </table>
-<p><br/>八、結論<br/><br/>本專案將顯著提升 IT 人員建立 Google Workspace 帳號的效率與一致性，同時兼顧資訊安全。未來可依需求擴充驗證機制或加入更多自動化管理功能，如帳號停用、密碼重設等。<br/><br/></p><h3>API</h3>
-<p>以下是「建立 Google Cloud Platform 專案並啟用 Admin SDK API」的詳細操作步驟，適用於管理 Google Workspace 的自動化應用：<br/><br/>一、建立 Google Cloud Platform (GCP) 專案<br/><br/>1. 登入 Google Cloud Console<br/>   前往 [Google Cloud Console](<a href="https://console.cloud.google.com">https://console.cloud.google.com</a>)。<br/><br/>2. 建立新專案<br/>   - 點選左上角的「專案選單」下拉按鈕（通常會顯示你目前的專案名稱）。<br/>   - 在彈出的專案視窗中，點選「新建專案」。<br/>   - 輸入專案名稱（如：workspace-account-automation）。<br/>   - 選擇對應的組織與資料夾（如有需要）。<br/>   - 點選「建立」。<br/><br/>3. 切換到新專案<br/>   - 專案建立完成後，點選右上角的「通知」可快速切換到新專案，或再次於專案選單中切換至新專案。<br/><br/>二、啟用 Admin SDK API and Gmail API<br/><br/>1. 進入 API 管理頁面<br/>   - 確認你當前專案已切換至剛建立的專案。<br/>   - 在左側導覽列，選擇「API 與服務」→「程式庫」。<br/><br/>2. 搜尋並啟用 Admin SDK<br/>   - 在搜尋框輸入 `Admin SDK`。<br/>   - 點選搜尋結果中的「Admin SDK」。<br/>   - 點選「啟用」。</p>
-<p></p>
-<p></p>
+<p><br/>八、結論<br/><br/>本專案將顯著提升 IT 人員建立 Google Workspace 帳號的效率與一致性，同時兼顧資訊安全。未來可依需求擴充驗證機制或加入更多自動化管理功能，如帳號停用、密碼重設等。<br/><br/></p><h3>Waitress</h3>
+<p>採 <a href="https://pypi.org/project/waitress/">waitress</a> 執行 app.py</p>
+<p>start_app.py 程式碼:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from waitress import serve
+from app import app  # 這裡導入 app.py 中的 Flask 應用
+
+# 這裡的 127.0.0.1:5000 是服務監聽的地址與端口
+serve(app, listen='127.0.0.1:5000', threads=8)
+</pre>
+<p>利用 <a href="https://pypi.org/project/waitress/">waitress</a> 執行的 app.py 程式碼:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pip install Flask google-api-python-client google-auth
+from flask import Flask, render_template, request, redirect, url_for, flash
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import os
+
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
+# 組態設定
+DOMAIN = "your_google_workspace_domain"
+ADMIN_EMAIL = "yout_admin_email"
+SERVICE_ACCOUNT_FILE = "C:/your_service_account_file_directory/service.json"
+PASSWORD_SECRET = "your_passwod_secret"
+SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
+
+def create_user(email_prefix, password):
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    delegated_credentials = credentials.with_subject(ADMIN_EMAIL)
+    service = build('admin', 'directory_v1', credentials=delegated_credentials)
+    user_body = {
+        "primaryEmail": f"{email_prefix}@{DOMAIN}",
+        "name": {
+            "givenName": email_prefix,
+            "familyName": "User"
+        },
+        "password": password
+    }
+    user = service.users().insert(body=user_body).execute()
+    return user
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        secret = request.form['secret']
+        prefix = request.form['prefix']
+        account_password = request.form['account_password']
+        confirm_password = request.form['confirm_password']
+
+        # 權限驗證
+        if secret != PASSWORD_SECRET:
+            flash("通關密碼錯誤！")
+            return redirect(url_for('index'))
+        
+        if not prefix.isdigit():
+            flash("請輸入您的學號")
+            return redirect(url_for('index'))
+        
+        # 密碼確認
+        if account_password != confirm_password:
+            flash("兩次密碼不一致，請重新確認！")
+            return redirect(url_for('index'))
+        
+        # 密碼驗證（可加入更多規則）
+        if len(account_password) &lt; 8:
+            flash("密碼長度必須至少 8 個字元！")
+            return redirect(url_for('index'))
+        
+        try:
+            result = create_user(prefix, account_password)
+            flash(f"帳號建立成功: {result['primaryEmail']}")
+        except Exception as e:
+            flash(f"建立帳號失敗: {str(e)}")
+        return redirect(url_for('index'))
+    return render_template('form.html')
+
+# 不使用 app.run()，讓 waitress 來處理
+</pre>
+<p>配合使用的 nginx.conf</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    sendfile        on;
+    keepalive_timeout  65;
+
+    server {
+        listen       [::]:80 ipv6only=on;
+        server_name  your_first_server_domain your_server_cname_domain;
+
+        #root   html;
+        # 將 port 80 http 連結到倉儲的靜態網站
+        root C:/your_static_site_directory/wcm2025_hw;
+        index  index.html;
+
+        location / {
+            try_files $uri $uri/ =404;
+        }
+    }
+
+    server {
+        listen       [::]:443 ssl ipv6only=on;
+        http2        on;
+        server_name  your_first_server_domain your_server_cname_domain;
+
+        ssl_certificate      fullchain.pem;
+        ssl_certificate_key  privkey.pem;
+        ssl_protocols        TLSv1.2 TLSv1.3;
+        ssl_ciphers          HIGH:!aNULL:!MD5;
+
+        location / {
+            # https port 443 的連結資料是由近端 IPv6 or IPv4 port 8080 所提供
+            #proxy_pass         http://[::1]:5000;
+            proxy_pass         http://127.0.0.1:5000;
+            proxy_set_header   Host $host;
+            proxy_set_header   X-Real-IP $remote_addr;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header   X-Forwarded-Proto $scheme;
+        }
+    }
+}</pre>
+<p>初步測試所使用的單一通關密碼進行驗證，可以再透過 flask-pyoidc 改為 <a href="https://learn.microsoft.com/zh-tw/entra/identity-platform/v2-protocols-oidc">OIDC</a> 認證通關:</p>
+<p>先安裝必要模組:</p>
+<p style="padding-left: 30px;">pip install Flask flask-pyoidc google-api-python-client google-auth</p>
+<p>接著登入 Google Cloud Console 建立 OAuth 2.0 憑證:</p>
+<ol>
+<li>登入 Google Cloud Console</li>
+<li>選擇你的專案，點選「建立憑證」&gt;「OAuth 用戶端 ID」</li>
+<li>選擇「Web 應用程式」</li>
+<li>設定授權的重新導向 URI（Redirect URI）</li>
+<li>例如：http://localhost:5000/oidc/callback</li>
+<li>取得「用戶端 ID」與「用戶端密鑰」</li>
+</ol>
+<p>接著建立 OIDC 設定檔:<br/><br/>將下列內容儲存為 oidc_secrets.json（請填入你自己的 client_id/client_secret）：</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">{
+  "web": {
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "issuer": "https://accounts.google.com",
+    "redirect_uris": ["http://localhost:5000/oidc/callback"]
+  }
+}</pre>
+<p>利用 OIDC 認證通關的 app.py:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pip install Flask flask-pyoidc google-api-python-client google-auth
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_pyoidc import OIDCAuthentication
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import os
+import json
+
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
+# === OIDC 設定 ===
+with open('oidc_secrets.json') as f:
+    oidc_conf = json.load(f)['web']
+
+issuer = oidc_conf['issuer']
+client_metadata = ClientMetadata(
+    client_id=oidc_conf['client_id'],
+    client_secret=oidc_conf['client_secret'],
+    post_logout_redirect_uris=[oidc_conf['redirect_uris'][0]]
+)
+provider_config = ProviderConfiguration(
+    issuer=issuer,
+    client_metadata=client_metadata
+)
+auth = OIDCAuthentication({'default': provider_config}, app)
+
+# === Google Workspace 設定 ===
+DOMAIN = "your_google_workspace_domain"
+ADMIN_EMAIL = "your_admin_email"
+SERVICE_ACCOUNT_FILE = "C:/your_service_account_file_directory/service.json"
+SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
+
+def create_user(email_prefix, password):
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    delegated_credentials = credentials.with_subject(ADMIN_EMAIL)
+    service = build('admin', 'directory_v1', credentials=delegated_credentials)
+    user_body = {
+        "primaryEmail": f"{email_prefix}@{DOMAIN}",
+        "name": {
+            "givenName": email_prefix,
+            "familyName": "User"
+        },
+        "password": password
+    }
+    user = service.users().insert(body=user_body).execute()
+    return user
+
+@app.route('/logout')
+def logout():
+    # 清除 session 並 redirect 回首頁
+    session.clear()
+    return redirect(auth.client_end_session_uri('default', url_for('index', _external=True)))
+
+@app.route('/', methods=['GET', 'POST'])
+@auth.oidc_auth('default')
+def index():
+    # 取得登入者資訊
+    user_session = auth.user_session
+    user_email = user_session.userinfo['email']
+
+    # 只允許特定網域
+    if not user_email.endswith('@your_google_workspace_domain'):
+        return "無權限，請使用組織帳號登入", 403
+
+    if request.method == 'POST':
+        prefix = request.form['prefix']
+        account_password = request.form['account_password']
+        confirm_password = request.form['confirm_password']
+
+        if not prefix.isdigit():
+            flash("請輸入您的學號")
+            return redirect(url_for('index'))
+
+        if account_password != confirm_password:
+            flash("兩次密碼不一致，請重新確認！")
+            return redirect(url_for('index'))
+
+        if len(account_password) &lt; 8:
+            flash("密碼長度必須至少 8 個字元！")
+            return redirect(url_for('index'))
+
+        try:
+            result = create_user(prefix, account_password)
+            flash(f"帳號建立成功: {result['primaryEmail']}")
+        except Exception as e:
+            flash(f"建立帳號失敗: {str(e)}")
+        return redirect(url_for('index'))
+    return render_template('form.html', user_email=user_email)</pre>
+<p>配合 OIDC 認證的 form.html:</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!doctype html&gt;
+&lt;title&gt;建立 Google Workspace 帳號&lt;/title&gt;
+&lt;h2&gt;建立 Google Workspace 帳號&lt;/h2&gt;
+&lt;p&gt;目前登入：{{ user_email }}&lt;/p&gt;
+&lt;form method="POST"&gt;
+  &lt;label&gt;學號（Email @ 前）：&lt;input type="text" name="prefix" required pattern="\d+"&gt;&lt;/label&gt;&lt;br&gt;
+  &lt;label&gt;新帳號密碼：&lt;input type="password" name="account_password" required&gt;&lt;/label&gt;&lt;br&gt;
+  &lt;label&gt;再次輸入密碼：&lt;input type="password" name="confirm_password" required&gt;&lt;/label&gt;&lt;br&gt;
+  &lt;input type="submit" value="送出"&gt;
+&lt;/form&gt;
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    &lt;ul&gt;
+    {% for message in messages %}
+      &lt;li&gt;{{ message }}&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+  {% endif %}
+{% endwith %}
+&lt;a href="{{ url_for('logout') }}"&gt;登出&lt;/a&gt;</pre>
+<p>之後假設透過收集用戶的 email address 存為 allowed_email.txt， 採 OIDC 認證流程時，只允許電子郵箱在此檔案中的用戶有權限利用 app.py 建立 Google Workspace 帳號, 則 app.py 配合修改如下:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask_pyoidc import OIDCAuthentication
+from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import os
+import json
+
+app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
+# 讀取 allowed_email.txt，存成 set
+def load_allowed_emails(filepath="allowed_email.txt"):
+    with open(filepath, encoding="utf-8") as f:
+        return set(line.strip().lower() for line in f if line.strip())
+
+ALLOWED_EMAILS = load_allowed_emails()
+
+# === OIDC 設定 ===
+with open('oidc_secrets.json') as f:
+    oidc_conf = json.load(f)['web']
+
+issuer = oidc_conf['issuer']
+client_metadata = ClientMetadata(
+    client_id=oidc_conf['client_id'],
+    client_secret=oidc_conf['client_secret'],
+    post_logout_redirect_uris=[oidc_conf['redirect_uris'][0]]
+)
+provider_config = ProviderConfiguration(
+    issuer=issuer,
+    client_metadata=client_metadata
+)
+auth = OIDCAuthentication({'default': provider_config}, app)
+
+# === Google Workspace 設定 ===
+DOMAIN = "your_google_workspace_domain"
+ADMIN_EMAIL = "your_admin_email"
+SERVICE_ACCOUNT_FILE = "C:/your_service_account_file_directory/service.json"
+SCOPES = ['https://www.googleapis.com/auth/admin.directory.user']
+
+def create_user(email_prefix, password):
+    credentials = service_account.Credentials.from_service_account_file(
+        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    delegated_credentials = credentials.with_subject(ADMIN_EMAIL)
+    service = build('admin', 'directory_v1', credentials=delegated_credentials)
+    user_body = {
+        "primaryEmail": f"{email_prefix}@{DOMAIN}",
+        "name": {
+            "givenName": email_prefix,
+            "familyName": "User"
+        },
+        "password": password
+    }
+    user = service.users().insert(body=user_body).execute()
+    return user
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(auth.client_end_session_uri('default', url_for('index', _external=True)))
+
+@app.route('/', methods=['GET', 'POST'])
+@auth.oidc_auth('default')
+def index():
+    user_session = auth.user_session
+    user_email = user_session.userinfo['email'].lower()
+
+    # 只允許在 allowed_email.txt 的 email
+    if user_email not in ALLOWED_EMAILS:
+        return render_template('not_allowed.html', user_email=user_email), 403
+
+    if request.method == 'POST':
+        prefix = request.form['prefix']
+        account_password = request.form['account_password']
+        confirm_password = request.form['confirm_password']
+
+        if not prefix.isdigit():
+            flash("請輸入您的學號")
+            return redirect(url_for('index'))
+
+        if account_password != confirm_password:
+            flash("兩次密碼不一致，請重新確認！")
+            return redirect(url_for('index'))
+
+        if len(account_password) &lt; 8:
+            flash("密碼長度必須至少 8 個字元！")
+            return redirect(url_for('index'))
+
+        try:
+            result = create_user(prefix, account_password)
+            flash(f"帳號建立成功: {result['primaryEmail']}")
+        except Exception as e:
+            flash(f"建立帳號失敗: {str(e)}")
+        return redirect(url_for('index'))
+    return render_template('form.html', user_email=user_email)</pre>
+<p></p><h3>API</h3>
+<p>以下是「建立 Google Cloud Platform 專案並啟用 Admin SDK API」的詳細操作步驟，適用於管理 Google Workspace 的自動化應用：<br/><br/>一、建立 Google Cloud Platform (GCP) 專案<br/><br/>1. 登入 Google Cloud Console<br/>   前往 [Google Cloud Console](<a href="https://console.cloud.google.com">https://console.cloud.google.com</a>)。<br/><br>2. 建立新專案<br>   - 點選左上角的「專案選單」下拉按鈕（通常會顯示你目前的專案名稱）。<br/>   - 在彈出的專案視窗中，點選「新建專案」。<br/>   - 輸入專案名稱（如：workspace-account-automation）。<br/>   - 選擇對應的組織與資料夾（如有需要）。<br/>   - 點選「建立」。<br/><br/>3. 切換到新專案<br>   - 專案建立完成後，點選右上角的「通知」可快速切換到新專案，或再次於專案選單中切換至新專案。<br><br/>二、啟用 Admin SDK API and Gmail API<br/><br/>1. 進入 API 管理頁面<br/>   - 確認你當前專案已切換至剛建立的專案。<br/>   - 在左側導覽列，選擇「API 與服務」→「程式庫」。<br/><br>2. 搜尋並啟用 Admin SDK<br>   - 在搜尋框輸入 `Admin SDK`。<br/>   - 點選搜尋結果中的「Admin SDK」。<br/>   - 點選「啟用」。</br></br></br></br></br></br></p>
 <ul>
 <li data-end="633" data-start="554">
 <p data-end="633" data-start="556">前往 Google Cloud Console：<br data-end="583" data-start="580"/> 👉 <a class="cursor-pointer" data-end="633" data-start="588" rel="noopener" target="_new">https://console.cloud.google.com/apis/library</a></p>
@@ -1323,9 +1680,8 @@ if __name__ == '__main__':
 </ul>
 </li>
 </ul>
-<p><br/>三、（進階）建立並下載 Service Account 金鑰</p>
-<p></p>
-<p><a href="https://console.cloud.google.com/iam-admin/serviceaccounts">https://console.cloud.google.com/iam-admin/serviceaccounts</a> <br/><br/></p>
+<p>三、（進階）建立並下載 Service Account 金鑰</p>
+<p><a href="https://console.cloud.google.com/iam-admin/serviceaccounts">https://console.cloud.google.com/iam-admin/serviceaccounts</a> </p>
 <p>✅ 建立新的服務帳戶並啟用 Domain-wide Delegation</p>
 <p>步驟：</p>
 <p>🔁 建立一個新的 Service Account（在建立流程中會有「進階設定」）</p>
@@ -1337,9 +1693,7 @@ if __name__ == '__main__':
 <p>* 一個 Client ID`（要貼去 Workspace 管理控制台使用）<br/>* 「View Google Workspace Admin Console」按鈕</p>
 <p>✅ 接著在 Workspace Admin Console 授權這個 Client ID</p>
 <p>1. 登入 [admin.google.com](https://admin.google.com)（必須是超級管理員）<br/>2. 前往：安全性 &gt; API 控制權限 &gt; 網域範圍代理（Domain-wide delegation）<br/>3. 點【新增】<br/>4. 輸入你剛剛的 Client ID<br/>5. 輸入你要授權的 scopes，例如：</p>
-<p>https://www.googleapis.com/auth/admin.directory.user<br/>https://www.googleapis.com/auth/admin.directory.group</p>
-<p></p>
-<p></p><h1>Reeborg</h1>
+<p>https://www.googleapis.com/auth/admin.directory.user<br/>https://www.googleapis.com/auth/admin.directory.group</p><h1>Reeborg</h1>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a></p>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py</a> </p>
 <hr/>
