@@ -23,7 +23,8 @@
 <p style="padding-left: 30px;">1a 上課時段: 每週三 13:20 - 16:10</p>
 <p style="padding-left: 30px;">1b 上課時段: 每週四 09:10 - 12:00 (w17 1/1 放假)</p>
 <p><a href="https://calendar.google.com/calendar/embed?src=mde.nfu.edu.tw_3439313938333136353439%40resource.calendar.google.com&amp;ctz=Asia%2FTaipei&amp;mode=week&amp;src=mde.nfu.edu.tw_35303530373431313438%40resource.calendar.google.com&amp;ctz=Asia%2FTaipei&amp;src=yen%40gm.nfu.edu.tw&amp;ctz=Asia%2FTaipei"> 全頁檢視 </a></p>
-<p><iframe height="600" src="https://calendar.google.com/calendar/embed?src=mde.nfu.edu.tw_3439313938333136353439%40resource.calendar.google.com&amp;ctz=Asia%2FTaipei&amp;mode=week&amp;src=mde.nfu.edu.tw_35303530373431313438%40resource.calendar.google.com&amp;ctz=Asia%2FTaipei&amp;src=yen%40gm.nfu.edu.tw&amp;ctz=Asia%2FTaipei" width="800"></iframe></p><h1>Topics</h1>
+<p><iframe height="600" src="https://calendar.google.com/calendar/embed?src=mde.nfu.edu.tw_3439313938333136353439%40resource.calendar.google.com&amp;ctz=Asia%2FTaipei&amp;mode=week&amp;src=mde.nfu.edu.tw_35303530373431313438%40resource.calendar.google.com&amp;ctz=Asia%2FTaipei&amp;src=yen%40gm.nfu.edu.tw&amp;ctz=Asia%2FTaipei" width="800"></iframe></p>
+<h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
 <p>Teams 線上教學:</p>
@@ -107,7 +108,8 @@
 <li>推薦學習網站：<a href="https://reeborg.ca/" target="_blank">Reeborg’s World</a>、<a href="https://www.w3schools.com/" target="_blank">W3Schools</a>、<a href="https://developer.mozilla.org/zh-TW/" target="_blank">MDN Web Docs</a></li>
 <li>建議每週規劃自主練習與小專案，培養實作與解決問題能力</li>
 <li>記錄學習歷程，定期回顧與修正</li>
-</ul><h2>Git</h2>
+</ul>
+<h2>Git</h2>
 <p><span style="background-color: #ffff00;">為何計算機程式要使用 Git 與 Github?</span></p>
 <p>計算機程式（軟體開發）使用 Git 與 GitHub 主要有以下幾個原因：</p>
 <ol>
@@ -1300,7 +1302,8 @@ if __name__ == '__main__':
 </tr>
 </tbody>
 </table>
-<p><br/>八、結論<br/><br/>本專案將顯著提升 IT 人員建立 Google Workspace 帳號的效率與一致性，同時兼顧資訊安全。未來可依需求擴充驗證機制或加入更多自動化管理功能，如帳號停用、密碼重設等。<br/><br/></p><h3>Waitress</h3>
+<p><br/>八、結論<br/><br/>本專案將顯著提升 IT 人員建立 Google Workspace 帳號的效率與一致性，同時兼顧資訊安全。未來可依需求擴充驗證機制或加入更多自動化管理功能，如帳號停用、密碼重設等。<br/><br/></p>
+<h3>Waitress</h3>
 <p>採 <a href="https://pypi.org/project/waitress/">waitress</a> 執行 app.py</p>
 <p>start_app.py 程式碼:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from waitress import serve
@@ -1686,7 +1689,8 @@ def index():
 &lt;h2&gt;未授權訪問&lt;/h2&gt;
 &lt;p&gt;您的 email（{{ user_email }}）不在允許名單中，無法建立帳號。&lt;/p&gt;
 &lt;a href="{{ url_for('logout') }}"&gt;登出&lt;/a&gt;</pre>
-<p></p><h3>API</h3>
+<p></p>
+<h3>API</h3>
 <p>以下是「建立 Google Cloud Platform 專案並啟用 Admin SDK API」的詳細操作步驟，適用於管理 Google Workspace 的自動化應用：<br/><br/>一、建立 Google Cloud Platform (GCP) 專案<br/><br/>1. 登入 Google Cloud Console<br/>   前往 [Google Cloud Console](<a href="https://console.cloud.google.com">https://console.cloud.google.com</a>)。<br/><br/>2. 建立新專案<br/>   - 點選左上角的「專案選單」下拉按鈕（通常會顯示你目前的專案名稱）。<br/>   - 在彈出的專案視窗中，點選「新建專案」。<br/>   - 輸入專案名稱（如：workspace-account-automation）。<br/>   - 選擇對應的組織與資料夾（如有需要）。<br/>   - 點選「建立」。<br/><br/>3. 切換到新專案<br/>   - 專案建立完成後，點選右上角的「通知」可快速切換到新專案，或再次於專案選單中切換至新專案。<br/><br/>二、啟用 Admin SDK API and Gmail API<br/><br/>1. 進入 API 管理頁面<br/>   - 確認你當前專案已切換至剛建立的專案。<br/>   - 在左側導覽列，選擇「API 與服務」→「程式庫」。<br/><br/>2. 搜尋並啟用 Admin SDK<br/>   - 在搜尋框輸入 `Admin SDK`。<br/>   - 點選搜尋結果中的「Admin SDK」。<br/>   - 點選「啟用」。</p>
 <ul>
 <li data-end="633" data-start="554">
@@ -1720,7 +1724,188 @@ def index():
 <p>* 一個 Client ID`（要貼去 Workspace 管理控制台使用）<br/>* 「View Google Workspace Admin Console」按鈕</p>
 <p>✅ 接著在 Workspace Admin Console 授權這個 Client ID</p>
 <p>1. 登入 [admin.google.com](https://admin.google.com)（必須是超級管理員）<br/>2. 前往：安全性 (Security) &gt; Access and data control &gt; API 控制權限 (API controls)&gt; 網域範圍代理（Domain-wide delegation) &gt; MANAGE DOMAIN WIDE DELEGATION<br/>3. 點【新增】<br/>4. 輸入你剛剛的 Client ID<br/>5. 輸入你要授權的 OAuth scopes，例如：</p>
-<p>https://www.googleapis.com/auth/admin.directory.user<br/>https://www.googleapis.com/auth/admin.directory.group</p><h1>Reeborg</h1>
+<p>https://www.googleapis.com/auth/admin.directory.user<br/>https://www.googleapis.com/auth/admin.directory.group</p>
+<h2>V</h2>
+<p><a href="https://mde.tw/v/">https://mde.tw/v/</a> </p>
+<p><a href="https://github.com/vlang/vinix">https://github.com/vlang/vinix</a> </p>
+<p><a href="https://github.com/vlang/ved">https://github.com/vlang/ved</a> </p>
+<p><a href="https://github.com/livewire/volt">https://github.com/livewire/volt</a> </p>
+<p><a href="https://github.com/elliotchance/vsql">https://github.com/elliotchance/vsql</a> </p>
+<p><a href="https://github.com/vlang/gitly">https://github.com/vlang/gitly</a> </p>
+<p><a href="https://github.com/vlang/vorum">https://github.com/vlang/vorum</a> </p>
+<p data-end="242" data-start="143">V 語言的核心目標是「簡單、安全、高效」，並且特別適合用來開發高效的系統程式、嵌入式系統、CLI 工具等。它的設計理念是為了彌補 C 語言和 Rust 之間的差距，簡化開發過程，同時保持高效與安全。</p>
+<ul data-end="548" data-start="244">
+<li data-end="477" data-start="244">
+<p data-end="253" data-start="246"><strong data-end="252" data-start="246">特點</strong>：</p>
+<ul data-end="477" data-start="256">
+<li data-end="293" data-start="256">
+<p data-end="293" data-start="258"><strong data-end="275" data-start="258">語法簡單，無需大量樣板代碼</strong>，學習曲線較平緩，適合開發快速原型。</p>
+</li>
+<li data-end="330" data-start="296">
+<p data-end="330" data-start="298"><strong data-end="311" data-start="298">無垃圾回收（GC）</strong>，記憶體管理方式可選擇手動或引用計數。</p>
+</li>
+<li data-end="377" data-start="333">
+<p data-end="377" data-start="335">支援 <strong data-end="345" data-start="338">跨平台</strong> 編譯（Windows、Linux、macOS、WASM 等）。</p>
+</li>
+<li data-end="412" data-start="380">
+<p data-end="412" data-start="382"><strong data-end="392" data-start="382">編譯速度極快</strong>，小型專案甚至可以在 1 秒內編譯完畢。</p>
+</li>
+<li data-end="449" data-start="415">
+<p data-end="449" data-start="417">使用 <strong data-end="430" data-start="420">靜態類型系統</strong>，並強制編譯期檢查，避免空指標等錯誤。</p>
+</li>
+<li data-end="477" data-start="452">
+<p data-end="477" data-start="454">僅生成一個可執行檔，避免複雜的依賴和部署問題。</p>
+</li>
+</ul>
+</li>
+<li data-end="548" data-start="479">
+<p data-end="548" data-start="481"><strong data-end="489" data-start="481">設計理念</strong>：像 Go 語言一樣簡單，像 C 一樣高效，像 Rust 一樣安全，但更加簡化與直接，避免過多的樣板代碼和繁瑣的設置。</p>
+</li>
+</ul>
+<h4 data-end="565" data-start="550"><strong data-end="565" data-start="555">未來發展性：</strong></h4>
+<p data-end="615" data-start="566">V 語言的發展性仍在進行中，儘管它有一些非常有吸引力的特點，但由於它相對較新，目前仍面臨一些挑戰：</p>
+<ul data-end="873" data-start="618">
+<li data-end="696" data-start="618">
+<p data-end="696" data-start="620"><strong data-end="628" data-start="620">生態系統</strong>：目前的開發生態系統較小，缺乏許多現成的庫和框架。這對於大規模商業應用開發來說是一個障礙，但 V 語言的發展者已經在努力完善其生態系統。</p>
+</li>
+<li data-end="760" data-start="699">
+<p data-end="760" data-start="701"><strong data-end="712" data-start="701">生產力與穩定性</strong>：儘管 V 語言設計上非常簡單，但實際運行的穩定性和性能在長期大規模使用中如何表現仍然需要觀察。</p>
+</li>
+<li data-end="873" data-start="763">
+<p data-end="873" data-start="765"><strong data-end="774" data-start="765">市場接受度</strong>：Go 和 Rust 已經在市場中占有一席之地，V 的接受度可能需要時間。如果能夠快速吸引開發者社群並積極進行優化，未來仍然有可能在某些領域獲得一席之地，特別是在需要快速原型開發和高效編譯的場景中。</p>
+</li>
+</ul>
+<p><strong>V 語言</strong>是一個相對較新的程式語言，旨在彌補當前流行語言中的某些空白。與主流的編程語言（如 <strong>Go</strong>、<strong>Rust</strong>、<strong>C++</strong>、<strong>Python</strong> 等）相比，V 有一些明顯的優勢，特別是在 <strong>簡單性、安全性</strong> 和 <strong>編譯速度</strong> 方面。但它的未來性仍然受到多方面挑戰，包括生態系統、社群支持、以及功能的深度等。</p>
+<h4><strong>V 語言與現有熱門語言比較</strong></h4>
+<hr/>
+<p><br/>1. <strong>V 語言 vs Go</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>簡單性與語法</strong>：V 的語法非常簡單，沒有繁瑣的樣板代碼或其他語言常見的複雜結構（如 Go 的錯誤處理機制）。開發者可以像 Python 一樣輕鬆寫出簡潔的程式碼，而又能保有 C 語言般的性能。</p>
+</li>
+<li>
+<p><strong>編譯速度</strong>：V 的編譯速度超快，通常小型專案在 1 秒內就能編譯完成。對比 Go，V 在這一點上有顯著的優勢，尤其是當開發者處於快速原型開發或需要迭代的情況下。</p>
+</li>
+<li>
+<p><strong>無垃圾回收</strong>：V 沒有垃圾回收（GC），而 Go 使用垃圾回收機制。這使得 V 更適合一些對 <strong>記憶體控制</strong> 要求極高的應用，如嵌入式系統或高效能計算。</p>
+</li>
+<li>
+<p><strong>安全性</strong>：V 強調<strong>編譯時錯誤檢查</strong>，這使得許多錯誤可以在編譯階段就被捕捉。Go 的錯誤處理機制雖然簡單，但<strong>缺乏像 V 一樣強制編譯期安全檢查</strong>。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>生態系統與庫</strong>：Go 擁有龐大的生態系統和現成的庫，可以快速構建各類應用。相比之下，V 的生態系統仍在發展中，許多領域（如 Web 開發、機器學習等）仍然缺乏現成的庫和框架。</p>
+</li>
+<li>
+<p><strong>並行性</strong>：Go 的 <strong>goroutines</strong> 是其最具代表性的特性，對於並行計算非常高效。V 雖然也支持併發，但其並行模型還不如 Go 成熟。</p>
+</li>
+</ul>
+<hr/>
+<p><br/>2. <strong>V 語言 vs Rust</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>簡單性與學習曲線</strong>：Rust 的學習曲線比較陡峭，尤其是對記憶體管理的要求，V 語言則更加簡單。V 更容易上手，適合那些需要高效能但又不想為了記憶體安全而陷入過度複雜性的開發者。</p>
+</li>
+<li>
+<p><strong>編譯速度</strong>：V 的編譯速度比 Rust 快得多。Rust 的編譯過程比較慢，特別是在大型專案中，這對開發者的效率是一個不小的挑戰。</p>
+</li>
+<li>
+<p><strong>小型應用與原型開發</strong>：由於 V 的語法非常簡潔，編譯速度極快，因此它非常適合進行快速原型開發。Rust 雖然適合構建高性能系統，但對於快速原型和小型應用，V 可能會更高效。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>記憶體管理</strong>：Rust 以其<strong>精確的記憶體管理</strong>著稱，並且有<strong>所有權模型</strong>來防止內存錯誤（例如空指標、內存洩漏）。V 雖然沒有垃圾回收，但它的記憶體管理仍不如 Rust 精細，並且沒有像 Rust 那樣強大的所有權檢查。</p>
+</li>
+<li>
+<p><strong>性能</strong>：Rust 被設計為極致高效，能與 C++ 相媲美。V 雖然在性能上不差，但在極限性能需求下，Rust 仍然占據領先地位。</p>
+</li>
+</ul>
+<hr/>
+<p><br/>3. <strong>V 語言 vs C++</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>簡單性</strong>：C++ 的語法比較冗長且容易出錯，需要大量樣板代碼，並且手動管理記憶體容易導致錯誤。V 則簡化了許多這些複雜的操作，像 Go 一樣注重簡潔的語法設計，能減少開發者的負擔。</p>
+</li>
+<li>
+<p><strong>編譯速度</strong>：C++ 的編譯時間非常長，尤其在大型專案中，V 的快速編譯是一大優勢。</p>
+</li>
+<li>
+<p><strong>安全性</strong>：C++ 允許使用指標運算，這使得它容易出現空指標和內存錯誤，而 V 語言則不允許這些操作，強制進行編譯時檢查以避免此類錯誤。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>性能</strong>：C++ 是目前最強大的系統編程語言之一，無論在內存控制還是處理速度上，C++ 都有極高的優勢。V 可能無法與 C++ 在極限性能上競爭，尤其是在需要 <strong>低層次硬體控制</strong> 或 <strong>高效能計算</strong> 的應用中。</p>
+</li>
+<li>
+<p><strong>生態系統</strong>：C++ 的生態系統非常龐大，擁有大量的庫和工具支援，這是 V 無法在短期內超越的。</p>
+</li>
+</ul>
+<hr/>
+<p><br/>4. <strong>V 語言 vs Python</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>性能</strong>：Python 雖然在開發效率上非常高，但它的執行速度比 V 慢得多，尤其是處理大量數據時，Python 的性能瓶頸非常明顯。而 V 能提供接近 C 的性能，適合高效能需求的應用。</p>
+</li>
+<li>
+<p><strong>編譯速度與部署</strong>：Python 需要安裝解釋器並處理外部依賴，而 V 可以直接編譯成單一的原生可執行檔，這使得 V 在部署和運行效率上優於 Python。</p>
+</li>
+<li>
+<p><strong>靜態型別與安全性</strong>：V 是靜態類型的，這意味著許多錯誤可以在編譯階段就被檢查出來，這比 Python 的動態類型安全性更高。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>生態系統與庫</strong>：Python 目前擁有非常龐大的生態系統，無論是 Web 開發、數據科學、機器學習還是自動化腳本，都有非常成熟的庫可供使用。V 的生態系統還處於起步階段，缺乏像 Python 一樣強大的第三方庫支持。</p>
+</li>
+<li>
+<p><strong>開發效率</strong>：Python 是一個高度靈活的語言，開發速度非常快，對開發者非常友好。相比之下，V 雖然簡單，但還是比 Python 多了一些限制，並且其生態系統尚不完整。</p>
+</li>
+</ul>
+<hr/>
+<h4><strong>總結：V 語言的優勢與未來性</strong></h4>
+<table>
+<thead>
+<tr>
+<th>語言</th>
+<th>優勢</th>
+<th>未來發展性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Go</strong></td>
+<td>簡單語法、高效編譯、無垃圾回收、快速原型開發</td>
+<td>仍需擴展庫和工具，與 Go 競爭的空間在於更強的安全性和編譯速度</td>
+</tr>
+<tr>
+<td><strong>Rust</strong></td>
+<td>簡單易學、編譯速度極快、內存控制精細</td>
+<td>開發速度快、跨平台部署、但功能不如 Rust 精細，未來可成為更輕量級的選擇</td>
+</tr>
+<tr>
+<td><strong>C++</strong></td>
+<td>性能極高、深層系統控制</td>
+<td>V 更簡單安全，但無法與 C++ 在極限性能上競爭，適合快速開發</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>開發效率高、庫支持多</td>
+<td>V 的高效性能可替代 Python 在處理大量數據時的瓶頸，但生態不如 Python 成熟</td>
+</tr>
+</tbody>
+</table>
+<p><strong>V 的未來性</strong>取決於它是否能夠吸引到更多的開發者社群，並且發展出豐富的生態系統和第三方庫。隨著它在 <strong>系統開發</strong> 和 <strong>高效能應用</strong> 上的強大優勢，V 很有可能在這些領域獲得成功，但要成為類似 Python 或 Go 那樣的主流語言，還需要更長時間的發展。</p><h1>Reeborg</h1>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a></p>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py</a> </p>
 <hr/>
@@ -1732,7 +1917,8 @@ def index():
 <p style="padding-left: 30px;"><a href="https://127.0.0.1:8442/reeborg/?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
 <p>For Github Pages:</p>
 <p style="padding-left: 30px;"><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
-<p></p><h2>ex1</h2>
+<p></p>
+<h2>ex1</h2>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a> 是已知的機器人採收紅蘿蔔的程式，經由以下與 Copilot 的對話，希望透過 Python Class 的編寫解決特定範圍農作物採收的程式。</p>
 <p>問句:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">以下是 Reeborg 一個用來採收紅蘿蔔的程式, 目前位於 (3,3) 到 (8,8) 的區域中各座標點, 各有一個紅羅蔔等待採收, 現在想要建立一個 harvest() class, 可以利用 (3,3), (8,8)作為標定有農作物必須採收的兩個區域對角點座標, 而程式可以利用此一 harvest 類別生成案例完成採收的任務: def turn(int):
@@ -1772,7 +1958,8 @@ for i in range(3):
 <p>AI 回應: <a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_class_ex2.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_class_ex2.py </a> </p>
 <p>延伸到採收 harvest2 農田: <a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest2.json&amp;editor=python/harvest1_class_ex1.py">https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest2.json&amp;editor=python/harvest1_class_ex1.py</a> </p>
 <p>但卻沒能套用到 harvest3 農田: <a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex1.py">https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex1.py</a> </p>
-<p>而必須要在每一個座標點留下或放入一個紅蘿蔔: <a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex3.py">https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex3.py </a> </p><h1>Brython</h1>
+<p>而必須要在每一個座標點留下或放入一個紅蘿蔔: <a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex3.py">https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex3.py </a> </p>
+<h1>Brython</h1>
 <p><button id="add1to100">1 add to 100</button></p>
 <!-- 導入 brython 程式庫 -->
 <p>
@@ -2012,4 +2199,5 @@ doc["aitetris"].bind("click", aitetris.do)
 <p><!-- Brython 程式執行的結果, 都以 brython_div1 作為切入位置 --></p>
 <div id="brython_div2"></div>
 <!-- editor2 結束 --><hr/>
-<p></p></div>
+<p></p>
+</div>

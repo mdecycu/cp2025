@@ -1,0 +1,375 @@
+<!DOCTYPE html><html>
+        <head>
+        <title>cp2025</title>
+        <meta charset="utf-8">
+<meta property="head" content="H2">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/magnific-popup.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/jquery-ui.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/owl.theme.default.min.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/flaticon/font/flaticon.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/aos.css">
+        <link rel="stylesheet" href="./../cmsimde/static/chimper/css/style.css">
+        <link rel="shortcut icon" href="./../cmsimde/static/favicons.png">
+        
+        <style type='text/css'>
+            .site-section {
+            background-color: #FFFF;
+            padding: 40px 40px;
+            }
+            body > div > div.dropdown.open {
+                display: block;
+            }
+        </style>
+    
+        <!-- <script src="./../cmsimde/static/jquery.js"></script> -->
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+        <script src="../cmsimde/static/chimper/js/jquery-3.3.1.min.js"></script>
+        <link rel="stylesheet" href="./../cmsimde/static/tipuesearch/css/normalize.min.css">
+        <script src="./../cmsimde/static/tipuesearch/tipuesearch_set.js"></script>
+        <script src="tipuesearch_content.js"></script>
+        <link rel="stylesheet" href="./../cmsimde/static/tipuesearch/css/tipuesearch.css">
+        <script src="./../cmsimde/static/tipuesearch/tipuesearch.js"></script>
+        <!-- for Wink3 客製化關閉 -->
+        <!--
+        <link rel="stylesheet" type="text/css" href="./../cmsimde/static/winkPlayer.css" />
+        <script type="text/javascript" src="./../cmsimde/static/winkPlayer.js"></script>
+        -->
+        <script>
+            /* original tipuesearch
+            $(document).ready(function() {
+                 $('#tipue_search_input').tipuesearch();
+            });
+            */
+            // customed doSearch
+            function doSearch() {
+                $('#tipue_search_input').tipuesearch({
+                    newWindow: true, 
+                    minimumLength: 2,
+                    wholeWords: false, // for search 中文
+                });
+            }
+            $(document).ready(doSearch);
+        </script>
+        
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shCore.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushBash.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushDiff.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushJScript.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushJava.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushPython.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushSql.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushHaxe.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushXml.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushPhp.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushPowerShell.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushLua.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushMojo.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushWbt.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushCpp.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushCss.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushCSharp.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushDart.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/syntaxhighlighter/shBrushRust.js"></script>
+<link type="text/css" rel="stylesheet" href="./../cmsimde/static/syntaxhighlighter/css/shCoreDefault.css"/>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<!-- 暫時不用
+<script src="./../cmsimde/static/fengari-web.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/Cango-13v08-min.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/CangoAxes-4v01-min.js"></script>
+<script type="text/javascript" src="./../cmsimde/static/gearUtils-05.js"></script>
+-->
+<!-- for Brython 暫時不用
+<script src="https://scrum-3.github.io/web/brython/brython.js"></script>
+<script src="https://scrum-3.github.io/web/brython/brython_stdlib.js"></script>
+-->
+<style>
+img.add_border {
+    border: 3px solid blue;
+}
+</style>
+
+</head>
+<body>
+<div class='container'><nav>
+        
+    <div class="site-wrap">
+
+    <div class="site-mobile-menu">
+      <div class="site-mobile-menu-header">
+        <div class="site-mobile-menu-close mt-3">
+          <span class="icon-close2 js-menu-toggle"></span>
+        </div>
+      </div>
+      <div class="site-mobile-menu-body"></div>
+    </div>
+    
+            <header class="site-navbar py-4 bg-white" role="banner">
+              <div class="container">
+                <div class="row align-items-center">
+                <h1>cp2025 計算機程式</h1>
+                <div class="pl-4">
+                    <form>
+                    <input type="text" placeholder="Search" name="q" id="tipue_search_input" pattern=".{2,}" title="At least 2 characters" required>
+                    </form>
+                </div>
+                  <!-- <div class="col-11 col-xl-2">
+                    <h1 class="mb-0 site-logo"><a href="index.html" class="text-black h2 mb-0">cp2025 計算機程式</a></h1> 
+                  </div>
+                  -->
+                  <div class="col-12 col-md-10 d-none d-xl-block">
+                    <nav class="site-navigation position-relative text-right" role="navigation">
+    <ul class='site-menu js-clone-nav mr-auto d-none d-lg-block'>
+                        <li class="active has-children"><a href="index.html">Home</a>
+                        <ul class="dropdown">
+                            <li><a href="sitemap.html">SMap</a></li>
+                            <li><a href="./../reveal/index.html">reveal</a></li>
+                            <li><a href="./../blog/index.html">blog</a></li>
+                        </ul>
+                      </li>
+                     <li><a href='About.html'>About</a><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='Git.html'>Git</a><ul class='dropdown'><li><a href='Git_ex1.html'>Git_ex1</a><li><a href='Git_ex2.html'>Git_ex2</a></li></ul><li class='has-children'><a href='Python.html'>Python</a><ul class='dropdown'><li><a href='Python_ex1.html'>Python_ex1</a></li></ul><li class='has-children'><a href='Javascript.html'>Javascript</a><ul class='dropdown'><li><a href='HTML and CSS.html'>HTML and CSS</a></li></ul><li class='has-children'><a href='Project.html'>Project</a><ul class='dropdown'><li><a href='Waitress.html'>Waitress</a><li><a href='API.html'>API</a></li></ul><li><a href='V.html'>V</a></li></ul><li class='has-children'><a href='Reeborg.html'>Reeborg</a><ul class='dropdown'><li><a href='ex1.html'>ex1</a></li></ul><li><a href='Brython.html'>Brython</a></li>
+                      </ul>
+                </nav>
+              </div>
+              <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+              </div>
+
+            </div>
+          </div>
+          
+        </header>
+    <div id="tipue_search_content">API << <a href='API.html'>Previous</a> <a href='Reeborg.html'>Next</a> >> Reeborg<br /><h1>V</h1>
+<p><a href="https://mde.tw/v/">https://mde.tw/v/</a> </p>
+<p><a href="https://github.com/vlang/vinix">https://github.com/vlang/vinix</a> </p>
+<p><a href="https://github.com/vlang/ved">https://github.com/vlang/ved</a> </p>
+<p><a href="https://github.com/livewire/volt">https://github.com/livewire/volt</a> </p>
+<p><a href="https://github.com/elliotchance/vsql">https://github.com/elliotchance/vsql</a> </p>
+<p><a href="https://github.com/vlang/gitly">https://github.com/vlang/gitly</a> </p>
+<p><a href="https://github.com/vlang/vorum">https://github.com/vlang/vorum</a> </p>
+<p data-end="242" data-start="143">V 語言的核心目標是「簡單、安全、高效」，並且特別適合用來開發高效的系統程式、嵌入式系統、CLI 工具等。它的設計理念是為了彌補 C 語言和 Rust 之間的差距，簡化開發過程，同時保持高效與安全。</p>
+<ul data-end="548" data-start="244">
+<li data-end="477" data-start="244">
+<p data-end="253" data-start="246"><strong data-end="252" data-start="246">特點</strong>：</p>
+<ul data-end="477" data-start="256">
+<li data-end="293" data-start="256">
+<p data-end="293" data-start="258"><strong data-end="275" data-start="258">語法簡單，無需大量樣板代碼</strong>，學習曲線較平緩，適合開發快速原型。</p>
+</li>
+<li data-end="330" data-start="296">
+<p data-end="330" data-start="298"><strong data-end="311" data-start="298">無垃圾回收（GC）</strong>，記憶體管理方式可選擇手動或引用計數。</p>
+</li>
+<li data-end="377" data-start="333">
+<p data-end="377" data-start="335">支援 <strong data-end="345" data-start="338">跨平台</strong> 編譯（Windows、Linux、macOS、WASM 等）。</p>
+</li>
+<li data-end="412" data-start="380">
+<p data-end="412" data-start="382"><strong data-end="392" data-start="382">編譯速度極快</strong>，小型專案甚至可以在 1 秒內編譯完畢。</p>
+</li>
+<li data-end="449" data-start="415">
+<p data-end="449" data-start="417">使用 <strong data-end="430" data-start="420">靜態類型系統</strong>，並強制編譯期檢查，避免空指標等錯誤。</p>
+</li>
+<li data-end="477" data-start="452">
+<p data-end="477" data-start="454">僅生成一個可執行檔，避免複雜的依賴和部署問題。</p>
+</li>
+</ul>
+</li>
+<li data-end="548" data-start="479">
+<p data-end="548" data-start="481"><strong data-end="489" data-start="481">設計理念</strong>：像 Go 語言一樣簡單，像 C 一樣高效，像 Rust 一樣安全，但更加簡化與直接，避免過多的樣板代碼和繁瑣的設置。</p>
+</li>
+</ul>
+<h4 data-end="565" data-start="550"><strong data-end="565" data-start="555">未來發展性：</strong></h4>
+<p data-end="615" data-start="566">V 語言的發展性仍在進行中，儘管它有一些非常有吸引力的特點，但由於它相對較新，目前仍面臨一些挑戰：</p>
+<ul data-end="873" data-start="618">
+<li data-end="696" data-start="618">
+<p data-end="696" data-start="620"><strong data-end="628" data-start="620">生態系統</strong>：目前的開發生態系統較小，缺乏許多現成的庫和框架。這對於大規模商業應用開發來說是一個障礙，但 V 語言的發展者已經在努力完善其生態系統。</p>
+</li>
+<li data-end="760" data-start="699">
+<p data-end="760" data-start="701"><strong data-end="712" data-start="701">生產力與穩定性</strong>：儘管 V 語言設計上非常簡單，但實際運行的穩定性和性能在長期大規模使用中如何表現仍然需要觀察。</p>
+</li>
+<li data-end="873" data-start="763">
+<p data-end="873" data-start="765"><strong data-end="774" data-start="765">市場接受度</strong>：Go 和 Rust 已經在市場中占有一席之地，V 的接受度可能需要時間。如果能夠快速吸引開發者社群並積極進行優化，未來仍然有可能在某些領域獲得一席之地，特別是在需要快速原型開發和高效編譯的場景中。</p>
+</li>
+</ul>
+<p><strong>V 語言</strong>是一個相對較新的程式語言，旨在彌補當前流行語言中的某些空白。與主流的編程語言（如 <strong>Go</strong>、<strong>Rust</strong>、<strong>C++</strong>、<strong>Python</strong> 等）相比，V 有一些明顯的優勢，特別是在 <strong>簡單性、安全性</strong> 和 <strong>編譯速度</strong> 方面。但它的未來性仍然受到多方面挑戰，包括生態系統、社群支持、以及功能的深度等。</p>
+<h4><strong>V 語言與現有熱門語言比較</strong></h4>
+<hr/>
+<p><br/>1. <strong>V 語言 vs Go</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>簡單性與語法</strong>：V 的語法非常簡單，沒有繁瑣的樣板代碼或其他語言常見的複雜結構（如 Go 的錯誤處理機制）。開發者可以像 Python 一樣輕鬆寫出簡潔的程式碼，而又能保有 C 語言般的性能。</p>
+</li>
+<li>
+<p><strong>編譯速度</strong>：V 的編譯速度超快，通常小型專案在 1 秒內就能編譯完成。對比 Go，V 在這一點上有顯著的優勢，尤其是當開發者處於快速原型開發或需要迭代的情況下。</p>
+</li>
+<li>
+<p><strong>無垃圾回收</strong>：V 沒有垃圾回收（GC），而 Go 使用垃圾回收機制。這使得 V 更適合一些對 <strong>記憶體控制</strong> 要求極高的應用，如嵌入式系統或高效能計算。</p>
+</li>
+<li>
+<p><strong>安全性</strong>：V 強調<strong>編譯時錯誤檢查</strong>，這使得許多錯誤可以在編譯階段就被捕捉。Go 的錯誤處理機制雖然簡單，但<strong>缺乏像 V 一樣強制編譯期安全檢查</strong>。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>生態系統與庫</strong>：Go 擁有龐大的生態系統和現成的庫，可以快速構建各類應用。相比之下，V 的生態系統仍在發展中，許多領域（如 Web 開發、機器學習等）仍然缺乏現成的庫和框架。</p>
+</li>
+<li>
+<p><strong>並行性</strong>：Go 的 <strong>goroutines</strong> 是其最具代表性的特性，對於並行計算非常高效。V 雖然也支持併發，但其並行模型還不如 Go 成熟。</p>
+</li>
+</ul>
+<hr/>
+<p><br/>2. <strong>V 語言 vs Rust</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>簡單性與學習曲線</strong>：Rust 的學習曲線比較陡峭，尤其是對記憶體管理的要求，V 語言則更加簡單。V 更容易上手，適合那些需要高效能但又不想為了記憶體安全而陷入過度複雜性的開發者。</p>
+</li>
+<li>
+<p><strong>編譯速度</strong>：V 的編譯速度比 Rust 快得多。Rust 的編譯過程比較慢，特別是在大型專案中，這對開發者的效率是一個不小的挑戰。</p>
+</li>
+<li>
+<p><strong>小型應用與原型開發</strong>：由於 V 的語法非常簡潔，編譯速度極快，因此它非常適合進行快速原型開發。Rust 雖然適合構建高性能系統，但對於快速原型和小型應用，V 可能會更高效。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>記憶體管理</strong>：Rust 以其<strong>精確的記憶體管理</strong>著稱，並且有<strong>所有權模型</strong>來防止內存錯誤（例如空指標、內存洩漏）。V 雖然沒有垃圾回收，但它的記憶體管理仍不如 Rust 精細，並且沒有像 Rust 那樣強大的所有權檢查。</p>
+</li>
+<li>
+<p><strong>性能</strong>：Rust 被設計為極致高效，能與 C++ 相媲美。V 雖然在性能上不差，但在極限性能需求下，Rust 仍然占據領先地位。</p>
+</li>
+</ul>
+<hr/>
+<p><br/>3. <strong>V 語言 vs C++</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>簡單性</strong>：C++ 的語法比較冗長且容易出錯，需要大量樣板代碼，並且手動管理記憶體容易導致錯誤。V 則簡化了許多這些複雜的操作，像 Go 一樣注重簡潔的語法設計，能減少開發者的負擔。</p>
+</li>
+<li>
+<p><strong>編譯速度</strong>：C++ 的編譯時間非常長，尤其在大型專案中，V 的快速編譯是一大優勢。</p>
+</li>
+<li>
+<p><strong>安全性</strong>：C++ 允許使用指標運算，這使得它容易出現空指標和內存錯誤，而 V 語言則不允許這些操作，強制進行編譯時檢查以避免此類錯誤。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>性能</strong>：C++ 是目前最強大的系統編程語言之一，無論在內存控制還是處理速度上，C++ 都有極高的優勢。V 可能無法與 C++ 在極限性能上競爭，尤其是在需要 <strong>低層次硬體控制</strong> 或 <strong>高效能計算</strong> 的應用中。</p>
+</li>
+<li>
+<p><strong>生態系統</strong>：C++ 的生態系統非常龐大，擁有大量的庫和工具支援，這是 V 無法在短期內超越的。</p>
+</li>
+</ul>
+<hr/>
+<p><br/>4. <strong>V 語言 vs Python</strong></p>
+<h4><strong>優勢</strong>：</h4>
+<ul>
+<li>
+<p><strong>性能</strong>：Python 雖然在開發效率上非常高，但它的執行速度比 V 慢得多，尤其是處理大量數據時，Python 的性能瓶頸非常明顯。而 V 能提供接近 C 的性能，適合高效能需求的應用。</p>
+</li>
+<li>
+<p><strong>編譯速度與部署</strong>：Python 需要安裝解釋器並處理外部依賴，而 V 可以直接編譯成單一的原生可執行檔，這使得 V 在部署和運行效率上優於 Python。</p>
+</li>
+<li>
+<p><strong>靜態型別與安全性</strong>：V 是靜態類型的，這意味著許多錯誤可以在編譯階段就被檢查出來，這比 Python 的動態類型安全性更高。</p>
+</li>
+</ul>
+<h4><strong>挑戰</strong>：</h4>
+<ul>
+<li>
+<p><strong>生態系統與庫</strong>：Python 目前擁有非常龐大的生態系統，無論是 Web 開發、數據科學、機器學習還是自動化腳本，都有非常成熟的庫可供使用。V 的生態系統還處於起步階段，缺乏像 Python 一樣強大的第三方庫支持。</p>
+</li>
+<li>
+<p><strong>開發效率</strong>：Python 是一個高度靈活的語言，開發速度非常快，對開發者非常友好。相比之下，V 雖然簡單，但還是比 Python 多了一些限制，並且其生態系統尚不完整。</p>
+</li>
+</ul>
+<hr/>
+<h4><strong>總結：V 語言的優勢與未來性</strong></h4>
+<table>
+<thead>
+<tr>
+<th>語言</th>
+<th>優勢</th>
+<th>未來發展性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Go</strong></td>
+<td>簡單語法、高效編譯、無垃圾回收、快速原型開發</td>
+<td>仍需擴展庫和工具，與 Go 競爭的空間在於更強的安全性和編譯速度</td>
+</tr>
+<tr>
+<td><strong>Rust</strong></td>
+<td>簡單易學、編譯速度極快、內存控制精細</td>
+<td>開發速度快、跨平台部署、但功能不如 Rust 精細，未來可成為更輕量級的選擇</td>
+</tr>
+<tr>
+<td><strong>C++</strong></td>
+<td>性能極高、深層系統控制</td>
+<td>V 更簡單安全，但無法與 C++ 在極限性能上競爭，適合快速開發</td>
+</tr>
+<tr>
+<td><strong>Python</strong></td>
+<td>開發效率高、庫支持多</td>
+<td>V 的高效性能可替代 Python 在處理大量數據時的瓶頸，但生態不如 Python 成熟</td>
+</tr>
+</tbody>
+</table>
+<p><strong>V 的未來性</strong>取決於它是否能夠吸引到更多的開發者社群，並且發展出豐富的生態系統和第三方庫。隨著它在 <strong>系統開發</strong> 和 <strong>高效能應用</strong> 上的強大優勢，V 很有可能在這些領域獲得成功，但要成為類似 Python 或 Go 那樣的主流語言，還需要更長時間的發展。</p><br />API << <a href='API.html'>Previous</a> <a href='Reeborg.html'>Next</a> >> Reeborg</div>
+        
+    <!-- footer -->
+      <div class="container">
+        <div class="row pt-3 mx-auto">
+            <p>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+        </div>
+      </div>
+    <!-- for footer -->
+    
+        </div> <!-- for site wrap -->
+            <!-- <script src="../cmsimde/static/chimper/js/jquery-3.3.1.min.js"></script> -->
+            <script src="../cmsimde/static/chimper/js/jquery-migrate-3.0.1.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery-ui.js"></script>
+            <script src="../cmsimde/static/chimper/js/popper.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/bootstrap.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/owl.carousel.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery.stellar.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery.countdown.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/jquery.magnific-popup.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/bootstrap-datepicker.min.js"></script>
+            <script src="../cmsimde/static/chimper/js/aos.js"></script>
+            <!--
+            <script src="../cmsimde/static/chimper/js/typed.js"></script>
+                    <script>
+                    var typed = new Typed('.typed-words', {
+                    strings: ["Web Apps"," WordPress"," Mobile Apps"],
+                    typeSpeed: 80,
+                    backSpeed: 80,
+                    backDelay: 4000,
+                    startDelay: 1000,
+                    loop: true,
+                    showCursor: true
+                    });
+                    </script>
+            -->
+            <script src="../cmsimde/static/chimper/js/main.js"></script>
+        
+<!-- 啟用 LaTeX equations 編輯 -->
+  <!-- <script>
+  MathJax = {
+    tex: {inlineMath: [['$', '$'], ['\(', '\)']]}
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>-->
+    </body></html>
+        
