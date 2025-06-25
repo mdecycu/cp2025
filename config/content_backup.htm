@@ -45,7 +45,7 @@ for /f %%i in ('findstr /i . Files.txt 2^&gt;nul') do dism /online /norestart /a
 del Files.txt
 pause
 </pre>
-<p>完成之後，可以在搜尋處輸入 gpedit.msc，開啟 Local Group Policy Editor， 進入 Windows 設定 - 安全設定 - 帳戶原則 - 密碼原則中，若將密碼最長使用期限的 42 天改為 0，則密碼就可由使用者自行決定最長使用期限，不需要每 42 天被強迫更改。</p>
+<p>完成之後，可以在搜尋處輸入 gpedit.msc，開啟 Local Group Policy Editor，進入 Windows 設定 - 安全設定 - 帳戶原則 - 密碼原則中，若將密碼最長使用期限的 42 天改為 0，則密碼就可由使用者自行決定最長使用期限，不需要每 42 天被強迫更改。</p>
 <p>其他建議: 安裝 <a href="https://www.7-zip.org/">7zip</a>、安裝 Firefox，之後儘可能使用可攜套件。  </p><h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
@@ -653,6 +653,7 @@ git push</pre>
 <p style="padding-left: 30px;"><a href="https://github.com/loukhin/Reeborg">https://github.com/loukhin/Reeborg</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/aroberge/reeborg-howto">https://github.com/aroberge/reeborg-howto</a></p>
 <p style="padding-left: 30px;"><a href="https://github.com/LeeRenJie/100-days-of-code-in-python">https://github.com/LeeRenJie/100-days-of-code-in-python</a></p>
+<p style="padding-left: 30px;"><a href="http://repo.darmajaya.ac.id/4765/1/The%20Self-Taught%20Programmer_%20The%20Definitive%20Guide%20to%20Programming%20Professionally%20%28%20PDFDrive%20%29.pdf">Self-taught programmer</a></p>
 <p>Python code for Artificial Intelligence - Foundations of Computational Agents</p>
 <p style="padding-left: 30px;"><a href="https://artint.info/AIPython/aipython.pdf">https://artint.info/AIPython/aipython.pdf</a></p>
 <p style="padding-left: 30px;"><a href="https://www.researchgate.net/publication/387024839_Programming_AI_with_Python">Program AI with Python</a></p>
@@ -663,8 +664,7 @@ git push</pre>
 <p style="padding-left: 30px;"><a href="/downloads/GA/ga_1.py">ga_1.py</a> (from <a href="https://www.geeksforgeeks.org/genetic-algorithms/">https://www.geeksforgeeks.org/genetic-algorithms/</a>)</p>
 <p style="padding-left: 30px;"><a href="https://medium.com/analytics-vidhya/genetic-algorithm-494ac5be18bb">https://medium.com/analytics-vidhya/genetic-algorithm-494ac5be18bb</a></p>
 <p style="padding-left: 30px;"><a href="https://medium.com/@LeonFedden/evolving-solutions-with-genetic-algorithms-e3122473a35f">https://medium.com/@LeonFedden/evolving-solutions-with-genetic-algorithms-e3122473a35f</a></p>
-<p style="padding-left: 30px;">Apply GA to <a href="https://github.com/mdecycu/cs101">https://github.com/mdecycu/cs101</a></p>
-<h3>Python_ex1</h3>
+<p style="padding-left: 30px;">Apply GA to <a href="https://github.com/mdecycu/cs101">https://github.com/mdecycu/cs101</a></p><h3>Python_ex1</h3>
 <h4>Python 初學者學習指引</h4>
 <h4>一、學習步驟建議</h4>
 <ol>
@@ -1748,6 +1748,9 @@ def index():
 <p>https://www.googleapis.com/auth/admin.directory.user<br/>https://www.googleapis.com/auth/admin.directory.group</p>
 <h2>V</h2>
 <p><a href="https://mde.tw/v/">https://mde.tw/v/</a> </p>
+<p><a href="/downloads/v.properties">v.properties</a> for SciTE (將 V 程式碼存為 .v 後，在 SciTE 中以 Tools - Go 執行 v run 檔名.v)</p>
+<p><a href="https://docs.vlang.io/introduction.html">V Documentation</a></p>
+<p>v install pdf 之後，<a href="https://github.com/vlang/pdf">pdf 模組</a>在可攜系統將會位於 Y:\home_ipv6\.vmodules</p>
 <p><a href="https://github.com/vlang/vinix">https://github.com/vlang/vinix</a> </p>
 <p><a href="https://github.com/vlang/ved">https://github.com/vlang/ved</a> </p>
 <p><a href="https://github.com/livewire/volt">https://github.com/livewire/volt</a> </p>
@@ -1926,7 +1929,17 @@ def index():
 </tr>
 </tbody>
 </table>
-<p><strong>V 的未來性</strong>取決於它是否能夠吸引到更多的開發者社群，並且發展出豐富的生態系統和第三方庫。隨著它在 <strong>系統開發</strong> 和 <strong>高效能應用</strong> 上的強大優勢，V 很有可能在這些領域獲得成功，但要成為類似 Python 或 Go 那樣的主流語言，還需要更長時間的發展。</p><h1>Reeborg</h1>
+<p><strong>V 的未來性</strong>取決於它是否能夠吸引到更多的開發者社群，並且發展出豐富的生態系統和第三方庫。隨著它在 <strong>系統開發</strong> 和 <strong>高效能應用</strong> 上的強大優勢，V 很有可能在這些領域獲得成功，但要成為類似 Python 或 Go 那樣的主流語言，還需要更長時間的發展。</p><h3>learn_V</h3>
+<p>Install from source code:</p>
+<p style="padding-left: 30px;">git clone https://github.com/vlang/v<br/>cd v<br/>make # make.bat on Windows </p>
+<p>或直接從 <a href="https://github.com/vlang/v/releases">github.com/vlang/v/release</a> 下載</p>
+<p>V 更新:</p>
+<p style="padding-left: 30px;">v up</p>
+<p style="padding-left: 30px;">自行取下最新原始碼後，自行編譯</p>
+<p><a href="https://blog.vlang.io/getting-started-with-v">https://blog.vlang.io/getting-started-with-v</a>/</p>
+<p><a href="https://github.com/v-community/v_by_example/blob/master/cn/README.md">V by examples</a></p>
+<p><a href="https://github.com/coderlyfe/vweb_tut">vweb tutorial</a> (<a href="https://www.youtube.com/watch?v=ga4B9pWXc2E">video</a>)</p>
+<p><a href="https://github.com/malisipi/vwebui">https://github.com/malisipi/vwebui</a> </p><h1>Reeborg</h1>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a></p>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1_east_west.py</a> </p>
 <hr/>
@@ -1938,8 +1951,7 @@ def index():
 <p style="padding-left: 30px;"><a href="https://127.0.0.1:8442/reeborg/?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
 <p>For Github Pages:</p>
 <p style="padding-left: 30px;"><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=%2Freeborg%2Fworlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=%2Freeborg%2Fworlds%2Ftutorial_en%2Fharvest1.json&amp;editor=%2Freeborg%2Fpython%2Fharvest1.py">Reeborg</a></p>
-<p></p>
-<h2>ex1</h2>
+<p></p><h2>ex1</h2>
 <p><a href="https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py">https://mde.tw/cp2025/reeborg?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest1.json&amp;editor=python/harvest1.py</a> 是已知的機器人採收紅蘿蔔的程式，經由以下與 Copilot 的對話，希望透過 Python Class 的編寫解決特定範圍農作物採收的程式。</p>
 <p>問句:</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">以下是 Reeborg 一個用來採收紅蘿蔔的程式, 目前位於 (3,3) 到 (8,8) 的區域中各座標點, 各有一個紅羅蔔等待採收, 現在想要建立一個 harvest() class, 可以利用 (3,3), (8,8)作為標定有農作物必須採收的兩個區域對角點座標, 而程式可以利用此一 harvest 類別生成案例完成採收的任務: def turn(int):

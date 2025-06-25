@@ -2,7 +2,7 @@
         <head>
         <title>cp2025</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap.min.css">
@@ -142,125 +142,18 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">Python_ex1 << <a href='Python_ex1.html'>Previous</a> <a href='HTML and CSS.html'>Next</a> >> HTML and CSS<br /><h1>Javascript</h1>
-<h4>JavaScript 初學者完整學習指引</h4>
-<h4>一、為什麼學 JavaScript？</h4>
-<ul>
-<li>JavaScript 是網頁開發必學語言，執行於所有主流瀏覽器。</li>
-<li>可用於前端（瀏覽器）、後端（Node.js）、行動應用、桌面應用等。</li>
-<li>社群大、資源多，學會 JS 等於打開 Web 世界大門。</li>
-</ul>
-<h4>二、學習流程建議</h4>
-<ol>
-<li>認識 JavaScript 應用場景及基礎語法。</li>
-<li>熟悉開發與測試環境：<br/>推薦直接在 Chrome、Edge、Firefox 等瀏覽器按 F12 開啟「開發人員工具」→「主控台(Console)」練習。</li>
-<li>循序漸進學習語法與邏輯：從變數、流程控制、函式、物件等開始。</li>
-<li>多做練習題與小專案。</li>
-<li>了解 DOM 操作、事件處理與基礎網頁互動。</li>
-<li>進階可學習 ES6+ 新語法與框架（如 React、Vue）。</li>
-</ol>
-<h4>三、JavaScript 必學基礎語法與範例</h4>
-<table>
-<tbody>
-<tr>
-<th>語法主題</th>
-<th>說明</th>
-<th>範例</th>
-</tr>
-<tr>
-<td>變數宣告</td>
-<td>用 <code>let</code>、<code>const</code>（現代 JS），<br/>不要再用 <code>var</code>。</td>
-<td><code>let x = 10;<br/>const pi = 3.14;</code></td>
-</tr>
-<tr>
-<td>資料型態</td>
-<td>數字（Number）、字串（String）、布林（Boolean）、陣列（Array）、物件（Object）、null、undefined</td>
-<td><code> let s = "hi";<br/> let arr = [1,2,3];<br/> let person = { name: "Tom", age: 20 }; </code></td>
-</tr>
-<tr>
-<td>輸出</td>
-<td>用 <code>console.log()</code> 輸出到主控台</td>
-<td><code>console.log("Hello!");<br/>console.log(x + 2);</code></td>
-</tr>
-<tr>
-<td>運算子</td>
-<td>數學（+、-、*、/、%）、比較（==、===、!=、!==、&gt;、&lt;）、邏輯（&amp;&amp;、||、!）</td>
-<td><code> let z = x + 5;<br/> x === 10<br/> (a &gt; 0) &amp;&amp; (b &lt; 5) </code></td>
-</tr>
-<tr>
-<td>條件判斷</td>
-<td>if、else if、else</td>
-<td><code> if (x &gt; 0) {<br/>   console.log("正數");<br/> } else {<br/>   console.log("非正數");<br/> } </code></td>
-</tr>
-<tr>
-<td>迴圈</td>
-<td>for、while、do...while</td>
-<td><code> for (let i = 0; i &lt; 3; i++) {<br/>   console.log(i);<br/> }<br/> <br/> let count = 0;<br/> while (count &lt; 3) {<br/>   console.log(count);<br/>   count++;<br/> } </code></td>
-</tr>
-<tr>
-<td>函式</td>
-<td>定義與呼叫，<br/> ES6 支援箭頭函式</td>
-<td><code> function greet(name) {<br/>   console.log("Hi, " + name);<br/> }<br/> greet("Amy");<br/> <br/> // 箭頭函式<br/> const add = (a, b) =&gt; a + b;<br/> console.log(add(2,3)); </code></td>
-</tr>
-<tr>
-<td>陣列與物件</td>
-<td>基本操作：存取元素、方法如 <code>push</code>、<code>forEach</code> 等</td>
-<td><code> let nums = [1,2,3];<br/> nums.push(4);<br/> nums.forEach(item =&gt; console.log(item));<br/> <br/> let person = { name: "Tom", age: 20 };<br/> console.log(person.name); </code></td>
-</tr>
-<tr>
-<td>註解</td>
-<td>單行 <code>//</code>，多行 <code>/* */</code></td>
-<td><code> // 這是單行註解<br/> /*<br/> 這是多行註解<br/> */ </code></td>
-</tr>
-</tbody>
-</table>
-<div class="tip"><strong>小提醒：</strong> JavaScript 語法彈性大，但容易出現隱含錯誤，建議使用嚴格模式 <code>'use strict';</code>，養成良好命名與註解習慣。</div>
-<h4>四、在網頁上的應用簡介</h4>
-<ul>
-<li>JavaScript 主要用於網頁互動、動態內容與事件處理。</li>
-<li>可透過 <code>&lt;script&gt;</code> 標籤直接在 HTML 內嵌或引用外部 JS 檔案：</li>
-</ul>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;title&gt;JS 範例&lt;/title&gt;&lt;/head&gt;
-&lt;body&gt;
-  &lt;button onclick="sayHello()"&gt;點我&lt;/button&gt;
-  &lt;script&gt;
-    function sayHello() {
-      alert("你好！");
-    }
-  &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</pre>
-<h4>五、常見錯誤與學習建議</h4>
-<ul>
-<li><strong>常見錯誤：</strong>
-<ul>
-<li>少分號或括號（雖然 JS 支援自動補全，但還是建議加上）。</li>
-<li>變數未宣告直接使用。</li>
-<li>區分 <code>==</code>（寬鬆相等）與 <code>===</code>（嚴格相等）。</li>
-<li>陣列與物件存取語法錯誤。</li>
-</ul>
-</li>
-<li><strong>學習建議：</strong>
-<ul>
-<li>多練習：在主控台嘗試各種語法。</li>
-<li>閱讀 MDN（Mozilla Developer Network）文件，查詢 JS 語法與用法。</li>
-<li>完成小專案，如計算機、Todo List、網頁互動等。</li>
-<li>多與他人討論，參加線上社群。</li>
-</ul>
-</li>
-</ul>
-<h4>六、進階主題（可視情況逐步學習）</h4>
-<ul>
-<li>ES6+ 新語法（let、const、箭頭函式、解構賦值、展開運算子、模組化等）</li>
-<li>事件處理、DOM 操作與網頁互動</li>
-<li>非同步程式（callback、Promise、async/await）</li>
-<li>物件導向程式設計、類別（class）</li>
-<li>前端框架（如 React、Vue、Angular）</li>
-<li>Node.js 伺服器端開發</li>
-</ul>
-<br />Python_ex1 << <a href='Python_ex1.html'>Previous</a> <a href='HTML and CSS.html'>Next</a> >> HTML and CSS</div>
+    <div id="tipue_search_content">V << <a href='V.html'>Previous</a> <a href='Reeborg.html'>Next</a> >> Reeborg<br /><h1>learn_V</h1>
+<p>Install from source code:</p>
+<p style="padding-left: 30px;">git clone https://github.com/vlang/v<br/>cd v<br/>make # make.bat on Windows </p>
+<p>或直接從 <a href="https://github.com/vlang/v/releases">github.com/vlang/v/release</a> 下載</p>
+<p>V 更新:</p>
+<p style="padding-left: 30px;">v up</p>
+<p style="padding-left: 30px;">自行取下最新原始碼後，自行編譯</p>
+<p><a href="https://blog.vlang.io/getting-started-with-v">https://blog.vlang.io/getting-started-with-v</a>/</p>
+<p><a href="https://github.com/v-community/v_by_example/blob/master/cn/README.md">V by examples</a></p>
+<p><a href="https://github.com/coderlyfe/vweb_tut">vweb tutorial</a> (<a href="https://www.youtube.com/watch?v=ga4B9pWXc2E">video</a>)</p>
+<p><a href="https://github.com/malisipi/vwebui">https://github.com/malisipi/vwebui</a> </p>
+<p style="padding-left: 30px;"><a href="https://webui.me/docs">https://webui.me/docs</a> </p><br />V << <a href='V.html'>Previous</a> <a href='Reeborg.html'>Next</a> >> Reeborg</div>
         
     <!-- footer -->
       <div class="container">
