@@ -29,15 +29,26 @@
 <p><a href="https://mde.tw/cs101">https://mde.tw/cs101</a> </p>
 <h1>Computer</h1>
 <p>一、假如使用 Windows 操作系統</p>
-<p>檔案總管內定並無檢視副檔名與隱藏檔案的設定，若之後所使用的工具並非安裝版，其副檔名並未登錄於操作系統，因此可能無法透過檔案 icon 辨識檔案屬性，最直接的方式就是透過副檔名確認。</p>
-<p>其次，許多系統工具會使用 Windows 認定的隱藏檔格式 (以 . 開頭)，這些隱藏檔案或隱藏目錄，在 Git 指令操作時非常重要，因此建議將 Windows 檔案總管視窗下的檢視設定中，開啟檢視附檔名與隱藏檔的選項設定。</p>
+<p>顯示副檔名與隱藏檔</p>
+<p style="padding-left: 30px;">檔案總管內定並無檢視副檔名與隱藏檔案的設定，若之後所使用的工具並非安裝版，其副檔名並未登錄於操作系統，因此可能無法透過檔案 icon 辨識檔案屬性，最直接的方式就是透過副檔名確認。</p>
+<p style="padding-left: 30px;">其次，許多系統工具會使用 Windows 認定的隱藏檔格式 (以 . 開頭)，這些隱藏檔案或隱藏目錄，在 Git 指令操作時非常重要，因此建議將 Windows 檔案總管視窗下的檢視設定中，開啟檢視附檔名與隱藏檔的選項設定。</p>
 <p>假如使用 Windows 11 家用版</p>
-<p>新機開啟之後的設定流程，系統要求必須登入微軟帳號才能繼續使用時，可以透過指令輸入，在重新開機設定階段，繞過此一過程。</p>
-<p>意即，當按下 Shift + F10 (若有 Fn 鍵則需按下 Shift + Fn + F10) 時，系統會跳出命令列視窗，若此時命令列視窗中的目錄，已經跳到 C:\Windows\System32&gt;，則可利用 cd OOBE 之後執行 BYPASSNRO，要求重新開機時繞過此一要求。</p>
-<p>這些指令都是英文字母，OOBE 是 Out Of Box Experience 的縮寫，而 BYPASSNRO 則是 BYPASS Network Requirement Out-of-box 的意思。</p>
-<p>在 Windows 11 設置過程，選擇執行 C:\Windows\System32\OOBE\BYPASSNRO 按下 Enter，就會重新開機，之後的設置過程，便會繞過需要登入微軟帳號才能使用 Windows 11 的要求。</p>
-<p>另外，Windows 11 家用版並沒有 gpedit.msc 工具，這是操作系統的群組原則設置工具，若希望關閉微軟強制設定每 42 天必須重製密碼的內建原則，可以先安裝 gpedit.msc 之後再行修改。</p>
-<p>在搜尋欄位執行 cmd 之後，選擇以管理者身分啟動命令列視窗後，執行下列批次檔指令:</p>
+<p style="padding-left: 30px;">家用版與專業版的差異:</p>
+<p style="padding-left: 60px;">家用版僅支援單一 CPU</p>
+<p style="padding-left: 60px;">家用版最多支援 128 GB 記憶體</p>
+<p style="padding-left: 60px;">家用版無硬碟編碼功能</p>
+<p style="padding-left: 60px;">家用版無 <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/">Windows Sandbox</a></p>
+<p style="padding-left: 60px;">家用版無 Remote Desk Top Host - 可以使用 <a href="https://en.wikipedia.org/wiki/VNC">VNC</a> 進行遠端控制 </p>
+<p style="padding-left: 60px;">家用版必須自行安裝 Group Policy Editor (gpedit.msc) - 但可以<a href="https://www.itechtics.com/easily-enable-group-policy-editor-gpedit-msc-in-windows-10-home-edition/">自行配置安裝</a></p>
+<p style="padding-left: 60px;">家用版無 Hyper-V - 可以使用 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 配置虛擬機</p>
+<p>無登入狀態使用 Windows 11</p>
+<p style="padding-left: 30px;">新機開啟之後的設定流程，系統要求必須登入微軟帳號才能繼續使用時，可以透過指令輸入，在重新開機設定階段，繞過此一過程。</p>
+<p style="padding-left: 30px;">意即，當按下 Shift + F10 (若有 Fn 鍵則需按下 Shift + Fn + F10) 時，系統會跳出命令列視窗，若此時命令列視窗中的目錄，已經跳到 C:\Windows\System32&gt;，則可利用 cd OOBE 之後執行 BYPASSNRO，要求重新開機時繞過此一要求。</p>
+<p style="padding-left: 30px;">這些指令都是英文字母，OOBE 是 Out Of Box Experience 的縮寫，而 BYPASSNRO 則是 BYPASS Network Requirement Out-of-box 的意思。</p>
+<p style="padding-left: 30px;">在 Windows 11 設置過程，選擇執行 C:\Windows\System32\OOBE\BYPASSNRO 按下 Enter，就會重新開機，之後的設置過程，便會繞過需要登入微軟帳號才能使用 Windows 11 的要求。</p>
+<p>自行安裝 gpedit.msc</p>
+<p style="padding-left: 30px;">另外，Windows 11 家用版並沒有 gpedit.msc 工具，這是操作系統的群組原則設置工具，若希望關閉微軟強制設定每 42 天必須重製密碼的內建原則，可以先安裝 gpedit.msc 之後再行修改。</p>
+<p style="padding-left: 30px;">在搜尋欄位執行 cmd 之後，選擇以管理者身分啟動命令列視窗後，執行下列批次檔指令:</p>
 <p>get_gpedit.bat</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">@echo off
 pushd "%~dp0"
@@ -47,8 +58,14 @@ for /f %%i in ('findstr /i . Files.txt 2^&gt;nul') do dism /online /norestart /a
 del Files.txt
 pause
 </pre>
-<p>完成之後，可以在搜尋處輸入 gpedit.msc，開啟 Local Group Policy Editor，進入 Windows 設定 - 安全設定 - 帳戶原則 - 密碼原則中，若將密碼最長使用期限的 42 天改為 0，則密碼就可由使用者自行決定最長使用期限，不需要每 42 天被強迫更改。</p>
-<p>其他建議: 安裝 <a href="https://www.7-zip.org/">7zip</a>、安裝 Firefox，之後儘可能使用可攜套件。  </p><h1>Topics</h1>
+<p style="padding-left: 30px;">完成之後，可以在搜尋處輸入 gpedit.msc，開啟 Local Group Policy Editor，進入 Windows 設定 - 安全設定 - 帳戶原則 - 密碼原則中，若將密碼最長使用期限的 42 天改為 0，則密碼就可由使用者自行決定最長使用期限，不需要每 42 天被強迫更改。</p>
+<p>其他建議:</p>
+<p style="padding-left: 30px;">安裝 <a href="https://www.7-zip.org/">7zip</a>、安裝 Firefox，之後儘可能使用可攜套件。</p>
+<p>二、假如使用 Ubuntu</p>
+<p><a href="https://ubuntu.com/#download-ubuntu">Ubuntu</a> 操作系統分為 Server 與 Desktop 版本，一般機械相關的課程所採用的套件大多僅支援 Windows 版，因此 Ubuntu 或其他 Linux 相關操作系統僅是用來建立輔助用的伺服器，或者用於測試所開發的套件是否能夠在 Ubuntu 環境中執行。</p>
+<p>在 Windows 11 操作系統中，利用 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 配置一台 Ubuntu 虛擬機，應該是最方便的使用方式，儘管 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 虛擬機僅能模擬大約 75% 的硬體效能，但只要 4GB Ram 與約 5GB 的硬碟空間就可以啟動，因此建議所使用的 Windows 筆電或桌機至少要有 32GB 的記憶體，以及 512 GB 以上的 SSD 硬碟空間.</p>
+<p>三、假如使用 Mac</p>
+<p><a href="https://en.wikipedia.org/wiki/MacOS">MacOS</a> 採用 BSD 系列操作系統，屬於 UNiX，因此就機械相關課程的使用情況，與 Ubuntu 或其他 Linux 操作系統相似，大部分情況必須設法配置 Windows 11 虛擬機，或遠端登入到其他 Windows 11 機器，才能執行一些僅支援 Windows 的套件。  </p><h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
 <p>Teams 線上教學:</p>
@@ -133,17 +150,18 @@ pause
 <li>建議每週規劃自主練習與小專案，培養實作與解決問題能力</li>
 <li>記錄學習歷程，定期回顧與修正</li>
 </ul><h2>Git</h2>
-<p><span style="background-color: #ffff00;">為何計算機程式要使用 Git 與 Github?</span></p>
-<p>計算機程式（軟體開發）使用 Git 與 GitHub 主要有以下幾個原因：</p>
+<p>假如您還沒有 Github 帳號，請馬上<a href="https://github.com/signup">建立一個</a>。</p>
+<p><span style="background-color: #ffff00;">為何計算機程式課程要使用 Git 與 Github?</span></p>
+<p>計算機程式課程（軟體開發）使用 Git 與 GitHub 主要有以下幾個原因：</p>
 <ol>
-<li>版本控制: Git 是一套分散式的版本控制系統，能記錄每一個檔案的修改歷程。這樣就算不小心改壞了，也能隨時回復到以前的版本，追蹤誰改了什麼、什麼時候改的。</li>
+<li>版本控制: Git 是一套分散式的版本控制系統，能記錄每一個檔案的修改歷程。這樣就算不小心改壞了某一個版本的程式，也能隨時回復到以前的版本，而且在協同設計流程中，可以追蹤那一個使用者改了那些內容、什麼時候改的，可以快速釐清許多議題。</li>
 <li>團隊協作: 多個開發者可以同時對同一個專案進行開發，透過分支（branch）機制，各自開發新功能、修 bug，最後再合併（merge）到主分支，避免互相覆蓋程式碼。</li>
 <li>雲端備份與分享: GitHub 是基於 Git 的雲端代管平台，可以將本地的 Git 專案上傳到雲端，不怕資料遺失。也方便將程式碼公開或私下分享給其他人。</li>
 <li>問題追蹤與管理: GitHub 除了儲存程式碼，還提供 issue、pull request 等工具，有助於追蹤 bug、討論功能、審查程式碼，提高專案管理效率。</li>
 <li>開放原始碼與社群合作: 許多開放原始碼專案都放在 GitHub，任何人都能貢獻程式碼，促進社群協作與學習。</li>
 <li>總結：使用 Git 和 GitHub 可以讓程式開發更有組織、更安全、更容易協作與管理，也方便與他人分享、學習與成長。</li>
 </ol>
-<p><span style="background-color: #ffff00;">請舉實際的計算機程式案例，說明如何操作 Git 與 Github，以便取得程式開發流程的便利與優勢。</span></p>
+<p><span style="background-color: #ffff00;">請舉實際的計算機程式開發案例，說明如何操作 Git 與 Github，以便取得程式開發流程的便利與優勢。</span></p>
 <p>Git 與 GitHub 操作案例說明</p>
 <h4>Git 與 GitHub 實際操作案例：多人開發 ToDo List 網站</h4>
 <div>
@@ -228,7 +246,7 @@ pause
 <div>
 <h4>總結</h4>
 <p>Git 與 GitHub 提供完整的版本控制、團隊協作、問題追蹤、程式碼審查與備份機制，讓開發流程更有條理，大幅提升開發效率與品質。不論團隊或個人開發，都能享有回溯、備份、管理等多重好處。</p>
-<h3>Git_ex1</h3>
+</div><h3>Git_ex1</h3>
 <h4>Reeborg 機器人 Python 開發流程與 Git/GitHub 協作範例</h4>
 <h4>階段一：基礎 Python 與 Reeborg 指令</h4>
 <p>初學者可直接用 Python 撰寫簡單的 <a href="https://mde.tw/cp2025/reeborg/">Reeborg 機器人程式</a>，例如讓機器人向前走數步、左轉、撿物件：</p>
@@ -2364,4 +2382,4 @@ doc["aitetris"].bind("click", aitetris.do)
 <p><!-- Brython 程式執行的結果, 都以 brython_div1 作為切入位置 --></p>
 <div id="brython_div2"></div>
 <!-- editor2 結束 --><hr/>
-<p></p></div>
+<p></p>

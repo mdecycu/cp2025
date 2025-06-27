@@ -144,15 +144,26 @@ img.add_border {
         </header>
     <div id="tipue_search_content">cs101 << <a href='cs101.html'>Previous</a> <a href='Topics.html'>Next</a> >> Topics<br /><h1>Computer</h1>
 <p>一、假如使用 Windows 操作系統</p>
-<p>檔案總管內定並無檢視副檔名與隱藏檔案的設定，若之後所使用的工具並非安裝版，其副檔名並未登錄於操作系統，因此可能無法透過檔案 icon 辨識檔案屬性，最直接的方式就是透過副檔名確認。</p>
-<p>其次，許多系統工具會使用 Windows 認定的隱藏檔格式 (以 . 開頭)，這些隱藏檔案或隱藏目錄，在 Git 指令操作時非常重要，因此建議將 Windows 檔案總管視窗下的檢視設定中，開啟檢視附檔名與隱藏檔的選項設定。</p>
+<p>顯示副檔名與隱藏檔</p>
+<p style="padding-left: 30px;">檔案總管內定並無檢視副檔名與隱藏檔案的設定，若之後所使用的工具並非安裝版，其副檔名並未登錄於操作系統，因此可能無法透過檔案 icon 辨識檔案屬性，最直接的方式就是透過副檔名確認。</p>
+<p style="padding-left: 30px;">其次，許多系統工具會使用 Windows 認定的隱藏檔格式 (以 . 開頭)，這些隱藏檔案或隱藏目錄，在 Git 指令操作時非常重要，因此建議將 Windows 檔案總管視窗下的檢視設定中，開啟檢視附檔名與隱藏檔的選項設定。</p>
 <p>假如使用 Windows 11 家用版</p>
-<p>新機開啟之後的設定流程，系統要求必須登入微軟帳號才能繼續使用時，可以透過指令輸入，在重新開機設定階段，繞過此一過程。</p>
-<p>意即，當按下 Shift + F10 (若有 Fn 鍵則需按下 Shift + Fn + F10) 時，系統會跳出命令列視窗，若此時命令列視窗中的目錄，已經跳到 C:\Windows\System32&gt;，則可利用 cd OOBE 之後執行 BYPASSNRO，要求重新開機時繞過此一要求。</p>
-<p>這些指令都是英文字母，OOBE 是 Out Of Box Experience 的縮寫，而 BYPASSNRO 則是 BYPASS Network Requirement Out-of-box 的意思。</p>
-<p>在 Windows 11 設置過程，選擇執行 C:\Windows\System32\OOBE\BYPASSNRO 按下 Enter，就會重新開機，之後的設置過程，便會繞過需要登入微軟帳號才能使用 Windows 11 的要求。</p>
-<p>另外，Windows 11 家用版並沒有 gpedit.msc 工具，這是操作系統的群組原則設置工具，若希望關閉微軟強制設定每 42 天必須重製密碼的內建原則，可以先安裝 gpedit.msc 之後再行修改。</p>
-<p>在搜尋欄位執行 cmd 之後，選擇以管理者身分啟動命令列視窗後，執行下列批次檔指令:</p>
+<p style="padding-left: 30px;">家用版與專業版的差異:</p>
+<p style="padding-left: 60px;">家用版僅支援單一 CPU</p>
+<p style="padding-left: 60px;">家用版最多支援 128 GB 記憶體</p>
+<p style="padding-left: 60px;">家用版無硬碟編碼功能</p>
+<p style="padding-left: 60px;">家用版無 <a href="https://learn.microsoft.com/en-us/windows/security/application-security/application-isolation/windows-sandbox/">Windows Sandbox</a></p>
+<p style="padding-left: 60px;">家用版無 Remote Desk Top Host - 可以使用 <a href="https://en.wikipedia.org/wiki/VNC">VNC</a> 進行遠端控制 </p>
+<p style="padding-left: 60px;">家用版必須自行安裝 Group Policy Editor (gpedit.msc) - 但可以<a href="https://www.itechtics.com/easily-enable-group-policy-editor-gpedit-msc-in-windows-10-home-edition/">自行配置安裝</a></p>
+<p style="padding-left: 60px;">家用版無 Hyper-V - 可以使用 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 配置虛擬機</p>
+<p>無登入狀態使用 Windows 11</p>
+<p style="padding-left: 30px;">新機開啟之後的設定流程，系統要求必須登入微軟帳號才能繼續使用時，可以透過指令輸入，在重新開機設定階段，繞過此一過程。</p>
+<p style="padding-left: 30px;">意即，當按下 Shift + F10 (若有 Fn 鍵則需按下 Shift + Fn + F10) 時，系統會跳出命令列視窗，若此時命令列視窗中的目錄，已經跳到 C:\Windows\System32&gt;，則可利用 cd OOBE 之後執行 BYPASSNRO，要求重新開機時繞過此一要求。</p>
+<p style="padding-left: 30px;">這些指令都是英文字母，OOBE 是 Out Of Box Experience 的縮寫，而 BYPASSNRO 則是 BYPASS Network Requirement Out-of-box 的意思。</p>
+<p style="padding-left: 30px;">在 Windows 11 設置過程，選擇執行 C:\Windows\System32\OOBE\BYPASSNRO 按下 Enter，就會重新開機，之後的設置過程，便會繞過需要登入微軟帳號才能使用 Windows 11 的要求。</p>
+<p>自行安裝 gpedit.msc</p>
+<p style="padding-left: 30px;">另外，Windows 11 家用版並沒有 gpedit.msc 工具，這是操作系統的群組原則設置工具，若希望關閉微軟強制設定每 42 天必須重製密碼的內建原則，可以先安裝 gpedit.msc 之後再行修改。</p>
+<p style="padding-left: 30px;">在搜尋欄位執行 cmd 之後，選擇以管理者身分啟動命令列視窗後，執行下列批次檔指令:</p>
 <p>get_gpedit.bat</p>
 <pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">@echo off
 pushd "%~dp0"
@@ -162,8 +173,14 @@ for /f %%i in ('findstr /i . Files.txt 2^&gt;nul') do dism /online /norestart /a
 del Files.txt
 pause
 </pre>
-<p>完成之後，可以在搜尋處輸入 gpedit.msc，開啟 Local Group Policy Editor，進入 Windows 設定 - 安全設定 - 帳戶原則 - 密碼原則中，若將密碼最長使用期限的 42 天改為 0，則密碼就可由使用者自行決定最長使用期限，不需要每 42 天被強迫更改。</p>
-<p>其他建議: 安裝 <a href="https://www.7-zip.org/">7zip</a>、安裝 Firefox，之後儘可能使用可攜套件。  </p><br />cs101 << <a href='cs101.html'>Previous</a> <a href='Topics.html'>Next</a> >> Topics</div>
+<p style="padding-left: 30px;">完成之後，可以在搜尋處輸入 gpedit.msc，開啟 Local Group Policy Editor，進入 Windows 設定 - 安全設定 - 帳戶原則 - 密碼原則中，若將密碼最長使用期限的 42 天改為 0，則密碼就可由使用者自行決定最長使用期限，不需要每 42 天被強迫更改。</p>
+<p>其他建議:</p>
+<p style="padding-left: 30px;">安裝 <a href="https://www.7-zip.org/">7zip</a>、安裝 Firefox，之後儘可能使用可攜套件。</p>
+<p>二、假如使用 Ubuntu</p>
+<p><a href="https://ubuntu.com/#download-ubuntu">Ubuntu</a> 操作系統分為 Server 與 Desktop 版本，一般機械相關的課程所採用的套件大多僅支援 Windows 版，因此 Ubuntu 或其他 Linux 相關操作系統僅是用來建立輔助用的伺服器，或者用於測試所開發的套件是否能夠在 Ubuntu 環境中執行。</p>
+<p>在 Windows 11 操作系統中，利用 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 配置一台 Ubuntu 虛擬機，應該是最方便的使用方式，儘管 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 虛擬機僅能模擬大約 75% 的硬體效能，但只要 4GB Ram 與約 5GB 的硬碟空間就可以啟動，因此建議所使用的 Windows 筆電或桌機至少要有 32GB 的記憶體，以及 512 GB 以上的 SSD 硬碟空間.</p>
+<p>三、假如使用 Mac</p>
+<p><a href="https://en.wikipedia.org/wiki/MacOS">MacOS</a> 採用 BSD 系列操作系統，屬於 UNiX，因此就機械相關課程的使用情況，與 Ubuntu 或其他 Linux 操作系統相似，大部分情況必須設法配置 Windows 11 虛擬機，或遠端登入到其他 Windows 11 機器，才能執行一些僅支援 Windows 的套件。  </p><br />cs101 << <a href='cs101.html'>Previous</a> <a href='Topics.html'>Next</a> >> Topics</div>
         
     <!-- footer -->
       <div class="container">
