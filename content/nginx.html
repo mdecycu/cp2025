@@ -2,7 +2,7 @@
         <head>
         <title>cp2025</title>
         <meta charset="utf-8">
-<meta property="head" content="H2">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap.min.css">
@@ -142,25 +142,159 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">Git_ex2 << <a href='Git_ex2.html'>Previous</a> <a href='Python_ex1.html'>Next</a> >> Python_ex1<br /><h1>Python</h1>
-<p>Learn Python with <a href="https://mde.tw/reeborg">Reeborg</a></p>
-<p style="padding-left: 30px;"><a href="https://reeborg.ca/docs/en/">https://reeborg.ca/docs/en/</a></p>
-<p style="padding-left: 30px;"><a href="https://aroberge.gitbooks.io/reeborg-s-world-advanced-world-creation/content/">https://aroberge.gitbooks.io/reeborg-s-world-advanced-world-creation/content/</a></p>
-<p style="padding-left: 30px;"><a href="https://github.com/loukhin/Reeborg">https://github.com/loukhin/Reeborg</a></p>
-<p style="padding-left: 30px;"><a href="https://github.com/aroberge/reeborg-howto">https://github.com/aroberge/reeborg-howto</a></p>
-<p style="padding-left: 30px;"><a href="https://github.com/LeeRenJie/100-days-of-code-in-python">https://github.com/LeeRenJie/100-days-of-code-in-python</a></p>
-<p style="padding-left: 30px;"><a href="http://repo.darmajaya.ac.id/4765/1/The%20Self-Taught%20Programmer_%20The%20Definitive%20Guide%20to%20Programming%20Professionally%20%28%20PDFDrive%20%29.pdf">Self-taught programmer</a></p>
-<p>Python code for Artificial Intelligence - Foundations of Computational Agents</p>
-<p style="padding-left: 30px;"><a href="https://artint.info/AIPython/aipython.pdf">https://artint.info/AIPython/aipython.pdf</a></p>
-<p style="padding-left: 30px;"><a href="https://www.researchgate.net/publication/387024839_Programming_AI_with_Python">Program AI with Python</a></p>
-<p style="padding-left: 30px;"><a href="https://www.tutorialspoint.com/artificial_intelligence_with_python/artificial_intelligence_with_python_tutorial.pdf">AI with Python</a></p>
-<p style="padding-left: 30px;"><a href="https://web.stanford.edu/class/archive/cs/cs106a/cs106a.1208/lectures/26-Intro-to-AI/26-Intro-to-AI.pdf">Using Python for Artificial Intelligence</a></p>
-<p style="padding-left: 30px;"><a href="https://python-course.eu/books/bernd_klein_python_and_machine_learning_a4.pdf">Machine Learning with Python Tutorial</a></p>
-<p>Genetic Algorithms:</p>
-<p style="padding-left: 30px;"><a href="./../downloads/GA/ga_1.py">ga_1.py</a> (from <a href="https://www.geeksforgeeks.org/genetic-algorithms/">https://www.geeksforgeeks.org/genetic-algorithms/</a>)</p>
-<p style="padding-left: 30px;"><a href="https://medium.com/analytics-vidhya/genetic-algorithm-494ac5be18bb">https://medium.com/analytics-vidhya/genetic-algorithm-494ac5be18bb</a></p>
-<p style="padding-left: 30px;"><a href="https://medium.com/@LeonFedden/evolving-solutions-with-genetic-algorithms-e3122473a35f">https://medium.com/@LeonFedden/evolving-solutions-with-genetic-algorithms-e3122473a35f</a></p>
-<p style="padding-left: 30px;">Apply GA to <a href="https://github.com/mdecycu/cs101">https://github.com/mdecycu/cs101</a></p><br />Git_ex2 << <a href='Git_ex2.html'>Previous</a> <a href='Python_ex1.html'>Next</a> >> Python_ex1</div>
+    <div id="tipue_search_content">llama << <a href='llama.html'>Previous</a> <a href='Topics.html'>Next</a> >> Topics<br /><h1>nginx</h1>
+<p>透過 ollama 與 nginx 的結合，在 Web based 介面中使用 llama:</p>
+<p>index.html</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Ollama Chat&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 2rem; max-width: 700px; }
+    textarea { width: 100%; height: 100px; }
+    pre { background: #eee; padding: 1em; white-space: pre-wrap; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;🧠 Chat with LLaMA (via Ollama)&lt;/h1&gt;
+  &lt;textarea id="prompt" placeholder="Say something..."&gt;&lt;/textarea&gt;&lt;br/&gt;
+  &lt;button onclick="send()"&gt;Send&lt;/button&gt;
+  &lt;pre id="output"&gt;&lt;/pre&gt;
+
+  &lt;script&gt;
+    async function send() {
+      const prompt = document.getElementById("prompt").value;
+      document.getElementById("output").textContent = "Thinking...";
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "llama3",
+          prompt,
+          stream: false
+        })
+      });
+      const result = await res.json();
+      document.getElementById("output").textContent = result.response;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>nginx.conf 中對應的 server 設定:<br/><br/></p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">server {
+    listen 80;
+    server_name your.domain.com;
+
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:11434/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</pre>
+<p>執行 ollama serve 或使用 ollama run 時，ollama 套件會在 http://localhost:11434 開啟一個 RESTful API 伺服器，讓你可以透過程式或前端介面與模型互動。</p>
+<p>因此執行 ollama run llama3.1:latest 之後，再伺服 nginx 的 index.html 後，就可以從 WWW 伺服器連接頁面上，與 llama 語言模型系統對話。</p>
+<p>若 ollama 所執行的模型支援 vision 功能，則可以進一步延伸 index.html，使用者可以上傳圖片與 AI 模型對話</p>
+<p>index_vision.html</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Ollama Chat + Image/File Upload&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; }
+    textarea { width: 100%; height: 80px; }
+    .chatbox { white-space: pre-wrap; background: #f4f4f4; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+    .file-label { margin-top: 0.5rem; display: block; font-weight: bold; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h2&gt;🧠 Chat with LLaMA + Upload Image/Text&lt;/h2&gt;
+  
+  &lt;div class="chatbox" id="chatlog"&gt;&lt;/div&gt;
+
+  &lt;textarea id="prompt" placeholder="Say something..."&gt;&lt;/textarea&gt;&lt;br&gt;
+  
+  &lt;label class="file-label"&gt;Upload image (.png/.jpg) or text (.txt/.md):&lt;/label&gt;
+  &lt;input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.txt,.md"&gt;&lt;br&gt;&lt;br&gt;
+  
+  &lt;button onclick="send()"&gt;Send&lt;/button&gt;
+
+  &lt;script&gt;
+    const chatlog = document.getElementById("chatlog");
+
+    async function send() {
+      const promptInput = document.getElementById("prompt").value.trim();
+      const fileInput = document.getElementById("fileInput");
+      if (!promptInput &amp;&amp; fileInput.files.length === 0) return;
+
+      let userMessage = promptInput || "[No prompt]";
+      let fullPrompt = promptInput;
+
+      // 檔案處理
+      if (fileInput.files.length &gt; 0) {
+        const file = fileInput.files[0];
+        const type = file.type;
+
+        if (type.startsWith("image/")) {
+          const base64 = await fileToBase64(file);
+          fullPrompt += `\n\n[以下為圖片 base64 編碼：]\n${base64}`;
+        } else if (type === "text/plain" || file.name.endsWith(".md")) {
+          const text = await file.text();
+          fullPrompt += `\n\n[以下為文件內容：]\n${text}`;
+        } else {
+          appendChat("❌ Unsupported file type.");
+          return;
+        }
+      }
+
+      appendChat("🧑‍💻 You:\n" + userMessage);
+      appendChat("🤖 LLaMA is thinking...");
+
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "llama3",
+          prompt: fullPrompt,
+          stream: false
+        })
+      });
+
+      const result = await res.json();
+      updateLastBotReply("🤖 LLaMA:\n" + result.response);
+    }
+
+    function appendChat(text) {
+      const div = document.createElement("div");
+      div.className = "chatbox";
+      div.textContent = text;
+      chatlog.appendChild(div);
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function updateLastBotReply(text) {
+      const boxes = document.getElementsByClassName("chatbox");
+      boxes[boxes.length - 1].textContent = text;
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) =&gt; {
+        const reader = new FileReader();
+        reader.onload = () =&gt; resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>或直接將 ollama 結合 <a href="https://www.openwebui.com/">https://www.openwebui.com/</a> 提供 Web based 對話進階功能。</p><br />llama << <a href='llama.html'>Previous</a> <a href='Topics.html'>Next</a> >> Topics</div>
         
     <!-- footer -->
       <div class="container">

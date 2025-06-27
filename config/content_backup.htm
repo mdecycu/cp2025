@@ -66,20 +66,176 @@ pause
 <p>在 Windows 11 操作系統中，利用 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 配置一台 Ubuntu 虛擬機，應該是最方便的使用方式，儘管 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 虛擬機僅能模擬大約 75% 的硬體效能，但只要 4GB Ram 與約 5GB 的硬碟空間就可以啟動，因此建議所使用的 Windows 筆電或桌機至少要有 32GB 的記憶體，以及 512 GB 以上的 SSD 硬碟空間.</p>
 <p>三、假如使用 Mac</p>
 <p><a href="https://en.wikipedia.org/wiki/MacOS">MacOS</a> 採用 BSD 系列操作系統，屬於 UNiX，因此就機械相關課程的使用情況，與 Ubuntu 或其他 Linux 操作系統相似，大部分情況必須設法配置 Windows 11 虛擬機，或遠端登入到其他 Windows 11 機器，才能執行一些僅支援 Windows 的套件。  </p><h2>llama</h2>
-<p>在自己的電腦上執行 <a href="https://en.wikipedia.org/wiki/Llama_(language_model)">llama</a>，若電腦有 GPU 可以加快運算，若只有 CPU 也可以執行。</p>
-<p>連線至 <a href="https://ollama.com">https://ollama.com</a>，下載安裝後，直接執行 llama3.2 (約 2GB):</p>
-<p>安裝完成後，ollama 位於: C:\Users\使用者帳號\AppData\Local\Programs\Ollama，可以利用命令列視窗或 Powershell 命令列視窗，更換目錄至 Ollama 之後，以 ollama list 列出已經取下的模型，例如: 系統已經取下 llama3.2，則可利用 ollama run llama3.2 執行。</p>
-<p>各種開放模擬列表: <a href="https://ollama.com/search">https://ollama.com/search</a>，若要取下 deepseek-r1 模型 (約 5.2GB)：</p>
-<p style="padding-left: 30px;">cd <span>C:\Users\使用者帳號\AppData\Local\Programs\Ollama</span></p>
-<p style="padding-left: 30px;">ollama pull deepseek-r1</p>
-<p style="padding-left: 30px;">ollama run deepseek-r1</p>
-<p style="padding-left: 30px;">若要中斷對談，使用 ctrl + c，若要跳出 ollama 的語言模型執行，使用 ctrl + d</p>
-<p>以下畫面在電腦輔助設計室上一代電腦，配置 Intel i7-6700 CPU @ 3.40GHz，32GB 記憶體，安裝 NVIDIA GeForce GTX 950 顯卡電腦上執行:</p>
-<p><img caption="false" height="170" src="/images/ollama_on_win10.png" width="200"/></p>
-<p><b>Llama</b><span> </span>(<b>Large Language Model Meta AI</b>, formerly stylized as<span> </span><b>LLaMA</b>) is a family of<span> </span><a href="https://en.wikipedia.org/wiki/Large_language_model" title="Large language model">large language models</a><span> </span>(LLMs) released by<span> </span><a href="https://en.wikipedia.org/wiki/Meta_AI" title="Meta AI">Meta AI</a><span> </span>starting in February 2023.<span> </span>The latest version is Llama 4, released in April 2025.</p>
-<p>Llama models come in different sizes, ranging from 1 billion to 2 trillion parameters. Initially only a<span> </span><a href="https://en.wikipedia.org/wiki/Foundation_model" title="Foundation model">foundation model</a>,<span> </span>starting with Llama 2, Meta AI released instruction<span> </span><a href="https://en.wikipedia.org/wiki/Fine-tuning_(deep_learning)" title="Fine-tuning (deep learning)">fine-tuned</a><span> </span>versions alongside foundation models.</p>
-<p>Model weights for the first version of Llama were only available to researchers on a case-by-case basis, under a non-commercial license.<span> </span>Unauthorized copies of the first model were shared via<span> </span><a href="https://en.wikipedia.org/wiki/BitTorrent" title="BitTorrent">BitTorrent</a>.<span> </span>Subsequent versions of Llama were made accessible outside academia and released under licenses that permitted some commercial use.</p>
-<p>Alongside the release of Llama 3,<span> </span><a href="https://en.wikipedia.org/wiki/Meta_Platforms" title="Meta Platforms">Meta</a><span> </span>added<span> </span><a href="https://en.wikipedia.org/wiki/Virtual_assistant" title="Virtual assistant">virtual assistant</a><span> </span>features to<span> </span><a href="https://en.wikipedia.org/wiki/Facebook" title="Facebook">Facebook</a><span> </span>and<span> </span><a href="https://en.wikipedia.org/wiki/WhatsApp" title="WhatsApp">WhatsApp</a><span> </span>in select regions, and a standalone website. Both services use a Llama 3 model.<sup class="reference" id="cite_ref-9"><a href="https://en.wikipedia.org/wiki/Llama_(language_model)#cite_note-9"><span class="cite-bracket">[</span>9<span class="cite-bracket">]</span></a></sup></p><h1>Topics</h1>
+<p>在自己的電腦上執行 <a href="https://en.wikipedia.org/wiki/Llama_(language_model)">llama</a>:</p>
+<p style="padding-left: 30px;">若電腦有 GPU 可以加快運算，若只有 CPU 也可以執行，以下採一台安裝 Windows 10 的舊電腦進行示範。</p>
+<p>安裝 ollama 工具:</p>
+<p style="padding-left: 30px;">連線至 <a href="https://ollama.com">https://ollama.com</a>，下載安裝後，可直接執行 llama3.2 (約 2GB):</p>
+<p style="padding-left: 30px;">安裝完成後，ollama 位於: C:\Users\使用者帳號\AppData\Local\Programs\Ollama，可以利用命令列視窗或 Powershell 命令列視窗，更換目錄至 Ollama 之後，以 ollama list 列出已經取下的模型，例如: 系統已經取下 llama3.2，則可利用 ollama run llama3.2 執行。</p>
+<p style="padding-left: 30px;">各種開放模擬列表: <a href="https://ollama.com/search">https://ollama.com/search</a>，若要取下 deepseek-r1 模型 (約 5.2GB)：</p>
+<p style="padding-left: 60px;">cd <span>C:\Users\使用者帳號\AppData\Local\Programs\Ollama</span></p>
+<p style="padding-left: 60px;">ollama pull deepseek-r1</p>
+<p style="padding-left: 60px;">ollama run deepseek-r1</p>
+<p style="padding-left: 60px;">若要中斷對談，使用 ctrl + c，若要跳出 ollama 的語言模型執行，使用 ctrl + d</p>
+<p style="padding-left: 30px;">以下畫面在電腦輔助設計室上一代電腦，配置 Intel i7-6700 CPU @ 3.40GHz，32GB 記憶體，安裝 NVIDIA GeForce GTX 950 顯卡電腦上執行:</p>
+<p style="padding-left: 30px;"><img caption="false" height="170" src="/images/ollama_on_win10.png" width="200"/></p>
+<p>有關 Llama (資料取自 <a href="https://en.wikipedia.org/wiki/Llama_(language_model)">llama</a>):</p>
+<p style="padding-left: 30px;"><b>Llama</b><span> </span>(<b>Large Language Model Meta AI</b>, formerly stylized as<span> </span><b>LLaMA</b>) is a family of<span> </span><a href="https://en.wikipedia.org/wiki/Large_language_model" title="Large language model">large language models</a><span> </span>(LLMs) released by<span> </span><a href="https://en.wikipedia.org/wiki/Meta_AI" title="Meta AI">Meta AI</a><span> </span>starting in February 2023.<span> </span>The latest version is Llama 4, released in April 2025.</p>
+<p style="padding-left: 30px;">Llama models come in different sizes, ranging from 1 billion to 2 trillion parameters. Initially only a<span> </span><a href="https://en.wikipedia.org/wiki/Foundation_model" title="Foundation model">foundation model</a>,<span> </span>starting with Llama 2, Meta AI released instruction<span> </span><a href="https://en.wikipedia.org/wiki/Fine-tuning_(deep_learning)" title="Fine-tuning (deep learning)">fine-tuned</a><span> </span>versions alongside foundation models.</p>
+<p style="padding-left: 30px;">Model weights for the first version of Llama were only available to researchers on a case-by-case basis, under a non-commercial license.<span> </span>Unauthorized copies of the first model were shared via<span> </span><a href="https://en.wikipedia.org/wiki/BitTorrent" title="BitTorrent">BitTorrent</a>.<span> </span>Subsequent versions of Llama were made accessible outside academia and released under licenses that permitted some commercial use.</p>
+<p style="padding-left: 30px;">Alongside the release of Llama 3,<span> </span><a href="https://en.wikipedia.org/wiki/Meta_Platforms" title="Meta Platforms">Meta</a><span> </span>added<span> </span><a href="https://en.wikipedia.org/wiki/Virtual_assistant" title="Virtual assistant">virtual assistant</a><span> </span>features to <a href="https://en.wikipedia.org/wiki/Facebook" title="Facebook">Facebook</a> and <a href="https://en.wikipedia.org/wiki/WhatsApp" title="WhatsApp">WhatsApp</a> in select regions, and a standalone website. Both services use a Llama 3 model.</p>
+<h3>nginx</h3>
+<p>透過 ollama 與 nginx 的結合，在 Web based 介面中使用 llama:</p>
+<p>index.html</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Ollama Chat&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 2rem; max-width: 700px; }
+    textarea { width: 100%; height: 100px; }
+    pre { background: #eee; padding: 1em; white-space: pre-wrap; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;🧠 Chat with LLaMA (via Ollama)&lt;/h1&gt;
+  &lt;textarea id="prompt" placeholder="Say something..."&gt;&lt;/textarea&gt;&lt;br/&gt;
+  &lt;button onclick="send()"&gt;Send&lt;/button&gt;
+  &lt;pre id="output"&gt;&lt;/pre&gt;
+
+  &lt;script&gt;
+    async function send() {
+      const prompt = document.getElementById("prompt").value;
+      document.getElementById("output").textContent = "Thinking...";
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "llama3",
+          prompt,
+          stream: false
+        })
+      });
+      const result = await res.json();
+      document.getElementById("output").textContent = result.response;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>nginx.conf 中對應的 server 設定:<br/><br/></p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">server {
+    listen 80;
+    server_name your.domain.com;
+
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://localhost:11434/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</pre>
+<p>執行 ollama serve 或使用 ollama run 時，ollama 套件會在 http://localhost:11434 開啟一個 RESTful API 伺服器，讓你可以透過程式或前端介面與模型互動。</p>
+<p>因此執行 ollama run llama3.1:latest 之後，再伺服 nginx 的 index.html 後，就可以從 WWW 伺服器連接頁面上，與 llama 語言模型系統對話。</p>
+<p>若 ollama 所執行的模型支援 vision 功能，則可以進一步延伸 index.html，使用者可以上傳圖片與 AI 模型對話</p>
+<p>index_vision.html</p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;title&gt;Ollama Chat + Image/File Upload&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; }
+    textarea { width: 100%; height: 80px; }
+    .chatbox { white-space: pre-wrap; background: #f4f4f4; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
+    .file-label { margin-top: 0.5rem; display: block; font-weight: bold; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h2&gt;🧠 Chat with LLaMA + Upload Image/Text&lt;/h2&gt;
+  
+  &lt;div class="chatbox" id="chatlog"&gt;&lt;/div&gt;
+
+  &lt;textarea id="prompt" placeholder="Say something..."&gt;&lt;/textarea&gt;&lt;br&gt;
+  
+  &lt;label class="file-label"&gt;Upload image (.png/.jpg) or text (.txt/.md):&lt;/label&gt;
+  &lt;input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.txt,.md"&gt;&lt;br&gt;&lt;br&gt;
+  
+  &lt;button onclick="send()"&gt;Send&lt;/button&gt;
+
+  &lt;script&gt;
+    const chatlog = document.getElementById("chatlog");
+
+    async function send() {
+      const promptInput = document.getElementById("prompt").value.trim();
+      const fileInput = document.getElementById("fileInput");
+      if (!promptInput &amp;&amp; fileInput.files.length === 0) return;
+
+      let userMessage = promptInput || "[No prompt]";
+      let fullPrompt = promptInput;
+
+      // 檔案處理
+      if (fileInput.files.length &gt; 0) {
+        const file = fileInput.files[0];
+        const type = file.type;
+
+        if (type.startsWith("image/")) {
+          const base64 = await fileToBase64(file);
+          fullPrompt += `\n\n[以下為圖片 base64 編碼：]\n${base64}`;
+        } else if (type === "text/plain" || file.name.endsWith(".md")) {
+          const text = await file.text();
+          fullPrompt += `\n\n[以下為文件內容：]\n${text}`;
+        } else {
+          appendChat("❌ Unsupported file type.");
+          return;
+        }
+      }
+
+      appendChat("🧑‍💻 You:\n" + userMessage);
+      appendChat("🤖 LLaMA is thinking...");
+
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "llama3",
+          prompt: fullPrompt,
+          stream: false
+        })
+      });
+
+      const result = await res.json();
+      updateLastBotReply("🤖 LLaMA:\n" + result.response);
+    }
+
+    function appendChat(text) {
+      const div = document.createElement("div");
+      div.className = "chatbox";
+      div.textContent = text;
+      chatlog.appendChild(div);
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function updateLastBotReply(text) {
+      const boxes = document.getElementsByClassName("chatbox");
+      boxes[boxes.length - 1].textContent = text;
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) =&gt; {
+        const reader = new FileReader();
+        reader.onload = () =&gt; resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p></p><h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
 <p>Teams 線上教學:</p>
