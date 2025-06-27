@@ -65,7 +65,21 @@ pause
 <p><a href="https://ubuntu.com/#download-ubuntu">Ubuntu</a> 操作系統分為 Server 與 Desktop 版本，一般機械相關的課程所採用的套件大多僅支援 Windows 版，因此 Ubuntu 或其他 Linux 相關操作系統僅是用來建立輔助用的伺服器，或者用於測試所開發的套件是否能夠在 Ubuntu 環境中執行。</p>
 <p>在 Windows 11 操作系統中，利用 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 配置一台 Ubuntu 虛擬機，應該是最方便的使用方式，儘管 <a href="https://www.virtualbox.org/wiki/Download_Old_Builds_6_1">Virtualbox</a> 虛擬機僅能模擬大約 75% 的硬體效能，但只要 4GB Ram 與約 5GB 的硬碟空間就可以啟動，因此建議所使用的 Windows 筆電或桌機至少要有 32GB 的記憶體，以及 512 GB 以上的 SSD 硬碟空間.</p>
 <p>三、假如使用 Mac</p>
-<p><a href="https://en.wikipedia.org/wiki/MacOS">MacOS</a> 採用 BSD 系列操作系統，屬於 UNiX，因此就機械相關課程的使用情況，與 Ubuntu 或其他 Linux 操作系統相似，大部分情況必須設法配置 Windows 11 虛擬機，或遠端登入到其他 Windows 11 機器，才能執行一些僅支援 Windows 的套件。  </p><h1>Topics</h1>
+<p><a href="https://en.wikipedia.org/wiki/MacOS">MacOS</a> 採用 BSD 系列操作系統，屬於 UNiX，因此就機械相關課程的使用情況，與 Ubuntu 或其他 Linux 操作系統相似，大部分情況必須設法配置 Windows 11 虛擬機，或遠端登入到其他 Windows 11 機器，才能執行一些僅支援 Windows 的套件。  </p><h2>llama</h2>
+<p>在自己的電腦上執行 <a href="https://en.wikipedia.org/wiki/Llama_(language_model)">llama</a>，若電腦有 GPU 可以加快運算，若只有 CPU 也可以執行。</p>
+<p>連線至 <a href="https://ollama.com">https://ollama.com</a>，下載安裝後，直接執行 llama3.2 (約 2GB):</p>
+<p>安裝完成後，ollama 位於: C:\Users\使用者帳號\AppData\Local\Programs\Ollama，可以利用命令列視窗或 Powershell 命令列視窗，更換目錄至 Ollama 之後，以 ollama list 列出已經取下的模型，例如: 系統已經取下 llama3.2，則可利用 ollama run llama3.2 執行。</p>
+<p>各種開放模擬列表: <a href="https://ollama.com/search">https://ollama.com/search</a>，若要取下 deepseek-r1 模型 (約 5.2GB)：</p>
+<p style="padding-left: 30px;">cd <span>C:\Users\使用者帳號\AppData\Local\Programs\Ollama</span></p>
+<p style="padding-left: 30px;">ollama pull deepseek-r1</p>
+<p style="padding-left: 30px;">ollama run deepseek-r1</p>
+<p style="padding-left: 30px;">若要中斷對談，使用 ctrl + c，若要跳出 ollama 的語言模型執行，使用 ctrl + d</p>
+<p>以下畫面在電腦輔助設計室上一代電腦，配置 Intel i7-6700 CPU @ 3.40GHz，32GB 記憶體，安裝 NVIDIA GeForce GTX 950 顯卡電腦上執行:</p>
+<p><img caption="false" height="170" src="/images/ollama_on_win10.png" width="200"/></p>
+<p><b>Llama</b><span> </span>(<b>Large Language Model Meta AI</b>, formerly stylized as<span> </span><b>LLaMA</b>) is a family of<span> </span><a href="https://en.wikipedia.org/wiki/Large_language_model" title="Large language model">large language models</a><span> </span>(LLMs) released by<span> </span><a href="https://en.wikipedia.org/wiki/Meta_AI" title="Meta AI">Meta AI</a><span> </span>starting in February 2023.<span> </span>The latest version is Llama 4, released in April 2025.</p>
+<p>Llama models come in different sizes, ranging from 1 billion to 2 trillion parameters. Initially only a<span> </span><a href="https://en.wikipedia.org/wiki/Foundation_model" title="Foundation model">foundation model</a>,<span> </span>starting with Llama 2, Meta AI released instruction<span> </span><a href="https://en.wikipedia.org/wiki/Fine-tuning_(deep_learning)" title="Fine-tuning (deep learning)">fine-tuned</a><span> </span>versions alongside foundation models.</p>
+<p>Model weights for the first version of Llama were only available to researchers on a case-by-case basis, under a non-commercial license.<span> </span>Unauthorized copies of the first model were shared via<span> </span><a href="https://en.wikipedia.org/wiki/BitTorrent" title="BitTorrent">BitTorrent</a>.<span> </span>Subsequent versions of Llama were made accessible outside academia and released under licenses that permitted some commercial use.</p>
+<p>Alongside the release of Llama 3,<span> </span><a href="https://en.wikipedia.org/wiki/Meta_Platforms" title="Meta Platforms">Meta</a><span> </span>added<span> </span><a href="https://en.wikipedia.org/wiki/Virtual_assistant" title="Virtual assistant">virtual assistant</a><span> </span>features to<span> </span><a href="https://en.wikipedia.org/wiki/Facebook" title="Facebook">Facebook</a><span> </span>and<span> </span><a href="https://en.wikipedia.org/wiki/WhatsApp" title="WhatsApp">WhatsApp</a><span> </span>in select regions, and a standalone website. Both services use a Llama 3 model.<sup class="reference" id="cite_ref-9"><a href="https://en.wikipedia.org/wiki/Llama_(language_model)#cite_note-9"><span class="cite-bracket">[</span>9<span class="cite-bracket">]</span></a></sup></p><h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
 <p>Teams 線上教學:</p>
@@ -150,7 +164,7 @@ pause
 <li>建議每週規劃自主練習與小專案，培養實作與解決問題能力</li>
 <li>記錄學習歷程，定期回顧與修正</li>
 </ul><h2>Git</h2>
-<p>假如您還沒有 Github 帳號，請馬上建立一個。</p>
+<p>假如您還沒有 Github 帳號，請馬上<a href="https://github.com/signup">建立一個</a>。</p>
 <p><span style="background-color: #ffff00;">為何計算機程式課程要使用 Git 與 Github?</span></p>
 <p>計算機程式課程（軟體開發）使用 Git 與 GitHub 主要有以下幾個原因：</p>
 <ol>
