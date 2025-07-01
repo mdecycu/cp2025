@@ -266,7 +266,7 @@ def main():
     #strategy = 3      # 選用的演化策略編號（這裡使用 DE/rand-to-best/1/exp）
     #F = 0.85          # 差分權重：控制變異的程度（通常介於 0.5 ~ 1.0）
     #CR = 1.0          # 交叉率（crossover rate）：基因交換的機率（0 ~ 1）
-    strategy = 7      # 選用的演化策略編號（這裡使用 DE/rand-to-best/1/exp）
+    strategy = 3      # 選用的演化策略編號（這裡使用 DE/rand-to-best/1/exp）
     F = 1.2          # 差分權重：控制變異的程度（通常介於 0.5 ~ 1.0）
     CR = 0.9        # 交叉率（crossover rate）：基因交換的機率（0 ~ 1）
     
