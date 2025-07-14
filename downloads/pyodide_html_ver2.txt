@@ -1,0 +1,278 @@
+<h1>Pyodide</h1>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+<p><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="numpy_ode">numpy_ode</button></p>
+<!-- Ace Editor Scripts -->
+<script src="/static/ace/FileSaver.min.js"></script>
+<script src="/static/ace/filereader.js"></script>
+<script src="/static/ace/ace.js"></script>
+<script src="/static/ace/ext-language_tools.js"></script>
+<script src="/static/ace/mode-python.js"></script>
+<script src="/static/ace/snippets/python.js"></script>
+<!-- Editor 1 -->
+<div id="kw_editor1" style="width: 600px; height: 300px;"></div>
+<p><button id="kw_run1">Run</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console1" style="width: 600px; height: 120px;"></textarea></p>
+<div id="pyodide_div1"></div>
+<div id="mpl_output1"></div>
+<div id="brython_div1"></div>
+<hr>
+<p>從 1 累加到 100 part2:</p>
+<p><button id="add1to100part2">1 add to 100</button></p>
+<!-- Editor 2 -->
+<div id="kw_editor2" style="width: 600px; height: 300px;"></div>
+<p><button id="kw_run2">Run</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console2" style="width: 600px; height: 120px;"></textarea></p>
+<div id="pyodide_div2"></div>
+<div id="mpl_output2"></div>
+<div id="brython_div2"></div>
+<script>// <![CDATA[
+function getUrlParam(key) {
+  return new URLSearchParams(window.location.search).get(key);
+}
+function updateUrlParam(key, value) {
+  const url = new URL(window.location);
+  url.searchParams.set(key, value);
+  window.history.replaceState({}, "", url);
+}
+
+let pyodide, editor1, editor2;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  editor1 = ace.edit("kw_editor1");
+  editor1.setTheme("ace/theme/chrome");
+  editor1.session.setMode("ace/mode/python");
+
+  editor2 = ace.edit("kw_editor2");
+  editor2.setTheme("ace/theme/chrome");
+  editor2.session.setMode("ace/mode/python");
+
+  pyodide = await loadPyodide();
+  await pyodide.loadPackage(["numpy", "scipy", "matplotlib"]);
+
+  const GIST_ADD1TO100 =
+    "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/" +
+    "c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
+  const NUMPY_ODE = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/"
++
+    "a021d8cf59f85e1aacf5708a93ee3b238056d2c8/pyodide_ode_ex1.py"
+
+  const PYODIDE_ROBOT_ANIMATION = `import js
+import asyncio
+
+CELL_SIZE = 40
+WIDTH, HEIGHT = 10, 10
+
+container = js.document.getElementById("brython_div1")
+container.style.position = "relative"
+container.style.width = f"{WIDTH * CELL_SIZE}px"
+container.style.height = f"{HEIGHT * CELL_SIZE}px"
+
+def create_canvas_layer(z):
+    c = js.document.createElement("canvas")
+    c.width = WIDTH * CELL_SIZE
+    c.height = HEIGHT * CELL_SIZE
+    c.style.position = "absolute"
+    c.style.top = "0px"
+    c.style.left = "0px"
+    c.style.zIndex = str(z)
+    container.appendChild(c)
+    return c
+
+grid_canvas = create_canvas_layer(0)
+walls_canvas = create_canvas_layer(1)
+objects_canvas = create_canvas_layer(2)
+robots_canvas = create_canvas_layer(3)
+
+ctx_grid = grid_canvas.getContext("2d")
+ctx_objects = objects_canvas.getContext("2d")
+ctx_robots = robots_canvas.getContext("2d")
+
+def draw_grid():
+    ctx_grid.strokeStyle = "#cccccc"
+    for i in range(WIDTH + 1):
+        ctx_grid.beginPath()
+        ctx_grid.moveTo(i * CELL_SIZE, 0)
+        ctx_grid.lineTo(i * CELL_SIZE, HEIGHT * CELL_SIZE)
+        ctx_grid.stroke()
+    for j in range(HEIGHT + 1):
+        ctx_grid.beginPath()
+        ctx_grid.moveTo(0, j * CELL_SIZE)
+        ctx_grid.lineTo(WIDTH * CELL_SIZE, j * CELL_SIZE)
+        ctx_grid.stroke()
+
+draw_grid()
+
+def clear_layer(ctx):
+    ctx.clearRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE)
+
+def draw_robot(ctx, x, y, facing="E"):
+    size = CELL_SIZE - 8
+    px = x * CELL_SIZE + 4
+    py = y * CELL_SIZE + 4
+    ctx.fillStyle = "blue"
+    ctx.fillRect(px, py, size, size)
+    ctx.fillStyle = "white"
+    ctx.beginPath()
+    if facing == "E":
+        ctx.moveTo(px + size*0.3, py + size*0.2)
+        ctx.lineTo(px + size*0.7, py + size/2)
+        ctx.lineTo(px + size*0.3, py + size*0.8)
+    elif facing == "W":
+        ctx.moveTo(px + size*0.7, py + size*0.2)
+        ctx.lineTo(px + size*0.3, py + size/2)
+        ctx.lineTo(px + size*0.7, py + size*0.8)
+    elif facing == "N":
+        ctx.moveTo(px + size*0.2, py + size*0.7)
+        ctx.lineTo(px + size/2, py + size*0.3)
+        ctx.lineTo(px + size*0.8, py + size*0.7)
+    elif facing == "S":
+        ctx.moveTo(px + size*0.2, py + size*0.3)
+        ctx.lineTo(px + size/2, py + size*0.7)
+        ctx.lineTo(px + size*0.8, py + size*0.3)
+    ctx.closePath()
+    ctx.fill()
+
+class AnimatedRobot:
+    def __init__(self):
+        self.x = 0
+        self.y = 0
+        self.facing = "E"
+        self.ctx = ctx_robots
+        self.trace_ctx = ctx_objects
+        self.queue = []
+
+    def draw_robot(self):
+        clear_layer(self.ctx)
+        draw_robot(self.ctx, self.x, self.y, self.facing)
+
+    def draw_trace(self, fx, fy, tx, ty):
+        ctx = self.trace_ctx
+        ctx.strokeStyle = "#d33"
+        ctx.lineWidth = 2
+        ctx.beginPath()
+        ctx.moveTo(fx * CELL_SIZE + CELL_SIZE/2, fy * CELL_SIZE + CELL_SIZE/2)
+        ctx.lineTo(tx * CELL_SIZE + CELL_SIZE/2, ty * CELL_SIZE + CELL_SIZE/2)
+        ctx.stroke()
+
+    async def move(self, steps):
+        while steps > 0:
+            fx, fy = self.x, self.y
+            dx, dy = 0, 0
+            if self.facing == "E": dx = 1
+            elif self.facing == "W": dx = -1
+            elif self.facing == "N": dy = -1
+            elif self.facing == "S": dy = 1
+            nx, ny = self.x + dx, self.y + dy
+            if 0 <= nx < WIDTH and 0 <= ny < HEIGHT:
+                self.x, self.y = nx, ny
+                self.draw_trace(fx, fy, nx, ny)
+                self.draw_robot()
+                steps -= 1
+                await asyncio.sleep(0.3)
+            else:
+                print("撞牆，停止移動")
+                break
+
+    async def turn_left(self):
+        dirs = ["E","N","W","S"]
+        i = dirs.index(self.facing)
+        self.facing = dirs[(i+1) % 4]
+        self.draw_robot()
+        await asyncio.sleep(0.3)
+
+robot = AnimatedRobot()
+robot.draw_robot()
+
+async def run_animation():
+    await robot.move(9)
+    await robot.turn_left()
+    await robot.move(9)
+    await robot.turn_left()
+    await robot.move(9)
+    await robot.turn_left()
+    await robot.move(9)
+    print("動畫結束")
+
+async def main():
+    await run_animation()
+
+async def run_main():
+    import asyncio
+    task = asyncio.create_task(main())
+    await task
+`;
+
+  const src = getUrlParam("src");
+  if (src === "pyodide_robot_animation") {
+    editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);
+    updateUrlParam("src", "pyodide_robot_animation");
+  } else {
+    const code = await fetchCode(src || GIST_ADD1TO100);
+    editor1.setValue(code, -1);
+  }
+
+  editor2.setValue("", -1);
+
+  document.getElementById("add1to100").onclick = async () => {
+    const code = await fetchCode(GIST_ADD1TO100);
+    editor1.setValue(code, -1);
+    updateUrlParam("src", GIST_ADD1TO100);
+  };
+  document.getElementById("numpy_ode").onclick = async () => {
+    const code = await fetchCode(NUMPY_ODE);
+    editor1.setValue(code, -1);
+    updateUrlParam("src", NUMPY_ODE);
+  };
+  document.getElementById("robot1").onclick = () => {
+    editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);
+    updateUrlParam("src", "pyodide_robot_animation");
+  };
+  document.getElementById("add1to100part2").onclick = async () => {
+    const code = await fetchCode(GIST_ADD1TO100);
+    editor2.setValue(code, -1);
+  };
+
+  document.getElementById("kw_run1").onclick = () => runPyodide(editor1, "kw_console1", "brython_div1");
+  document.getElementById("kw_run2").onclick = () => runPyodide(editor2, "kw_console2", "brython_div2");
+  document.getElementById("kw_clear_console1").onclick = () => clearOutput("kw_console1", "brython_div1");
+  document.getElementById("kw_clear_console2").onclick = () => clearOutput("kw_console2", "brython_div2");
+});
+
+async function fetchCode(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`載入失敗 ${r.status}`);
+    return await r.text();
+  } catch (e) {
+    return `# 錯誤：${e.message}`;
+  }
+}
+
+function clearOutput(consoleId, divId) {
+  document.getElementById(consoleId).value = "";
+  document.getElementById(divId).innerHTML = "";
+}
+
+async function runPyodide(editor, consoleId, divId) {
+  document.getElementById(consoleId).value = "";
+  document.getElementById(divId).innerHTML = "";
+
+  await pyodide.runPythonAsync(`
+import sys
+class JsWriter:
+  def write(self, s):
+    if s.strip():
+      from js import document
+      ta = document.getElementById("${consoleId}")
+      ta.value += s
+sys.stdout = JsWriter()
+sys.stderr = JsWriter()
+  `);
+
+  try {
+    await pyodide.runPythonAsync(editor.getValue());
+  } catch (e) {
+    document.getElementById(consoleId).value += "\n錯誤：" + e.toString();
+  }
+}
+// ]]></script>

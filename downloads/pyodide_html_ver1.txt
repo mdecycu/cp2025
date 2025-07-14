@@ -1,0 +1,180 @@
+<h1>Pyodide</h1>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+<p><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button></p>
+<!-- Ace Editor Scripts -->
+<script src="/static/ace/FileSaver.min.js"></script>
+<script src="/static/ace/filereader.js"></script>
+<script src="/static/ace/ace.js"></script>
+<script src="/static/ace/ext-language_tools.js"></script>
+<script src="/static/ace/mode-python.js"></script>
+<script src="/static/ace/snippets/python.js"></script>
+<!-- Editor 1 -->
+<div id="kw_editor1" style="width: 600px; height: 300px;"></div>
+<p><button id="kw_run1">Run</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console1" style="width: 600px; height: 120px;"></textarea></p>
+<div id="pyodide_div1"></div>
+<div id="mpl_output1"></div>
+<div id="brython_div1"></div>
+<hr>
+<p>從 1 累加到 100 part2:</p>
+<p><button id="add1to100part2">1 add to 100</button></p>
+<!-- Editor 2 -->
+<div id="kw_editor2" style="width: 600px; height: 300px;"></div>
+<p><button id="kw_run2">Run</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console2" style="width: 600px; height: 120px;"></textarea></p>
+<div id="pyodide_div2"></div>
+<div id="mpl_output2"></div>
+<div id="brython_div2"></div>
+<script>// <![CDATA[
+// URL 參數取得
+function getUrlParam(key) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(key);
+}
+
+// 更新 URL 參數但不刷新頁面
+function updateUrlParam(key, value) {
+  const url = new URL(window.location);
+  url.searchParams.set(key, value);
+  window.history.replaceState({}, "", url);
+}
+
+let pyodide, pyodideReadyPromise;
+let editor1, editor2;
+
+// 預設 Gist raw 連結
+const GIST_ADD1TO100 = "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
+const GIST_ROBOT1 = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py";
+const GIST_ADD1TO100_PART2 = GIST_ADD1TO100;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  editor1 = ace.edit("kw_editor1");
+  editor1.setTheme("ace/theme/chrome");
+  editor1.session.setMode("ace/mode/python");
+
+  editor2 = ace.edit("kw_editor2");
+  editor2.setTheme("ace/theme/chrome");
+  editor2.session.setMode("ace/mode/python");
+
+  pyodideReadyPromise = loadPyodide();
+  pyodide = await pyodideReadyPromise;
+  await pyodide.loadPackage(["numpy", "scipy", "matplotlib"]);
+
+  // 如果網址有 src 參數，就先載入 editor1
+  const urlSrc = getUrlParam("src");
+  if (urlSrc) {
+    const code = await fetchCode(urlSrc);
+    editor1.setValue(code, -1);
+  } else {
+    // 沒有就載入預設 Add1To100 程式碼
+    const code = await fetchCode(GIST_ADD1TO100);
+    editor1.setValue(code, -1);
+  }
+
+  // 按鈕點擊事件：載入並更新 editor1，且更新網址參數
+  document.getElementById("add1to100").onclick = async () => {
+    const code = await fetchCode(GIST_ADD1TO100);
+    editor1.setValue(code, -1);
+    updateUrlParam("src", GIST_ADD1TO100);
+  };
+  document.getElementById("robot1").onclick = async () => {
+    const code = await fetchCode(GIST_ROBOT1);
+    editor1.setValue(code, -1);
+    updateUrlParam("src", GIST_ROBOT1);
+  };
+  document.getElementById("add1to100part2").onclick = async () => {
+    const code = await fetchCode(GIST_ADD1TO100_PART2);
+    editor2.setValue(code, -1);
+    // Part2 不更新 URL 參數，避免混淆
+  };
+
+  // Run 按鈕：執行並顯示結果
+  document.getElementById("kw_run1").onclick = async () => {
+    await runPyodide(editor1, "kw_console1", "mpl_output1", "brython_div1");
+  };
+  document.getElementById("kw_run2").onclick = async () => {
+    await runPyodide(editor2, "kw_console2", "mpl_output2", "brython_div2");
+  };
+
+  // Clear console
+  document.getElementById("kw_clear_console1").onclick = () => {
+    document.getElementById("kw_console1").value = "";
+    document.getElementById("mpl_output1").innerHTML = "";
+    document.getElementById("brython_div1").innerHTML = "";
+  };
+  document.getElementById("kw_clear_console2").onclick = () => {
+    document.getElementById("kw_console2").value = "";
+    document.getElementById("mpl_output2").innerHTML = "";
+    document.getElementById("brython_div2").innerHTML = "";
+  };
+});
+
+// 從 URL 下載程式碼
+async function fetchCode(url) {
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(`載入失敗: ${resp.status}`);
+    return await resp.text();
+  } catch (e) {
+    return `# 錯誤: ${e.message}`;
+  }
+}
+
+// 執行 pyodide 程式碼並處理輸出與 matplotlib 圖片
+async function runPyodide(editor, consoleId, mplOutputId, brythonDivId) {
+  const pyodide = await pyodideReadyPromise;
+  const code = editor.getValue();
+  const consoleEl = document.getElementById(consoleId);
+  const mplOutputEl = document.getElementById(mplOutputId);
+  const brythonDivEl = document.getElementById(brythonDivId);
+
+  consoleEl.value = "";
+  mplOutputEl.innerHTML = "";
+  brythonDivEl.innerHTML = "";
+
+  // 重新設定輸出、導入套件，覆寫 plt.show 以輸出 base64 png
+  const setupCode = `
+import sys, io
+sys.stdout = io.StringIO()
+sys.stderr = io.StringIO()
+
+import numpy as np
+import scipy
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
+
+def _custom_show():
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    encoded = base64.b64encode(buf.read()).decode('utf-8')
+    print("###PYODIDE_IMAGE_START###" + encoded + "###PYODIDE_IMAGE_END###")
+    buf.close()
+
+plt.show = _custom_show
+`;
+
+  try {
+    await pyodide.runPythonAsync(setupCode + "\n" + code);
+
+    let stdout = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+    let stderr = await pyodide.runPythonAsync("sys.stderr.getvalue()");
+    let output = stdout + stderr;
+
+    // 抓 matplotlib 圖片並顯示
+    const imgMatch = output.match(/###PYODIDE_IMAGE_START###(.*?)###PYODIDE_IMAGE_END###/s);
+    if (imgMatch) {
+      const img = document.createElement("img");
+      img.src = "data:image/png;base64," + imgMatch[1];
+      mplOutputEl.appendChild(img);
+      // 移除圖片標記，避免 console 重複顯示亂碼
+      output = output.replace(/###PYODIDE_IMAGE_START###.*?###PYODIDE_IMAGE_END###/s, '');
+    }
+
+    consoleEl.value = output;
+  } catch (err) {
+    consoleEl.value = err.toString();
+  }
+}
+// ]]></script>
