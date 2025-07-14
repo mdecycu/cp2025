@@ -2624,7 +2624,7 @@ draw_robot()</pre>
 <p>也可以採網頁前端使用 Brython，後端採 Python 執行運算後將資料傳回網頁: <a href="/downloads/brython_w_flask.7z">brython_w_flask.7z</a></p>
 <h1>Pyodide</h1>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
-<p><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button></p>
+<p><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="numpy_ode">numpy_ode</button></p>
 <!-- Ace Editor Scripts -->
 <script src="/static/ace/FileSaver.min.js"></script>
 <script src="/static/ace/filereader.js"></script>
@@ -2676,6 +2676,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const GIST_ADD1TO100 =
     "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/" +
     "c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
+  const NUMPY_ODE = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/"
++
+    "a021d8cf59f85e1aacf5708a93ee3b238056d2c8/pyodide_ode_ex1.py"
 
   const PYODIDE_ROBOT_ANIMATION = `import js
 import asyncio
@@ -2838,6 +2841,11 @@ async def run_main():
     const code = await fetchCode(GIST_ADD1TO100);
     editor1.setValue(code, -1);
     updateUrlParam("src", GIST_ADD1TO100);
+  };
+  document.getElementById("numpy_ode").onclick = async () => {
+    const code = await fetchCode(NUMPY_ODE);
+    editor1.setValue(code, -1);
+    updateUrlParam("src", NUMPY_ODE);
   };
   document.getElementById("robot1").onclick = () => {
     editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);

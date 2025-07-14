@@ -200,13 +200,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 +
     "a021d8cf59f85e1aacf5708a93ee3b238056d2c8/pyodide_ode_ex1.py"
 
-  const PYODIDE_ROBOT_ANIMATION = `import js
-import asyncio
+  const PYODIDE_ROBOT_ANIMATION = `import js, asyncio
 
 CELL_SIZE = 40
+WALL_THICKNESS = 6
+IMG_PATH = "https://mde.tw/cp2025/reeborg/src/images/"
 WIDTH, HEIGHT = 10, 10
 
 container = js.document.getElementById("brython_div1")
+container.innerHTML = ""
 container.style.position = "relative"
 container.style.width = f"{WIDTH * CELL_SIZE}px"
 container.style.height = f"{HEIGHT * CELL_SIZE}px"
@@ -222,15 +224,50 @@ def create_canvas_layer(z):
     container.appendChild(c)
     return c
 
-grid_canvas = create_canvas_layer(0)
-walls_canvas = create_canvas_layer(1)
-objects_canvas = create_canvas_layer(2)
-robots_canvas = create_canvas_layer(3)
+layers = {
+    "grid": create_canvas_layer(0),
+    "walls": create_canvas_layer(1),
+    "objects": create_canvas_layer(2),
+    "robots": create_canvas_layer(3),
+}
+ctx_grid = layers["grid"].getContext("2d")
+ctx_walls = layers["walls"].getContext("2d")
+ctx_objs = layers["objects"].getContext("2d")
+ctx_robots = layers["robots"].getContext("2d")
 
-ctx_grid = grid_canvas.getContext("2d")
-ctx_objects = objects_canvas.getContext("2d")
-ctx_robots = robots_canvas.getContext("2d")
+# --- Global dictionary to cache loaded robot images ---
+# This will store the loaded Image objects for reuse.
+robot_image_cache = {}
 
+async def preload_robot_images():
+    """Preloads all robot images into the cache."""
+    directions = ["e", "n", "w", "s"]
+    promises = []
+
+    for direction in directions:
+        img = js.document.createElement("img")
+        img.src = IMG_PATH + f"blue_robot_{direction}.png"
+        
+        # Create a Promise that resolves when the image is loaded
+        # This uses js.Promise.new to create a JavaScript Promise,
+        # which Pyodide's asyncio can await via js.await_promise.
+        load_promise = js.Promise.new(lambda resolve, reject: 
+            img.addEventListener("load", lambda evt: resolve(img)),
+            img.addEventListener("error", lambda evt: reject(js.Error.new(f"Failed to load image: {img.src}")))
+        )
+        promises.append(load_promise)
+        # Store the img object in the cache *before* awaiting, so it persists
+        robot_image_cache[direction] = img 
+
+    try:
+        # Await all image loading promises
+        await js.await_promise(js.Promise.all(promises))
+        print("✅ All robot images preloaded successfully!")
+    except Exception as e:
+        print(f"🚨 Error preloading robot images: {e}")
+        # If preloading fails, the robot won't appear, but the grid/walls/trace should still work.
+
+# --- Original draw_grid and draw_walls (remain unchanged) ---
 def draw_grid():
     ctx_grid.strokeStyle = "#cccccc"
     for i in range(WIDTH + 1):
@@ -244,106 +281,100 @@ def draw_grid():
         ctx_grid.lineTo(WIDTH * CELL_SIZE, j * CELL_SIZE)
         ctx_grid.stroke()
 
+def draw_walls():
+    def draw_img(ctx, src, x, y, w, h, offx=0, offy=0):
+        img = js.document.createElement("img")
+        img.src = src
+        def onload(evt):
+            px = x * CELL_SIZE + offx
+            py = (HEIGHT - 1 - y) * CELL_SIZE + offy
+            ctx.drawImage(img, px, py, w, h)
+        img.addEventListener("load", onload)
+    for x in range(WIDTH):
+        draw_img(ctx_walls, IMG_PATH+"north.png", x, HEIGHT-1, CELL_SIZE, WALL_THICKNESS)
+        draw_img(ctx_walls, IMG_PATH+"north.png", x, 0, CELL_SIZE, WALL_THICKNESS, offy=CELL_SIZE - WALL_THICKNESS)
+    for y in range(HEIGHT):
+        draw_img(ctx_walls, IMG_PATH+"east.png", 0, y, WALL_THICKNESS, CELL_SIZE)
+        draw_img(ctx_walls, IMG_PATH+"east.png", WIDTH-1, y, WALL_THICKNESS, CELL_SIZE, offx=CELL_SIZE - WALL_THICKNESS)
+
+# Call these sync functions early, as they were working previously
 draw_grid()
-
-def clear_layer(ctx):
-    ctx.clearRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE)
-
-def draw_robot(ctx, x, y, facing="E"):
-    size = CELL_SIZE - 8
-    px = x * CELL_SIZE + 4
-    py = y * CELL_SIZE + 4
-    ctx.fillStyle = "blue"
-    ctx.fillRect(px, py, size, size)
-    ctx.fillStyle = "white"
-    ctx.beginPath()
-    if facing == "E":
-        ctx.moveTo(px + size*0.3, py + size*0.2)
-        ctx.lineTo(px + size*0.7, py + size/2)
-        ctx.lineTo(px + size*0.3, py + size*0.8)
-    elif facing == "W":
-        ctx.moveTo(px + size*0.7, py + size*0.2)
-        ctx.lineTo(px + size*0.3, py + size/2)
-        ctx.lineTo(px + size*0.7, py + size*0.8)
-    elif facing == "N":
-        ctx.moveTo(px + size*0.2, py + size*0.7)
-        ctx.lineTo(px + size/2, py + size*0.3)
-        ctx.lineTo(px + size*0.8, py + size*0.7)
-    elif facing == "S":
-        ctx.moveTo(px + size*0.2, py + size*0.3)
-        ctx.lineTo(px + size/2, py + size*0.7)
-        ctx.lineTo(px + size*0.8, py + size*0.3)
-    ctx.closePath()
-    ctx.fill()
+draw_walls()
 
 class AnimatedRobot:
-    def __init__(self):
-        self.x = 0
-        self.y = 0
+    def __init__(self, x, y):
+        self.x = x - 1
+        self.y = y - 1
         self.facing = "E"
-        self.ctx = ctx_robots
-        self.trace_ctx = ctx_objects
-        self.queue = []
+        self.order = ["E", "N", "W", "S"]
+        self.draw_robot() # Initial draw
 
     def draw_robot(self):
-        clear_layer(self.ctx)
-        draw_robot(self.ctx, self.x, self.y, self.facing)
+        ctx_robots.clearRect(0, 0, WIDTH * CELL_SIZE, HEIGHT * CELL_SIZE)
+        
+        # Get the correct preloaded image from the cache
+        robot_img = robot_image_cache.get(self.facing.lower())
+        
+        if robot_img and robot_img.complete: # Ensure it's in cache and fully loaded
+            px = self.x * CELL_SIZE
+            py = (HEIGHT - 1 - self.y) * CELL_SIZE
+            ctx_robots.drawImage(robot_img, px, py, CELL_SIZE, CELL_SIZE)
+        else:
+            # This should ideally not happen if preload_robot_images succeeds
+            print(f"⚠️ Robot image for direction '{self.facing}' not yet loaded or found in cache.")
 
     def draw_trace(self, fx, fy, tx, ty):
-        ctx = self.trace_ctx
-        ctx.strokeStyle = "#d33"
-        ctx.lineWidth = 2
-        ctx.beginPath()
-        ctx.moveTo(fx * CELL_SIZE + CELL_SIZE/2, fy * CELL_SIZE + CELL_SIZE/2)
-        ctx.lineTo(tx * CELL_SIZE + CELL_SIZE/2, ty * CELL_SIZE + CELL_SIZE/2)
-        ctx.stroke()
+        ctx_objs.strokeStyle = "#d33"
+        ctx_objs.lineWidth = 2
+        ctx_objs.beginPath()
+        ctx_objs.moveTo(fx*CELL_SIZE+CELL_SIZE/2, (HEIGHT-1-fy)*CELL_SIZE+CELL_SIZE/2)
+        ctx_objs.lineTo(tx*CELL_SIZE+CELL_SIZE/2, (HEIGHT-1-ty)*CELL_SIZE+CELL_SIZE/2)
+        ctx_objs.stroke()
 
     async def move(self, steps):
-        while steps > 0:
+        for _ in range(steps):
             fx, fy = self.x, self.y
-            dx, dy = 0, 0
-            if self.facing == "E": dx = 1
-            elif self.facing == "W": dx = -1
-            elif self.facing == "N": dy = -1
-            elif self.facing == "S": dy = 1
+            if self.facing == "E": dx, dy = 1, 0
+            elif self.facing == "W": dx, dy = -1, 0
+            elif self.facing == "N": dx, dy = 0, 1
+            else: dx, dy = 0, -1
             nx, ny = self.x + dx, self.y + dy
             if 0 <= nx < WIDTH and 0 <= ny < HEIGHT:
                 self.x, self.y = nx, ny
                 self.draw_trace(fx, fy, nx, ny)
-                self.draw_robot()
-                steps -= 1
-                await asyncio.sleep(0.3)
+                self.draw_robot() # This is now a synchronous call
+                await asyncio.sleep(0.2)
             else:
-                print("撞牆，停止移動")
+                print("🚨 撞牆，停止")
                 break
 
     async def turn_left(self):
-        dirs = ["E","N","W","S"]
-        i = dirs.index(self.facing)
-        self.facing = dirs[(i+1) % 4]
-        self.draw_robot()
-        await asyncio.sleep(0.3)
+        idx = self.order.index(self.facing)
+        self.facing = self.order[(idx + 1) % 4]
+        self.draw_robot() # This is now a synchronous call
+        await asyncio.sleep(0.2)
 
-robot = AnimatedRobot()
-robot.draw_robot()
+# --- Main application startup sequence ---
+async def main_application_start():
+    # Step 1: Preload all robot images. This must complete before animation starts.
+    await preload_robot_images() 
+    
+    # Step 2: Initialize the robot AFTER images are (hopefully) loaded
+    global robot
+    robot = AnimatedRobot(1, 1)
 
-async def run_animation():
-    await robot.move(9)
-    await robot.turn_left()
-    await robot.move(9)
-    await robot.turn_left()
-    await robot.move(9)
-    await robot.turn_left()
-    await robot.move(9)
-    print("動畫結束")
+    # Step 3: Start the patrol animation
+    asyncio.create_task(patrol())
 
-async def main():
-    await run_animation()
+# --- Define patrol function ---
+async def patrol():
+    for _ in range(4):
+        await robot.move(9)
+        await robot.turn_left()
+    print("🚩 巡邏完成！")
 
-async def run_main():
-    import asyncio
-    task = asyncio.create_task(main())
-    await task
+# Kick off the main application startup
+asyncio.create_task(main_application_start())
 `;
 
   const src = getUrlParam("src");
