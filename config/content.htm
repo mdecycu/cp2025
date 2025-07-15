@@ -2637,7 +2637,7 @@ draw_robot()</pre>
 <p style="padding-left: 60px;"><a href="/downloads/de_volume_max.c">de_volume_max.c</a>, <a href="/downloads/de_volume_max.v">de_volume_max.v</a></p>
 <p>也可以採網頁前端使用 Brython，後端採 Python 執行運算後將資料傳回網頁: <a href="/downloads/brython_w_flask.7z">brython_w_flask.7z</a></p><h1>Pyodide</h1>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<p><button id="version">version</button><button id="hello_button">hello</button><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="numpy_ode">numpy_ode</button></p>
+<p><button id="version">version</button> <button id="hello_button">hello</button> <button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button> <button id="numpy_ode">numpy_ode</button></p>
 <!-- Ace Editor Scripts -->
 <script src="/static/ace/FileSaver.min.js"></script>
 <script src="/static/ace/filereader.js"></script>
@@ -2685,318 +2685,101 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   pyodide = await loadPyodide();
   await pyodide.loadPackage(["numpy", "scipy", "matplotlib", "micropip"]);
-  // 加入客製化程式 - start
+
+  // 定義 hello() 模組
   const code = `
-  # 定義一個模組內容
-  def hello():
-      print("Hello from custom module!")
-  `;
+def hello():
+    print("Hello from custom module!")
+`;
   pyodide.runPython(code);
-  // 加入客製化程式 - end
+
   const GIST_ADD1TO100 =
     "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/" +
     "c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
-  const NUMPY_ODE = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/"
-+
-    "98d582539545b3c9fbfa35dd3e605c506367618e/pyodide_ode_ex1.py"
-
-  const PYODIDE_ROBOT_ANIMATION = `import js, asyncio
-
-CELL_SIZE = 40
-WALL_THICKNESS = 6
-IMG_PATH = "https://mde.tw/cp2025/reeborg/src/images/"
-
-class World:
-    # Global cache for all images (robot and walls) to be populated by preloader
-    _image_cache = {}
-
-    def __init__(self, width, height):
-        self.width = width
-        self.height = height
-        self.layers = self._create_layers()
-        self._init_html()
-        # Drawing is moved to _setup_world_async to ensure images are preloaded
-        # self._draw_grid() 
-        # self._draw_walls() 
-
-    def _create_layers(self):
-        # Using js.document.createElement("canvas") directly for Pyodide
-        return {
-            "grid": js.document.createElement("canvas"),
-            "walls": js.document.createElement("canvas"),
-            "objects": js.document.createElement("canvas"),
-            "robots": js.document.createElement("canvas"),
-        }
-
-    def _init_html(self):
-        container = js.document.createElement("div")
-        container.style.position = "relative"
-        container.style.width = f"{self.width * CELL_SIZE}px"
-        container.style.height = f"{self.height * CELL_SIZE}px"
-
-        for z, canvas in enumerate(self.layers.values()):
-            canvas.width = self.width * CELL_SIZE
-            canvas.height = self.height * CELL_SIZE
-            canvas.style.position = "absolute"
-            canvas.style.top = "0px"
-            canvas.style.left = "0px"
-            canvas.style.zIndex = str(z)
-            container.appendChild(canvas)
-
-        # Clear existing content and append the new container
-        js.document.getElementById("brython_div1").innerHTML = ""
-        js.document.getElementById("brython_div1").appendChild(container)
-
-    def _draw_grid(self):
-        ctx = self.layers["grid"].getContext("2d")
-        ctx.strokeStyle = "#cccccc"
-        for i in range(self.width + 1):
-            ctx.beginPath()
-            ctx.moveTo(i * CELL_SIZE, 0)
-            ctx.lineTo(i * CELL_SIZE, self.height * CELL_SIZE)
-            ctx.stroke()
-        for j in range(self.height + 1):
-            ctx.beginPath()
-            ctx.moveTo(0, j * CELL_SIZE)
-            ctx.lineTo(self.width * CELL_SIZE, j * CELL_SIZE)
-            ctx.stroke()
-
-    # _draw_image is now simplified to use preloaded images
-    def _draw_image(self, ctx, img_key, x, y, w, h, offset_x=0, offset_y=0):
-        img = World._image_cache.get(img_key)
-        if img and img.complete:
-            px = x * CELL_SIZE + offset_x
-            py = (self.height - 1 - y) * CELL_SIZE + offset_y
-            ctx.drawImage(img, px, py, w, h)
-        else:
-            print(f"⚠️ Image '{img_key}' not found or not loaded in cache.")
-
-    def _draw_walls(self):
-        ctx = self.layers["walls"].getContext("2d")
-        for x in range(self.width):
-            # North wall: top edge (Reeborg's top wall is at y=height-1)
-            self._draw_image(ctx, "north", x, self.height - 1, CELL_SIZE, WALL_THICKNESS, offset_y=0)
-            # South wall: bottom edge (Reeborg's bottom wall is at y=0)
-            self._draw_image(ctx, "north", x, 0, CELL_SIZE, WALL_THICKNESS, offset_y=CELL_SIZE - WALL_THICKNESS)
-        for y in range(self.height):
-            # West wall: left edge (Reeborg's left wall is at x=0)
-            self._draw_image(ctx, "east", 0, y, WALL_THICKNESS, CELL_SIZE, offset_x=0)
-            # East wall: right edge (Reeborg's right wall is at x=width-1)
-            self._draw_image(ctx, "east", self.width - 1, y, WALL_THICKNESS, CELL_SIZE, offset_x=CELL_SIZE - WALL_THICKNESS)
-
-    # This method is not used in the Pyodide version directly for drawing the initial robot
-    # Instead, AnimatedRobot will draw itself using its _draw_robot method.
-    def robot(self, x, y):
-        # This function would just conceptually place the robot.
-        # The actual drawing is handled by AnimatedRobot.
-        pass
-
-    async def _preload_images(self):
-        """Preloads all necessary images (robot and walls)."""
-        image_files = {
-            "blue_robot_e": "blue_robot_e.png",
-            "blue_robot_n": "blue_robot_n.png",
-            "blue_robot_w": "blue_robot_w.png",
-            "blue_robot_s": "blue_robot_s.png",
-            "north": "north.png",
-            "east": "east.png",
-        }
-        
-        promises = []
-        
-        for key, filename in image_files.items():
-            img = js.document.createElement("img")
-            img.src = IMG_PATH + filename
-            
-            # Store the img object in the cache *before* awaiting, so it persists
-            World._image_cache[key] = img
-            
-            # Create a Promise for each image to ensure it loads
-            img_promise = js.Promise.new(lambda resolve, reject: 
-                img.addEventListener("load", lambda evt: resolve(img)),
-                img.addEventListener("error", lambda evt: reject(js.Error.new(f"Failed to load image: {img.src}")))
-            )
-            promises.append(img_promise)
-
-        try:
-            await js.await_promise(js.Promise.all(promises))
-            print("✅ All images preloaded successfully!")
-        except Exception as e:
-            # We catch this error, but the application will continue if images are partially loaded
-            # The 'await_promise' error might still appear here, but drawing should proceed
-            print(f"🚨 Error during image preloading: {e}")
-
-
-class AnimatedRobot:
-    def __init__(self, world, x, y):
-        self.world = world
-        self.x = x - 1
-        self.y = y - 1
-        self.facing = "E"
-        self.facing_order = ["E", "N", "W", "S"]
-        self.robot_ctx = world.layers["robots"].getContext("2d")
-        self.trace_ctx = world.layers["objects"].getContext("2d")
-        self._draw_robot() # Initial draw
-
-    def _robot_image_key(self):
-        return f"blue_robot_{self.facing.lower()}"
-
-    def _draw_robot(self):
-        self.robot_ctx.clearRect(0, 0, self.world.width * CELL_SIZE, self.world.height * CELL_SIZE)
-        # Use the _draw_image helper from World to draw from the global cache
-        self.world._draw_image(self.robot_ctx, self._robot_image_key(),
-                               self.x, self.y, CELL_SIZE, CELL_SIZE)
-
-    def _draw_trace(self, from_x, from_y, to_x, to_y):
-        ctx = self.trace_ctx
-        ctx.strokeStyle = "#d33"
-        ctx.lineWidth = 2
-        ctx.beginPath()
-        fx = from_x * CELL_SIZE + CELL_SIZE / 2
-        fy = (self.world.height - 1 - from_y) * CELL_SIZE + CELL_SIZE / 2
-        tx = to_x * CELL_SIZE + CELL_SIZE / 2
-        ty = (self.world.height - 1 - to_y) * CELL_SIZE + CELL_SIZE / 2
-        ctx.moveTo(fx, fy)
-        ctx.lineTo(tx, ty)
-        ctx.stroke()
-
-    async def move(self, steps):
-        for _ in range(steps):
-            from_x, from_y = self.x, self.y
-            dx, dy = 0, 0
-            if self.facing == "E":
-                dx = 1
-            elif self.facing == "W":
-                dx = -1
-            elif self.facing == "N":
-                dy = 1
-            elif self.facing == "S":
-                dy = -1
-            next_x = self.x + dx
-            next_y = self.y + dy
-            
-            # Boundary check
-            if 0 <= next_x < self.world.width and 0 <= next_y < self.world.height:
-                self.x, self.y = next_x, next_y
-                self._draw_trace(from_x, from_y, self.x, self.y)
-                self._draw_robot()
-                await asyncio.sleep(0.2) # Use asyncio.sleep for animation delay
-            else:
-                print("🚨 已經撞牆，停止移動！")
-                break
-
-    async def turn_left(self):
-        idx = self.facing_order.index(self.facing)
-        self.facing = self.facing_order[(idx + 1) % 4]
-        self._draw_robot()
-        await asyncio.sleep(0.3) # Use asyncio.sleep for animation delay
-
-# --- Main execution flow for Pyodide ---
-async def start_robot_patrol():
-    """Main function to setup world, preload assets, and start robot patrol."""
-    world = World(10, 10) # Create world instance
-    
-    # Preload images before drawing anything that depends on them
-    await world._preload_images()
-
-    # Now that images are preloaded, draw static elements
-    world._draw_grid()
-    world._draw_walls() # This now uses the preloaded images
-
-    # Initialize and start robot
-    robot_instance = AnimatedRobot(world, 1, 1)
-    
-    # Start the patrol sequence
-    await robot_instance.move(9)
-    await robot_instance.turn_left()
-    await robot_instance.move(9)
-    await robot_instance.turn_left()
-    await robot_instance.move(9)
-    await robot_instance.turn_left()
-    await robot_instance.move(9)
-    print("🚩 巡邏完成！")
-
-# Kick off the asynchronous main function
-asyncio.create_task(start_robot_patrol())
-`;
+  const NUMPY_ODE =
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
+    "98d582539545b3c9fbfa35dd3e605c506367618e/pyodide_ode_ex1.py";
+  const PYODIDE_ROBOT_ANIMATION =
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
+    "056281b57b1c06ccf76e51b4d3966bde5d2ba29e/pyodide_robot_ex1.py";
 
   const src = getUrlParam("src");
-  if (src === "pyodide_robot_animation") {
-    editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);
-    updateUrlParam("src", "pyodide_robot_animation");
+  if (src === PYODIDE_ROBOT_ANIMATION) {
+    const robotCode = await fetchCode(PYODIDE_ROBOT_ANIMATION);
+    editor1.setValue(robotCode, -1);
+    updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
+    runPyodide(editor1, "kw_console1", "brython_div1");
   } else {
-    const code = await fetchCode(src || GIST_ADD1TO100);
-    editor1.setValue(code, -1);
+    const initialCode = await fetchCode(src || GIST_ADD1TO100);
+    editor1.setValue(initialCode, -1);
     runPyodide(editor1, "kw_console1", "brython_div1");
   }
 
   editor2.setValue("", -1);
 
-  // for version button
   document.getElementById("version").onclick = () => {
-    const code = `import sys
+    const vcode = `
+import sys
 import matplotlib
 import numpy
 import scipy
-
 print("Python:", sys.version)
 print("matplotlib:", matplotlib.__version__)
 print("numpy:", numpy.__version__)
 print("scipy:", scipy.__version__)
 `;
-    editor1.setValue(code, -1);
+    editor1.setValue(vcode, -1);
     updateUrlParam("src", "inline_version");
     runPyodide(editor1, "kw_console1", "brython_div1");
-};
-  // for hello button
+  };
+
   document.getElementById("hello_button").onclick = () => {
-    const code = `hello()`;
-    editor1.setValue(code, -1);
+    editor1.setValue("hello()", -1);
     updateUrlParam("src", "inline_hello");
     runPyodide(editor1, "kw_console1", "brython_div1");
-};
+  };
 
-  // for add1to100 button
   document.getElementById("add1to100").onclick = async () => {
-    const code = await fetchCode(GIST_ADD1TO100);
-    editor1.setValue(code, -1);
+    const c = await fetchCode(GIST_ADD1TO100);
+    editor1.setValue(c, -1);
     updateUrlParam("src", GIST_ADD1TO100);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
-  // for numpy_ode button
+
   document.getElementById("numpy_ode").onclick = async () => {
-    const code = await fetchCode(NUMPY_ODE);
-    editor1.setValue(code, -1);
+    const c = await fetchCode(NUMPY_ODE);
+    editor1.setValue(c, -1);
     updateUrlParam("src", NUMPY_ODE);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
-  // for robot1 button
-  document.getElementById("robot1").onclick = () => {
-    editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);
-    updateUrlParam("src", "pyodide_robot_animation");
+
+  document.getElementById("robot1").onclick = async () => {
+    const rc = await fetchCode(PYODIDE_ROBOT_ANIMATION);
+    editor1.setValue(rc, -1);
+    updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
-  // for add1to100part2 button
+
   document.getElementById("add1to100part2").onclick = async () => {
-    const code = await fetchCode(GIST_ADD1TO100);
-    editor2.setValue(code, -1);
-    runPyodide(editor1, "kw_console2", "brython_div2");
+    const c = await fetchCode(GIST_ADD1TO100);
+    editor2.setValue(c, -1);
+    runPyodide(editor2, "kw_console2", "brython_div2");
   };
 
-  document.getElementById("kw_run1").onclick = () => runPyodide(editor1, "kw_console1", "brython_div1");
-  document.getElementById("kw_run2").onclick = () => runPyodide(editor2, "kw_console2", "brython_div2");
-  document.getElementById("kw_clear_console1").onclick = () => clearOutput("kw_console1", "brython_div1");
-  document.getElementById("kw_clear_console2").onclick = () => clearOutput("kw_console2", "brython_div2");
+  document.getElementById("kw_run1").onclick = () =>
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  document.getElementById("kw_run2").onclick = () =>
+    runPyodide(editor2, "kw_console2", "brython_div2");
+  document.getElementById("kw_clear_console1").onclick = () =>
+    clearOutput("kw_console1", "brython_div1");
+  document.getElementById("kw_clear_console2").onclick = () =>
+    clearOutput("kw_console2", "brython_div2");
 });
 
 async function fetchCode(url) {
-  try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`載入失敗 ${r.status}`);
-    return await r.text();
-  } catch (e) {
-    return `# 錯誤：${e.message}`;
-  }
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`載入失敗 ${r.status}`);
+  return await r.text();
 }
 
 function clearOutput(consoleId, divId) {
@@ -3012,13 +2795,13 @@ async function runPyodide(editor, consoleId, divId) {
 import sys
 class JsWriter:
   def write(self, s):
-    if s.strip():
-      from js import document
-      ta = document.getElementById("${consoleId}")
-      ta.value += s
+    from js import document
+    ta = document.getElementById("${consoleId}")
+    ta.value += s
+    ta.scrollTop = ta.scrollHeight
 sys.stdout = JsWriter()
 sys.stderr = JsWriter()
-  `);
+`);
 
   try {
     await pyodide.runPythonAsync(editor.getValue());
