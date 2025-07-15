@@ -143,7 +143,16 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">Pyodide << <a href='Pyodide.html'>Previous</a> <br /><h1>Pyodide_ex</h1>
-<p><a href="https://mde.tw/cp2025/content/Pyodide.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b69ccd3cb508dd000d36c1681e5be4cec3a39013/pyodide_robot_ex1.py">Pyodide 機器人巡邏</a></p><br />Pyodide << <a href='Pyodide.html'>Previous</a> </div>
+<p><a href="https://mde.tw/cp2025/content/Pyodide.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b69ccd3cb508dd000d36c1681e5be4cec3a39013/pyodide_robot_ex1.py">Pyodide 機器人巡邏</a></p>
+<p>Pyodide 導入客製化模組:</p>
+<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">const code = `
+# 定義一個模組內容
+def hello():
+    print("Hello from custom module!")
+`;
+pyodide.runPython(code);
+</pre>
+<p></p><br />Pyodide << <a href='Pyodide.html'>Previous</a> </div>
         
     <!-- footer -->
       <div class="container">

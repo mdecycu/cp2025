@@ -143,8 +143,8 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">Brython_ex << <a href='Brython_ex.html'>Previous</a> <a href='Pyodide_ex.html'>Next</a> >> Pyodide_ex<br /><h1>Pyodide</h1>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
-<p><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="numpy_ode">numpy_ode</button></p>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<p><button id="version">version</button><button id="hello_button">hello</button><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="numpy_ode">numpy_ode</button></p>
 <!-- Ace Editor Scripts -->
 <script src="./../cmsimde/static/ace/FileSaver.min.js"></script>
 <script src="./../cmsimde/static/ace/filereader.js"></script>
@@ -191,14 +191,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   editor2.session.setMode("ace/mode/python");
 
   pyodide = await loadPyodide();
-  await pyodide.loadPackage(["numpy", "scipy", "matplotlib"]);
-
+  await pyodide.loadPackage(["numpy", "scipy", "matplotlib", "micropip"]);
+  // 加入客製化程式 - start
+  const code = `
+  # 定義一個模組內容
+  def hello():
+      print("Hello from custom module!")
+  `;
+  pyodide.runPython(code);
+  // 加入客製化程式 - end
   const GIST_ADD1TO100 =
     "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/" +
     "c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
   const NUMPY_ODE = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/"
 +
-    "a021d8cf59f85e1aacf5708a93ee3b238056d2c8/pyodide_ode_ex1.py"
+    "98d582539545b3c9fbfa35dd3e605c506367618e/pyodide_ode_ex1.py"
 
   const PYODIDE_ROBOT_ANIMATION = `import js, asyncio
 
@@ -432,23 +439,51 @@ asyncio.create_task(start_robot_patrol())
 
   editor2.setValue("", -1);
 
+  // for version button
+  document.getElementById("version").onclick = () => {
+    const code = `import sys
+import matplotlib
+import numpy
+import scipy
+
+print("Python:", sys.version)
+print("matplotlib:", matplotlib.__version__)
+print("numpy:", numpy.__version__)
+print("scipy:", scipy.__version__)
+`;
+    editor1.setValue(code, -1);
+    updateUrlParam("src", "inline_version");
+    runPyodide(editor1, "kw_console1", "brython_div1");
+};
+  // for hello button
+  document.getElementById("hello_button").onclick = () => {
+    const code = `hello()`;
+    editor1.setValue(code, -1);
+    updateUrlParam("src", "inline_hello");
+    runPyodide(editor1, "kw_console1", "brython_div1");
+};
+
+  // for add1to100 button
   document.getElementById("add1to100").onclick = async () => {
     const code = await fetchCode(GIST_ADD1TO100);
     editor1.setValue(code, -1);
     updateUrlParam("src", GIST_ADD1TO100);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
+  // for numpy_ode button
   document.getElementById("numpy_ode").onclick = async () => {
     const code = await fetchCode(NUMPY_ODE);
     editor1.setValue(code, -1);
     updateUrlParam("src", NUMPY_ODE);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
+  // for robot1 button
   document.getElementById("robot1").onclick = () => {
     editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);
     updateUrlParam("src", "pyodide_robot_animation");
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
+  // for add1to100part2 button
   document.getElementById("add1to100part2").onclick = async () => {
     const code = await fetchCode(GIST_ADD1TO100);
     editor2.setValue(code, -1);
@@ -498,8 +533,7 @@ sys.stderr = JsWriter()
     document.getElementById(consoleId).value += "\n錯誤：" + e.toString();
   }
 }
-</script>
-<br />Brython_ex << <a href='Brython_ex.html'>Previous</a> <a href='Pyodide_ex.html'>Next</a> >> Pyodide_ex</div>
+</script><br />Brython_ex << <a href='Brython_ex.html'>Previous</a> <a href='Pyodide_ex.html'>Next</a> >> Pyodide_ex</div>
         
     <!-- footer -->
       <div class="container">
