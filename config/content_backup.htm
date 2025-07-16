@@ -272,6 +272,7 @@ pause
 <p>HW2:</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以採水平巡邏方式，走過每一個區域。</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以採上下垂直巡邏方式，走過每一個區域。</p>
+<p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/9d55811467e411eb89f74171d8a586ae9f1a96aa/brython_robot_free_walk.py">機器人自由行</a> 程式，加入機器人撞牆警示。</p>
 <p>HW3:</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以與<a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=worlds%2Ftutorial_en%2Fharvest1.json&amp;editor=python%2Fharvest1_east_west.py">機器人收割程式</a>的水平採收方式相同。</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以與<a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=worlds%2Ftutorial_en%2Fharvest1.json&amp;editor=python%2Fharvest1.py">機器人收割程式</a>的上下垂直採收方式相同。</p>
@@ -279,8 +280,7 @@ pause
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以與<a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=worlds%2Ftutorial_en%2Fharvest3.json&amp;editor=python%2Fharvest1_class_ex3.py">機器人收割程式</a>的採收與播種方式相同。</p>
 <p></p>
 <p></p>
-<p style="padding-left: 30px;"></p>
-<h1>Topics</h1>
+<p style="padding-left: 30px;"></p><h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
 <p>Teams 線上教學:</p>
@@ -2508,6 +2508,7 @@ doc["aitetris"].bind("click", aitetris.do)
 <!-- editor2 結束 --><hr/>
 <p></p>
 <h2>Brython_ex</h2>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/9d55811467e411eb89f74171d8a586ae9f1a96aa/brython_robot_free_walk.py">機器人自由行</a></p>
 <p>Can we bring pythonpad into this page? <a href="https://pythonpad.github.io/docs/manual.html">https://pythonpad.github.io/docs/manual.html</a> </p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import document, html, timer
  
@@ -2703,7 +2704,7 @@ def hello():
     "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
     "f3d75d08f2b90f4470342e91ee1e5c36b5f950bf/pyodide_robot_ex1.py";
   const FREE_WALK = 
-    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" + "b96bb7cc501b686444b96a11b48bb031184c0f94/pyodide_robot_ex2.py"
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" + "d1659628afe5d36a026ef305dc639f6be4c9f608/pyodide_robot_ex3.py"
 
   const src = getUrlParam("src");
   if (src === PYODIDE_ROBOT_ANIMATION) {

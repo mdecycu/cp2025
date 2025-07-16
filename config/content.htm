@@ -272,6 +272,7 @@ pause
 <p>HW2:</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以採水平巡邏方式，走過每一個區域。</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以採上下垂直巡邏方式，走過每一個區域。</p>
+<p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/9d55811467e411eb89f74171d8a586ae9f1a96aa/brython_robot_free_walk.py">機器人自由行</a> 程式，加入機器人撞牆警示。</p>
 <p>HW3:</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以與<a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=worlds%2Ftutorial_en%2Fharvest1.json&amp;editor=python%2Fharvest1_east_west.py">機器人收割程式</a>的水平採收方式相同。</p>
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以與<a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=worlds%2Ftutorial_en%2Fharvest1.json&amp;editor=python%2Fharvest1.py">機器人收割程式</a>的上下垂直採收方式相同。</p>
@@ -279,8 +280,7 @@ pause
 <p style="padding-left: 30px;">請修改 <a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/b33c5fc2a0774f8c5d2b0e8c7c7908e58d73bb94/robot_1.py">Brython_robot</a> 程式，讓機器人可以與<a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds%2Fmenus%2Fselect_collection_en.json&amp;name=Alone&amp;url=worlds%2Ftutorial_en%2Fharvest3.json&amp;editor=python%2Fharvest1_class_ex3.py">機器人收割程式</a>的採收與播種方式相同。</p>
 <p></p>
 <p></p>
-<p style="padding-left: 30px;"></p>
-<h1>Topics</h1>
+<p style="padding-left: 30px;"></p><h1>Topics</h1>
 <p>電腦輔助設計室電腦硬體與網路使用介紹</p>
 <p style="padding-left: 30px;">C: 為 SSD，網路協定可以自行決定使用 IPv4 或 IPv6 (若使用純 IPv6 則必須設定 Proxy 才能連結到 github.com 以及僅支援 IPv4 協定的網站) </p>
 <p>Teams 線上教學:</p>
@@ -2242,7 +2242,7 @@ for i in range(3):
 <p>但卻沒能套用到 harvest3 農田: <a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex1.py">https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex1.py</a> </p>
 <p>而必須要在每一個座標點留下或放入一個紅蘿蔔: <a href="https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex3.py">https://mde.tw/cp2025/reeborg/?lang=en&amp;mode=python&amp;menu=worlds/menus/select_collection_en.json&amp;name=Alone&amp;url=worlds/tutorial_en/harvest3.json&amp;editor=python/harvest1_class_ex3.py </a> </p>
 <h1>Brython</h1>
-<p><button id="add1to100">1 add to 100</button><button id="robot1">機器人巡邏</button></p>
+<p><button id="add1to100">1 add to 100</button><button id="robot1">機器人巡邏</button><button id="free_walk">自由行</button></p>
 <!-- 導入 brython 程式庫 -->
 <p>
 <script src="/static/brython.js"></script>
@@ -2347,6 +2347,33 @@ def robot1(ev):
 doc["robot1"].bind('click', robot1)
 </script>
 <!-- 機器人巡邏程式結束 --></p>
+<!-- 機器人自由行程式開始 -->
+<script type="text/python3">
+from browser import document as doc
+import ace
+
+# 清除畫布
+def clear_bd1(ev):
+    bd = doc["brython_div1"]
+    bd.clear()
+
+# 利用 ace 中的 Editor 建立 Ace2 物件, 其中的輸入變數分別對應到頁面中的編輯區物件
+Ace2 = ace.Editor(editor_id="kw_editor1", console_id="kw_console1", container_id="kw__container1", storage_id="kw_py_src1" )
+
+free_walk_url = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/9d55811467e411eb89f74171d8a586ae9f1a96aa/brython_robot_free_walk.py"
+
+# 從 gist 取得程式碼
+free_walk_src = open(free_walk_url).read()
+def free_walk(ev):
+    Ace2.editor.setValue(free_walk_src)
+    Ace2.editor.scrollToRow(0)
+    Ace2.editor.gotoLine(0)
+    Ace2.run()
+
+# id 為 "free_walk" 的按鈕點按時, 執行 robot1 方法
+doc["free_walk"].bind('click', free_walk)
+</script>
+<!-- 機器人自由行程式結束 -->
 <p><!-- add 1 to 100 開始 -->
 <script type="text/python3">
 from browser import document as doc
@@ -2506,8 +2533,8 @@ doc["aitetris"].bind("click", aitetris.do)
 <p><!-- Brython 程式執行的結果, 都以 brython_div1 作為切入位置 --></p>
 <div id="brython_div2"></div>
 <!-- editor2 結束 --><hr/>
-<p></p>
-<h2>Brython_ex</h2>
+<p></p><h2>Brython_ex</h2>
+<p><a href="https://mde.tw/cp2025/content/Brython.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/9d55811467e411eb89f74171d8a586ae9f1a96aa/brython_robot_free_walk.py">機器人自由行</a></p>
 <p>Can we bring pythonpad into this page? <a href="https://pythonpad.github.io/docs/manual.html">https://pythonpad.github.io/docs/manual.html</a> </p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from browser import document, html, timer
  
