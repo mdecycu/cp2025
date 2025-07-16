@@ -2637,7 +2637,7 @@ draw_robot()</pre>
 <p style="padding-left: 60px;"><a href="/downloads/de_volume_max.c">de_volume_max.c</a>, <a href="/downloads/de_volume_max.v">de_volume_max.v</a></p>
 <p>也可以採網頁前端使用 Brython，後端採 Python 執行運算後將資料傳回網頁: <a href="/downloads/brython_w_flask.7z">brython_w_flask.7z</a></p><h1>Pyodide</h1>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<p><button id="version">version</button> <button id="hello_button">hello</button> <button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button> <button id="numpy_ode">numpy_ode</button></p>
+<p><button id="version">version</button> <button id="hello_button">hello</button> <button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="free_walk">自由行</button> <button id="numpy_ode">numpy_ode</button></p>
 <!-- Ace Editor Scripts -->
 <script src="/static/ace/FileSaver.min.js"></script>
 <script src="/static/ace/filereader.js"></script>
@@ -2702,6 +2702,8 @@ def hello():
   const PYODIDE_ROBOT_ANIMATION =
     "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
     "f3d75d08f2b90f4470342e91ee1e5c36b5f950bf/pyodide_robot_ex1.py";
+  const FREE_WALK = 
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" + "d1659628afe5d36a026ef305dc639f6be4c9f608/pyodide_robot_ex3.py"
 
   const src = getUrlParam("src");
   if (src === PYODIDE_ROBOT_ANIMATION) {
@@ -2759,6 +2761,13 @@ print("scipy version:", scipy.__version__)
     const rc = await fetchCode(PYODIDE_ROBOT_ANIMATION);
     editor1.setValue(rc, -1);
     updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("free_walk").onclick = async () => {
+    const rc = await fetchCode(FREE_WALK);
+    editor1.setValue(rc, -1);
+    updateUrlParam("src", FREE_WALK);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
 
