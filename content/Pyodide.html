@@ -154,8 +154,8 @@ img.add_border {
 <script src="./../cmsimde/static/ace/snippets/python.js"></script>
 <!-- Editor 1 -->
 <div id="kw_editor1" style="width: 600px; height: 300px;"></div>
-<p><button id="kw_run1">Run</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
-<p><textarea id="kw_console1" style="width: 600px; height: 120px;"></textarea></p>
+<p><button id="kw_run1">Run</button> <button id="kw_output1">Output</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console1"></textarea></p>
 <div id="pyodide_div1"></div>
 <div id="mpl_output1"></div>
 <div id="brython_div1"></div>
@@ -164,8 +164,8 @@ img.add_border {
 <p><button id="add1to100part2">1 add to 100</button></p>
 <!-- Editor 2 -->
 <div id="kw_editor2" style="width: 600px; height: 300px;"></div>
-<p><button id="kw_run2">Run</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
-<p><textarea id="kw_console2" style="width: 600px; height: 120px;"></textarea></p>
+<p><button id="kw_run2">Run</button> <button id="kw_output2">Output</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console2"></textarea></p>
 <div id="pyodide_div2"></div>
 <div id="mpl_output2"></div>
 <div id="brython_div2"></div>
@@ -226,14 +226,16 @@ def hello():
 
   document.getElementById("version").onclick = () => {
     const vcode = `
+import pyodide
 import sys
 import matplotlib
 import numpy
 import scipy
-print("Python:", sys.version)
-print("matplotlib:", matplotlib.__version__)
-print("numpy:", numpy.__version__)
-print("scipy:", scipy.__version__)
+print("Pyodide version:", pyodide.__version__)
+print("Python version :", sys.version)
+print("matplotlib version:", matplotlib.__version__)
+print("numpy version:", numpy.__version__)
+print("scipy version:", scipy.__version__)
 `;
     editor1.setValue(vcode, -1);
     updateUrlParam("src", "inline_version");
@@ -282,6 +284,20 @@ print("scipy:", scipy.__version__)
   document.getElementById("kw_clear_console2").onclick = () =>
     clearOutput("kw_console2", "brython_div2");
 });
+
+// 處理兩個 Output 列數
+  document.getElementById("kw_output1").onclick = () => {
+    const ta = document.getElementById("kw_console1");
+    ta.rows = "15";
+    ta.cols = "70";
+    ta.scrollTop = 0;
+  };
+  document.getElementById("kw_output2").onclick = () => {
+    const ta = document.getElementById("kw_console2");
+    ta.rows = "15";
+    ta.cols = "70";
+    ta.scrollTop = 0;
+  };
 
 async function fetchCode(url) {
   const r = await fetch(url);

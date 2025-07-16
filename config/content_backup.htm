@@ -2637,7 +2637,7 @@ draw_robot()</pre>
 <p style="padding-left: 60px;"><a href="/downloads/de_volume_max.c">de_volume_max.c</a>, <a href="/downloads/de_volume_max.v">de_volume_max.v</a></p>
 <p>也可以採網頁前端使用 Brython，後端採 Python 執行運算後將資料傳回網頁: <a href="/downloads/brython_w_flask.7z">brython_w_flask.7z</a></p><h1>Pyodide</h1>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
-<p><button id="version">version</button><button id="hello_button">hello</button><button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button><button id="numpy_ode">numpy_ode</button></p>
+<p><button id="version">version</button> <button id="hello_button">hello</button> <button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button> <button id="numpy_ode">numpy_ode</button></p>
 <!-- Ace Editor Scripts -->
 <script src="/static/ace/FileSaver.min.js"></script>
 <script src="/static/ace/filereader.js"></script>
@@ -2647,8 +2647,8 @@ draw_robot()</pre>
 <script src="/static/ace/snippets/python.js"></script>
 <!-- Editor 1 -->
 <div id="kw_editor1" style="width: 600px; height: 300px;"></div>
-<p><button id="kw_run1">Run</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
-<p><textarea id="kw_console1" style="width: 600px; height: 120px;"></textarea></p>
+<p><button id="kw_run1">Run</button> <button id="kw_output1">Output</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console1"></textarea></p>
 <div id="pyodide_div1"></div>
 <div id="mpl_output1"></div>
 <div id="brython_div1"></div>
@@ -2657,8 +2657,8 @@ draw_robot()</pre>
 <p><button id="add1to100part2">1 add to 100</button></p>
 <!-- Editor 2 -->
 <div id="kw_editor2" style="width: 600px; height: 300px;"></div>
-<p><button id="kw_run2">Run</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
-<p><textarea id="kw_console2" style="width: 600px; height: 120px;"></textarea></p>
+<p><button id="kw_run2">Run</button> <button id="kw_output2">Output</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console2"></textarea></p>
 <div id="pyodide_div2"></div>
 <div id="mpl_output2"></div>
 <div id="brython_div2"></div>
@@ -2685,104 +2685,117 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   pyodide = await loadPyodide();
   await pyodide.loadPackage(["numpy", "scipy", "matplotlib", "micropip"]);
-  // 加入客製化程式 - start
+
+  // 定義 hello() 模組
   const code = `
-  # 定義一個模組內容
-  def hello():
-      print("Hello from custom module!")
-  `;
+def hello():
+    print("Hello from custom module!")
+`;
   pyodide.runPython(code);
-  // 加入客製化程式 - end
+
   const GIST_ADD1TO100 =
     "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/" +
     "c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
-  const NUMPY_ODE = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/"
-+
-    "98d582539545b3c9fbfa35dd3e605c506367618e/pyodide_ode_ex1.py"
-
-  const PYODIDE_ROBOT_ANIMATION = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" 
-+ 
-"056281b57b1c06ccf76e51b4d3966bde5d2ba29e/pyodide_robot_ex1.py"
+  const NUMPY_ODE =
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
+    "98d582539545b3c9fbfa35dd3e605c506367618e/pyodide_ode_ex1.py";
+  const PYODIDE_ROBOT_ANIMATION =
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
+    "056281b57b1c06ccf76e51b4d3966bde5d2ba29e/pyodide_robot_ex1.py";
 
   const src = getUrlParam("src");
-
-  if (src === "pyodide_robot_animation") {
-    editor1.setValue(PYODIDE_ROBOT_ANIMATION, -1);
+  if (src === PYODIDE_ROBOT_ANIMATION) {
+    const robotCode = await fetchCode(PYODIDE_ROBOT_ANIMATION);
+    editor1.setValue(robotCode, -1);
     updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
+    runPyodide(editor1, "kw_console1", "brython_div1");
   } else {
-    const code = await fetchCode(src || GIST_ADD1TO100);
-    editor1.setValue(code, -1);
+    const initialCode = await fetchCode(src || GIST_ADD1TO100);
+    editor1.setValue(initialCode, -1);
     runPyodide(editor1, "kw_console1", "brython_div1");
   }
 
   editor2.setValue("", -1);
 
-  // for version button
   document.getElementById("version").onclick = () => {
-    const code = `import sys
+    const vcode = `
+import pyodide
+import sys
 import matplotlib
 import numpy
 import scipy
-
-print("Python:", sys.version)
-print("matplotlib:", matplotlib.__version__)
-print("numpy:", numpy.__version__)
-print("scipy:", scipy.__version__)
+print("Pyodide version:", pyodide.__version__)
+print("Python version :", sys.version)
+print("matplotlib version:", matplotlib.__version__)
+print("numpy version:", numpy.__version__)
+print("scipy version:", scipy.__version__)
 `;
-    editor1.setValue(code, -1);
+    editor1.setValue(vcode, -1);
     updateUrlParam("src", "inline_version");
     runPyodide(editor1, "kw_console1", "brython_div1");
-};
-  // for hello button
+  };
+
   document.getElementById("hello_button").onclick = () => {
-    const code = `hello()`;
-    editor1.setValue(code, -1);
+    editor1.setValue("hello()", -1);
     updateUrlParam("src", "inline_hello");
     runPyodide(editor1, "kw_console1", "brython_div1");
-};
+  };
 
-  // for add1to100 button
   document.getElementById("add1to100").onclick = async () => {
-    const code = await fetchCode(GIST_ADD1TO100);
-    editor1.setValue(code, -1);
+    const c = await fetchCode(GIST_ADD1TO100);
+    editor1.setValue(c, -1);
     updateUrlParam("src", GIST_ADD1TO100);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
-  // for numpy_ode button
+
   document.getElementById("numpy_ode").onclick = async () => {
-    const code = await fetchCode(NUMPY_ODE);
-    editor1.setValue(code, -1);
+    const c = await fetchCode(NUMPY_ODE);
+    editor1.setValue(c, -1);
     updateUrlParam("src", NUMPY_ODE);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
-  // for robot1 button
-  document.getElementById("robot1").onclick = () => {
-    const code = await fetchCode(PYODIDE_ROBOT_ANIMATION);
-    editor1.setValue(code, -1);
+
+  document.getElementById("robot1").onclick = async () => {
+    const rc = await fetchCode(PYODIDE_ROBOT_ANIMATION);
+    editor1.setValue(rc, -1);
     updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
     runPyodide(editor1, "kw_console1", "brython_div1");
   };
-  // for add1to100part2 button
+
   document.getElementById("add1to100part2").onclick = async () => {
-    const code = await fetchCode(GIST_ADD1TO100);
-    editor2.setValue(code, -1);
+    const c = await fetchCode(GIST_ADD1TO100);
+    editor2.setValue(c, -1);
     runPyodide(editor2, "kw_console2", "brython_div2");
   };
 
-  document.getElementById("kw_run1").onclick = () => runPyodide(editor1, "kw_console1", "brython_div1");
-  document.getElementById("kw_run2").onclick = () => runPyodide(editor2, "kw_console2", "brython_div2");
-  document.getElementById("kw_clear_console1").onclick = () => clearOutput("kw_console1", "brython_div1");
-  document.getElementById("kw_clear_console2").onclick = () => clearOutput("kw_console2", "brython_div2");
+  document.getElementById("kw_run1").onclick = () =>
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  document.getElementById("kw_run2").onclick = () =>
+    runPyodide(editor2, "kw_console2", "brython_div2");
+  document.getElementById("kw_clear_console1").onclick = () =>
+    clearOutput("kw_console1", "brython_div1");
+  document.getElementById("kw_clear_console2").onclick = () =>
+    clearOutput("kw_console2", "brython_div2");
 });
 
+// 處理兩個 Output 列數
+  document.getElementById("kw_output1").onclick = () => {
+    const ta = document.getElementById("kw_console1");
+    ta.rows = "15";
+    ta.cols = "80";
+    ta.scrollTop = 0;
+  };
+  document.getElementById("kw_output2").onclick = () => {
+    const ta = document.getElementById("kw_console2");
+    ta.rows = "15";
+    ta.cols = "80";
+    ta.scrollTop = 0;
+  };
+
 async function fetchCode(url) {
-  try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`載入失敗 ${r.status}`);
-    return await r.text();
-  } catch (e) {
-    return `# 錯誤：${e.message}`;
-  }
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`載入失敗 ${r.status}`);
+  return await r.text();
 }
 
 function clearOutput(consoleId, divId) {
