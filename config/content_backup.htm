@@ -2882,7 +2882,7 @@ pyodide.runPython(code);
 <p><a href="https://mde.tw/cp2025/content/Pyodide.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/3ed6869dcd7312254513ca507de17945e15a9b6f/box_volume_max_pyodide_de.py">Volume_max_pyodide_de.py</a></p>
 <p></p>
 <h1>Pyodide2</h1>
-<p>在頁面中導入 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/ff833d14181c7e270d37432aa8589f5ecf00e383/robot.py">robot.py</a> 後，可以直接在編輯器中使用。</p>
+<p>在頁面中導入 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/ff833d14181c7e270d37432aa8589f5ecf00e383/robot.py">robot.py</a> (註解版: <a href="/downloads/pyodide_robot_commented.py">pyodide_robot_commented.py</a>) 後，可以直接在編輯器中使用。</p>
 <p>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 </p>
@@ -3103,8 +3103,7 @@ sys.stderr = JsWriter()
   }
 }
 </script>
-</p>
-<h2>robot.py</h2>
+</p><h2>robot.py</h2>
 <p><a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/ff833d14181c7e270d37432aa8589f5ecf00e383/robot.py">robot.py</a></p>
 <p>第一段：模組匯入與常數定義</p>
 <p>js 是 Brython 提供的 JS-Python 橋接模組，可直接操作 JavaScript DOM。<br/><br/>asyncio 是 Python 的非同步處理模組，用來讓動畫非同步進行。<br/><br/>CELL_SIZE 設定地圖中每個格子的大小（40px × 40px）。<br/><br/>WALL_THICKNESS 是用於繪製牆壁的線條厚度。<br/><br/>IMG_PATH 是儲存所有圖片的伺服器路徑（用於載入牆壁與機器人圖）。</p>
@@ -3456,3 +3455,25 @@ IMG_PATH = "https://mde.tw/cp2025/reeborg/src/images/"
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">world, robot = await init(10, 10, 1, 1)
 </pre>
 <p>等待 init() 的結果後，就可以直接控制 robot.walk() 或 robot.turn_left()。</p>
+<h2>Example2</h2>
+<p>自行定義機器人右轉的非同步執行函式:</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import robot
+import asyncio
+
+# 定義右轉的非同步函式
+async def turn_right(bot):
+    for _ in range(3):
+        await bot.turn_left()
+
+async def main():
+    world, bot = await robot.init(10, 10, 1, 1)
+    print("機器人開始行動")
+    await bot.turn_left()
+    await bot.walk(9)
+    await turn_right(bot) 
+    print("機器人完成行動")
+
+# main() 讓出執行控制權，由頁面中的 even loop 決定何時執行 main()
+await main()
+</pre>
+<p></p>

@@ -131,7 +131,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li class='has-children'><a href='About.html'>About</a><ul class='dropdown'><li><a href='talk.html'>talk</a><li><a href='cs101.html'>cs101</a><li class='has-children'><a href='Computer.html'>Computer</a><ul class='dropdown'><li><a href='llama.html'>llama</a><li><a href='nginx.html'>nginx</a></li></li></ul></ul><li><a href='Homework.html'>Homework</a><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='Git.html'>Git</a><ul class='dropdown'><li><a href='Git_ex1.html'>Git_ex1</a><li><a href='Git_ex2.html'>Git_ex2</a></li></ul><li class='has-children'><a href='Python.html'>Python</a><ul class='dropdown'><li><a href='Python_ex1.html'>Python_ex1</a></li></ul><li class='has-children'><a href='Javascript.html'>Javascript</a><ul class='dropdown'><li><a href='HTML and CSS.html'>HTML and CSS</a></li></ul><li class='has-children'><a href='Project.html'>Project</a><ul class='dropdown'><li><a href='Waitress.html'>Waitress</a><li><a href='API.html'>API</a></li></ul><li class='has-children'><a href='V.html'>V</a><ul class='dropdown'><li><a href='learn_V.html'>learn_V</a></li></li></ul></ul><li class='has-children'><a href='Reeborg.html'>Reeborg</a><ul class='dropdown'><li><a href='ex1.html'>ex1</a><li><a href='Otto_ninja.html'>Otto_ninja</a></li></ul><li class='has-children'><a href='Brython.html'>Brython</a><ul class='dropdown'><li><a href='Brython_ex.html'>Brython_ex</a></li></ul><li class='has-children'><a href='Pyodide.html'>Pyodide</a><ul class='dropdown'><li><a href='Pyodide_ex.html'>Pyodide_ex</a></li></ul><li class='has-children'><a href='Pyodide2.html'>Pyodide2</a><ul class='dropdown'><li><a href='robot.py.html'>robot.py</a></li>
+                     <li class='has-children'><a href='About.html'>About</a><ul class='dropdown'><li><a href='talk.html'>talk</a><li><a href='cs101.html'>cs101</a><li class='has-children'><a href='Computer.html'>Computer</a><ul class='dropdown'><li><a href='llama.html'>llama</a><li><a href='nginx.html'>nginx</a></li></li></ul></ul><li><a href='Homework.html'>Homework</a><li class='has-children'><a href='Topics.html'>Topics</a><ul class='dropdown'><li class='has-children'><a href='Git.html'>Git</a><ul class='dropdown'><li><a href='Git_ex1.html'>Git_ex1</a><li><a href='Git_ex2.html'>Git_ex2</a></li></ul><li class='has-children'><a href='Python.html'>Python</a><ul class='dropdown'><li><a href='Python_ex1.html'>Python_ex1</a></li></ul><li class='has-children'><a href='Javascript.html'>Javascript</a><ul class='dropdown'><li><a href='HTML and CSS.html'>HTML and CSS</a></li></ul><li class='has-children'><a href='Project.html'>Project</a><ul class='dropdown'><li><a href='Waitress.html'>Waitress</a><li><a href='API.html'>API</a></li></ul><li class='has-children'><a href='V.html'>V</a><ul class='dropdown'><li><a href='learn_V.html'>learn_V</a></li></li></ul></ul><li class='has-children'><a href='Reeborg.html'>Reeborg</a><ul class='dropdown'><li><a href='ex1.html'>ex1</a><li><a href='Otto_ninja.html'>Otto_ninja</a></li></ul><li class='has-children'><a href='Brython.html'>Brython</a><ul class='dropdown'><li><a href='Brython_ex.html'>Brython_ex</a></li></ul><li class='has-children'><a href='Pyodide.html'>Pyodide</a><ul class='dropdown'><li><a href='Pyodide_ex.html'>Pyodide_ex</a></li></ul><li class='has-children'><a href='Pyodide2.html'>Pyodide2</a><ul class='dropdown'><li><a href='robot.py.html'>robot.py</a><li><a href='Example2.html'>Example2</a></li>
                       </ul>
                 </nav>
               </div>
@@ -142,7 +142,7 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">Pyodide2 << <a href='Pyodide2.html'>Previous</a> <br /><h1>robot.py</h1>
+    <div id="tipue_search_content">Pyodide2 << <a href='Pyodide2.html'>Previous</a> <a href='Example2.html'>Next</a> >> Example2<br /><h1>robot.py</h1>
 <p><a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/ff833d14181c7e270d37432aa8589f5ecf00e383/robot.py">robot.py</a></p>
 <p>第一段：模組匯入與常數定義</p>
 <p>js 是 Brython 提供的 JS-Python 橋接模組，可直接操作 JavaScript DOM。<br/><br/>asyncio 是 Python 的非同步處理模組，用來讓動畫非同步進行。<br/><br/>CELL_SIZE 設定地圖中每個格子的大小（40px × 40px）。<br/><br/>WALL_THICKNESS 是用於繪製牆壁的線條厚度。<br/><br/>IMG_PATH 是儲存所有圖片的伺服器路徑（用於載入牆壁與機器人圖）。</p>
@@ -493,7 +493,8 @@ IMG_PATH = "https://mde.tw/cp2025/reeborg/src/images/"
 <p>回傳一個非同步任務（asyncio.Task），讓使用者可以這樣呼叫：</p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">world, robot = await init(10, 10, 1, 1)
 </pre>
-<p>等待 init() 的結果後，就可以直接控制 robot.walk() 或 robot.turn_left()。</p><br />Pyodide2 << <a href='Pyodide2.html'>Previous</a> </div>
+<p>等待 init() 的結果後，就可以直接控制 robot.walk() 或 robot.turn_left()。</p>
+<br />Pyodide2 << <a href='Pyodide2.html'>Previous</a> <a href='Example2.html'>Next</a> >> Example2</div>
         
     <!-- footer -->
       <div class="container">
