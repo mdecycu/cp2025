@@ -2,7 +2,7 @@
         <head>
         <title>cp2025</title>
         <meta charset="utf-8">
-<meta property="head" content="H3">
+<meta property="head" content="H1">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/css/bootstrap.min.css">
@@ -142,133 +142,229 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">Git << <a href='Git.html'>Previous</a> <a href='Git_ex2.html'>Next</a> >> Git_ex2<br /><h1>Git_ex1</h1>
-<h4>Reeborg 機器人 Python 開發流程與 Git/GitHub 協作範例</h4>
-<h4>階段一：基礎 Python 與 Reeborg 指令</h4>
-<p>初學者可直接用 Python 撰寫簡單的 <a href="https://mde.tw/cp2025/reeborg/">Reeborg 機器人程式</a>，例如讓機器人向前走數步、左轉、撿物件：</p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">move()
-move()
-turn_left()
-move()
-if object_here():
-    take()
-</pre>
-<h4>階段二：加入函式與三人協同開發</h4>
-<div class="collab"><strong>協作情境：</strong>三位組員（A、B、C）各自開發一段行走任務，然後將重複動作寫成函式，合併到專案。</div>
-<ol>
-<li><strong>組員 A:</strong> 讓機器人前進 3 格
-<pre>for i in range(3):
-    move()
-</pre>
-</li>
-<li><strong>組員 B:</strong> 機器人轉 2 次左
-<pre>for i in range(2):
-    turn_left()
-</pre>
-</li>
-<li><strong>組員 C:</strong> 機器人檢查物件並撿取
-<pre>if object_here():
-    take()
-</pre>
-</li>
-</ol>
-<p><span class="tip">協作流程：</span>三人各自建立分支（feature/A, feature/B, feature/C），在 GitHub 上合併 Pull Request，最後由主分支整合。</p>
-<h4>Git 基本指令與說明</h4>
-<ul>
-<li><strong>Step 1：初始化本地倉庫</strong>
-<pre>git init
-    </pre>
-<span>在專案資料夾裡執行，建立 Git 管理的本地倉庫。</span></li>
-<li><strong>Step 2：加入遠端 GitHub 倉庫</strong>
-<pre>git remote add origin https://github.com/你的帳號或組織/專案名稱.git
-    </pre>
-<span>將本地倉庫連結到 GitHub 上的遠端 repository。</span></li>
-<li><strong>Step 3：建立並切換到功能分支</strong>
-<pre>git checkout -b feature/A        # 組員A
-git checkout -b feature/B        # 組員B
-git checkout -b feature/C        # 組員C
-    </pre>
-<span>每位組員建立自己的功能分支，分工開發。</span></li>
-<li><strong>Step 4：修改程式並加入暫存區</strong>
-<pre>git add reeborg.py
-    </pre>
-<span>將變更過的檔案加入暫存區，準備提交。</span></li>
-<li><strong>Step 5：提交更動</strong>
-<pre>git commit -m "描述這次開發的內容"
-    </pre>
-<span>將暫存區的變更提交到本地倉庫。</span></li>
-<li><strong>Step 6：推送分支到 GitHub</strong>
-<pre>git push -u origin feature/A        # 組員A
-git push -u origin feature/B        # 組員B
-git push -u origin feature/C        # 組員C
-    </pre>
-<span>把每個人的分支推到遠端 GitHub。</span></li>
-<li><strong>Step 7：建立 Pull Request 並審查合併</strong> <br/> <span>到 GitHub 網站上建立 Pull Request（PR），請其他組員 code review，審查無誤後合併到主分支（main）。</span></li>
-<li><strong>Step 8：將最新主分支同步回本地</strong>
-<pre>git checkout main
-git pull
-    </pre>
-<span>確保本地 main 跟遠端同步。</span></li>
-</ul>
-<h4>加入共用函式</h4>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def turn(times):
-    for i in range(times):
-        turn_left()
+    <div id="tipue_search_content">Example2 << <a href='Example2.html'>Previous</a> <br /><h1>Pyodide3</h1>
+<p>在頁面中導入 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/297dd8cb8ed7a25b96a7d01f11954bb0207e92a0/robot_w_world.py">robot_w_world.py</a> 後，場景中導入 carrot.png、grass.png 與 pale_grass.png。準備後續從 URL 讀進 json 格式的 world，配合 src 程式碼進行機器人採收農作物的相關程式。</p>
+<p>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+</p>
+<p><button id="version">version</button> <button id="hello_button">hello</button> <button id="add1to100">1 add to 100</button> <button id="robot1">機器人巡邏</button> <button id="free_walk">自由行</button> <button id="numpy_ode">numpy_ode</button></p>
+<!-- Ace Editor Scripts -->
+<p>
+<script src="./../cmsimde/static/ace/FileSaver.min.js"></script>
+<script src="./../cmsimde/static/ace/filereader.js"></script>
+<script src="./../cmsimde/static/ace/ace.js"></script>
+<script src="./../cmsimde/static/ace/ext-language_tools.js"></script>
+<script src="./../cmsimde/static/ace/mode-python.js"></script>
+<script src="./../cmsimde/static/ace/snippets/python.js"></script>
+</p>
+<!-- Editor 1 -->
+<div id="kw_editor1" style="width: 600px; height: 300px;"></div>
+<p><button id="kw_run1">Run</button> <button id="kw_output1">Output</button> <button id="kw_clear_console1">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console1"></textarea></p>
+<div id="pyodide_div1"></div>
+<div id="mpl_output1"></div>
+<div id="brython_div1"></div>
+<hr/>
+<p>從 1 累加到 100 part2:</p>
+<p><button id="add1to100part2">1 add to 100</button></p>
+<!-- Editor 2 -->
+<div id="kw_editor2" style="width: 600px; height: 300px;"></div>
+<p><button id="kw_run2">Run</button> <button id="kw_output2">Output</button> <button id="kw_clear_console2">清除輸出區</button> <button onclick="location.reload()">Reload</button></p>
+<p><textarea id="kw_console2"></textarea></p>
+<div id="pyodide_div2"></div>
+<div id="mpl_output2"></div>
+<div id="brython_div2"></div>
+<p>
+<script>
+function getUrlParam(key) {
+  return new URLSearchParams(window.location.search).get(key);
+}
+function updateUrlParam(key, value) {
+  const url = new URL(window.location);
+  url.searchParams.set(key, value);
+  window.history.replaceState({}, "", url);
+}
 
-def new_move(steps):
-    for i in range(steps):
-        move()
-</pre>
-<pre>階段三：重構與加入迴圈、條件與函式應用</pre>
-<p>將重複採收動作寫成 <code>harvest_one_row()</code> 函式，結合前進與轉彎，流程更清晰。</p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">def harvest_one_row():
-    while object_here():
-        take()
-    else:
-        move()
-</pre>
-<h4>階段四：導入 class，建立泛用 Reeborg 機器人控制架構</h4>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">class ReeborgBot:
-    def turn(self, times):
-        for i in range(times):
-            turn_left()
-    def move_steps(self, steps):
-        for i in range(steps):
-            move()
-    def harvest_one_row(self):
-        while object_here():
-            take()
-        else:
-            move()
-    def harvest_field(self, rows, row_length):
-        for i in range(rows):
-            for j in range(row_length):
-                self.harvest_one_row()
-            if i != rows - 1:
-                self.turn(3)
-                self.move_steps(1)
-                self.turn(3)
-                self.move_steps(1)
+let pyodide, editor1, editor2;
 
-# 使用範例
-bot = ReeborgBot()
-bot.move_steps(2)
-turn_left()
-bot.move_steps(2)
-bot.harvest_field(3, 6)
-</pre>
-<pre>協作開發流程與 Git/GitHub 應用摘要</pre>
-<ol>
-<li><b>git init</b>：建立本地專案。</li>
-<li><b>git branch feature/A</b>、<b>git branch feature/B</b>、<b>git branch feature/C</b>：三位組員各自建立分支（或用 <b>git checkout -b</b> 一次完成）。</li>
-<li><b>git add</b>、<b>git commit</b>、<b>git push</b>：將各自更動上傳到 GitHub。</li>
-<li><b>Pull Request</b>：在 GitHub 建立 PR，進行 code review 與合併。</li>
-<li>遇重複邏輯，抽象為函式，用新分支推送與合併。</li>
-<li>最後導入 class，建立泛用控制架構，提升可維護性與擴充性。</li>
-</ol>
-<h4>結語</h4>
-<p>本例展示 Python 基礎語法、函式、類別應用，以及如何善用 Git/GitHub 進行協同開發，讓團隊程式碼更有架構、易於管理與擴展。</p>
-<br />Git << <a href='Git.html'>Previous</a> <a href='Git_ex2.html'>Next</a> >> Git_ex2</div>
+// 新增：把 robot_w_world.py 寫入 pyodide FS
+async function loadRobotModule() {
+  const robotUrl = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/297dd8cb8ed7a25b96a7d01f11954bb0207e92a0/robot_w_world.py";
+  const r = await fetch(robotUrl);
+  if (!r.ok) throw new Error(`載入 robot.py 失敗: ${r.status}`);
+  const code = await r.text();
+  pyodide.FS.writeFile("/robot.py", code);
+  pyodide.runPython(`import sys; sys.path.append("/")`);  // 加入根目錄到 sys.path
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  editor1 = ace.edit("kw_editor1");
+  editor1.setTheme("ace/theme/chrome");
+  editor1.session.setMode("ace/mode/python");
+
+  editor2 = ace.edit("kw_editor2");
+  editor2.setTheme("ace/theme/chrome");
+  editor2.session.setMode("ace/mode/python");
+
+  pyodide = await loadPyodide();
+  await pyodide.loadPackage(["numpy", "scipy", "matplotlib", "micropip"]);
+
+  // 預先載入 robot.py
+  await loadRobotModule();
+
+  // 你現有的 hello() 定義
+  const code = `
+def hello():
+    print("Hello from custom module!")
+`;
+  pyodide.runPython(code);
+
+  // 這是你之前其他按鈕用的 Gist 連結
+  const GIST_ADD1TO100 =
+    "https://gist.githubusercontent.com/mdecourse/0229a8a017091476a79700b8a190f185/raw/" +
+    "c48e37714f055c3a0027cbfef59e442a6ef659b9/from_1_add_to_100_1.py";
+  const NUMPY_ODE =
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
+    "98d582539545b3c9fbfa35dd3e605c506367618e/pyodide_ode_ex1.py";
+  const PYODIDE_ROBOT_ANIMATION =
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" +
+    "ff833d14181c7e270d37432aa8589f5ecf00e383/pyodide_walk_around2.py";
+  const FREE_WALK = 
+    "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/" + "2a66dceb4a1dbdd0c384d4d17453f1e4f03f2493/pyodide_free_walk2.py"
+
+  // 預設載入 GIST_ADD1TO100（或 URL 參數決定）
+  const src = getUrlParam("src");
+  if (src === PYODIDE_ROBOT_ANIMATION) {
+    const robotCode = await fetchCode(PYODIDE_ROBOT_ANIMATION);
+    editor1.setValue(robotCode, -1);
+    updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  } else {
+    const initialCode = await fetchCode(src || GIST_ADD1TO100);
+    editor1.setValue(initialCode, -1);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  }
+
+  editor2.setValue("", -1);
+
+  // 按鈕事件
+  document.getElementById("version").onclick = () => {
+    const vcode = `
+import pyodide
+import sys
+import matplotlib
+import numpy
+import scipy
+print("Pyodide version:", pyodide.__version__)
+print("Python version :", sys.version)
+print("matplotlib version:", matplotlib.__version__)
+print("numpy version:", numpy.__version__)
+print("scipy version:", scipy.__version__)
+`;
+    editor1.setValue(vcode, -1);
+    updateUrlParam("src", "inline_version");
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("hello_button").onclick = () => {
+    editor1.setValue("hello()", -1);
+    updateUrlParam("src", "inline_hello");
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("add1to100").onclick = async () => {
+    const c = await fetchCode(GIST_ADD1TO100);
+    editor1.setValue(c, -1);
+    updateUrlParam("src", GIST_ADD1TO100);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("numpy_ode").onclick = async () => {
+    const c = await fetchCode(NUMPY_ODE);
+    editor1.setValue(c, -1);
+    updateUrlParam("src", NUMPY_ODE);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("robot1").onclick = async () => {
+    const rc = await fetchCode(PYODIDE_ROBOT_ANIMATION);
+    editor1.setValue(rc, -1);
+    updateUrlParam("src", PYODIDE_ROBOT_ANIMATION);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("free_walk").onclick = async () => {
+    const rc = await fetchCode(FREE_WALK);
+    editor1.setValue(rc, -1);
+    updateUrlParam("src", FREE_WALK);
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  };
+
+  document.getElementById("add1to100part2").onclick = async () => {
+    const c = await fetchCode(GIST_ADD1TO100);
+    editor2.setValue(c, -1);
+    runPyodide(editor2, "kw_console2", "brython_div2");
+  };
+
+  document.getElementById("kw_run1").onclick = () =>
+    runPyodide(editor1, "kw_console1", "brython_div1");
+  document.getElementById("kw_run2").onclick = () =>
+    runPyodide(editor2, "kw_console2", "brython_div2");
+  document.getElementById("kw_clear_console1").onclick = () =>
+    clearOutput("kw_console1", "brython_div1");
+  document.getElementById("kw_clear_console2").onclick = () =>
+    clearOutput("kw_console2", "brython_div2");
+});
+
+// 調整 output textarea 行數
+document.getElementById("kw_output1").onclick = () => {
+  const ta = document.getElementById("kw_console1");
+  ta.rows = "15";
+  ta.cols = "70";
+  ta.scrollTop = 0;
+};
+document.getElementById("kw_output2").onclick = () => {
+  const ta = document.getElementById("kw_console2");
+  ta.rows = "15";
+  ta.cols = "70";
+  ta.scrollTop = 0;
+};
+
+async function fetchCode(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`載入失敗 ${r.status}`);
+  return await r.text();
+}
+
+function clearOutput(consoleId, divId) {
+  document.getElementById(consoleId).value = "";
+  document.getElementById(divId).innerHTML = "";
+}
+
+async function runPyodide(editor, consoleId, divId) {
+  document.getElementById(consoleId).value = "";
+  document.getElementById(divId).innerHTML = "";
+
+  await pyodide.runPythonAsync(`
+import sys
+class JsWriter:
+  def write(self, s):
+    from js import document
+    ta = document.getElementById("${consoleId}")
+    ta.value += s
+    ta.scrollTop = ta.scrollHeight
+sys.stdout = JsWriter()
+sys.stderr = JsWriter()
+`);
+
+  try {
+    await pyodide.runPythonAsync(editor.getValue());
+  } catch (e) {
+    document.getElementById(consoleId).value += "\\n錯誤：" + e.toString();
+  }
+}
+</script>
+</p><br />Example2 << <a href='Example2.html'>Previous</a> </div>
         
     <!-- footer -->
       <div class="container">
