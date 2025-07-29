@@ -143,7 +143,7 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">Example2 << <a href='Example2.html'>Previous</a> <br /><h1>Pyodide3</h1>
-<p>在頁面中導入 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/297dd8cb8ed7a25b96a7d01f11954bb0207e92a0/robot_w_world.py">robot_w_world.py</a> 後，場景中導入 carrot.png、grass.png 與 pale_grass.png。準備後續從 URL 讀進 json 格式的 world，配合 src 程式碼進行機器人採收農作物的相關程式。</p>
+<p>在頁面中導入 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/1b1c26eca7f5d772c6301bae865efaddb00a87bb/robot_w_world.py">robot_w_world.py</a> 後，場景中導入 carrot.png、grass.png 與 pale_grass.png。可從 URL 讀進 json 格式的 world 變數，配合 src 程式碼進行機器人採收農作物的相關程式。</p>
 <p>
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
 </p>
@@ -189,7 +189,7 @@ let pyodide, editor1, editor2;
 
 // 新增：把 robot_w_world.py 寫入 pyodide FS
 async function loadRobotModule() {
-  const robotUrl = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/297dd8cb8ed7a25b96a7d01f11954bb0207e92a0/robot_w_world.py";
+  const robotUrl = "https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/1b1c26eca7f5d772c6301bae865efaddb00a87bb/robot_w_world.py";
   const r = await fetch(robotUrl);
   if (!r.ok) throw new Error(`載入 robot.py 失敗: ${r.status}`);
   const code = await r.text();
