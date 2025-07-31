@@ -143,7 +143,8 @@ img.add_border {
           
         </header>
     <div id="tipue_search_content">Brython_ex << <a href='Brython_ex.html'>Previous</a> <a href='Pyodide.html'>Next</a> >> Pyodide<br /><h1>Brython1</h1>
-<p>將 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/adc0e2c8fbab839f9c0132547a4ee4bffcfe370f/brython_robot.py">brython_robot.py</a> 放入 downloads/py 目錄，此 Brython 程式庫將會再啟動 Brython 頁面環境時導入，使用者就可以直接利用 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/28dd3b0c020912dc86feba60bbf7082ca0dd6ea4/brython1_ex1.py">brython1_ex1.py</a> 控制機器人。</p>
+<p>將 <a href="https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/adc0e2c8fbab839f9c0132547a4ee4bffcfe370f/brython_robot.py">brython_robot.py</a> 放入 downloads/py 目錄，此 Brython 程式庫將會再啟動 Brython 頁面環境時導入，使用者就可以直接利用 <a href="https://mde.tw/cp2025/content/Brython1.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/3f7cfefa75631417487300b4d328ba04f1999dae/brython1_ex1.py">brython1_ex1.py</a> 控制機器人，也可以自行擴充定義 <a href="https://mde.tw/cp2025/content/Brython1.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/149f4026e28ee70c87f5693138869738dc34af3b/brython1_turn_right.py">turn_right()</a> 函式。</p>
+<p>也可以利用 i、m、j、k 等四個鍵控制 robot 向前、後退、左轉與右轉: <a href="https://mde.tw/cp2025/content/Brython1.html?src=https://gist.githubusercontent.com/mdecycu/ec4bb35dd0769e7a83d2a9fa57878a67/raw/a1de47ae2a2c941d6abe945bd58ae79ba38be8c6/brython1_ijkm_control.py">brython1_ijkm_control.py</a>。</p>
 <p><button id="add1to100">1 add to 100</button><button id="robot1">機器人巡邏</button><button id="free_walk">自由行</button></p>
 <!-- 導入 brython 程式庫 -->
 <p>
@@ -154,7 +155,7 @@ img.add_border {
 <p>
 <script>
 window.onload=function(){
-brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+brython({debug:1, pythonpath:['./../cmsimde/static/','/downloads/py/']});
 }
 </script>
 </p>
