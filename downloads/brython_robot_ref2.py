@@ -66,10 +66,12 @@ class World:
         self._init_html()
         self._draw_grid()
         self._draw_walls()
+        self._draw_background()
 
     def _create_layers(self):
         return {
             "grid": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
+            "background": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
             "traces": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
             "walls": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
             "objects": html.CANVAS(width=self.width * CELL_SIZE, height=self.height * CELL_SIZE),
@@ -118,6 +120,29 @@ class World:
 
         img.bind("load", onload)
 
+    def _draw_background(self):
+        ctx = self.layers["background"].getContext("2d")
+        # 清空畫布
+        ctx.clearRect(0, 0, self.width * CELL_SIZE, self.height * CELL_SIZE)
+        # 逐格畫背景，依是否有 carrot 決定用 pale_grass 或 grass
+        for y in range(self.height):
+            for x in range(self.width):
+                coord = f"{x+1},{y+1}"
+                if coord in self.objects and "carrot" in self.objects[coord]:
+                    src = IMG_PATH + "pale_grass.png"
+                else:
+                    src = IMG_PATH + "grass.png"
+                # 因為 drawImage 是非同步，我們用 closure 保留當前x,y,src
+                def draw(x=x, y=y, src=src):
+                    img = html.IMG()
+                    img.src = src
+                    def onload(evt):
+                        px = x * CELL_SIZE
+                        py = (self.height - 1 - y) * CELL_SIZE
+                        ctx.drawImage(img, px, py, CELL_SIZE, CELL_SIZE)
+                    img.bind("load", onload)
+                draw()
+
     def _draw_walls(self):
         ctx = self.layers["walls"].getContext("2d")
         for x in range(self.width):
@@ -153,8 +178,20 @@ class World:
             x, y = map(int, coord.split(","))
             for obj, count in items.items():
                 if obj == "carrot":
+                    # 畫胡蘿蔔圖像
                     self._draw_image(ctx, IMG_PATH + "carrot.png", x - 1, y - 1, CELL_SIZE, CELL_SIZE)
 
+                    # 用數字圖片替代文字顯示數量 1_t.png 為背景透明數字
+                    if 1 <= count <= 9:
+                        num_img = f"{IMG_PATH}{count}_t.png"
+                        self._draw_image(
+                            ctx,
+                            num_img,
+                            x - 1, y - 1,
+                            20, 20,
+                            offset_x=CELL_SIZE - 22,
+                            offset_y=CELL_SIZE - 22
+                        )
 
 class AnimatedRobot:
     def __init__(self, world, x, y, orientation=0):
