@@ -178,8 +178,20 @@ class World:
             x, y = map(int, coord.split(","))
             for obj, count in items.items():
                 if obj == "carrot":
+                    # 畫胡蘿蔔圖像
                     self._draw_image(ctx, IMG_PATH + "carrot.png", x - 1, y - 1, CELL_SIZE, CELL_SIZE)
 
+                    # 用數字圖片替代文字顯示數量 1_t.png 為背景透明數字
+                    if 1 <= count <= 9:
+                        num_img = f"{IMG_PATH}{count}_t.png"
+                        self._draw_image(
+                            ctx,
+                            num_img,
+                            x - 1, y - 1,
+                            20, 20,
+                            offset_x=CELL_SIZE - 22,
+                            offset_y=CELL_SIZE - 22
+                        )
 
 class AnimatedRobot:
     def __init__(self, world, x, y, orientation=0):
