@@ -241,27 +241,54 @@ class AnimatedRobot:
                     return
                 from_x, from_y = self.x, self.y
                 dx, dy = 0, 0
+                facing_dir = None
                 if self.facing == "E":
                     dx = 1
+                    facing_dir = "east"
                 elif self.facing == "W":
                     dx = -1
+                    facing_dir = "west"
                 elif self.facing == "N":
                     dy = 1
+                    facing_dir = "north"
                 elif self.facing == "S":
                     dy = -1
+                    facing_dir = "south"
+
                 next_x = self.x + dx
                 next_y = self.y + dy
 
                 # 邊界檢查
-                if 0 <= next_x < self.world.width and 0 <= next_y < self.world.height:
-                    self.x, self.y = next_x, next_y
-                    self._draw_trace(from_x, from_y, self.x, self.y)
-                    self._draw_robot()
-                    steps -= 1
-                    timer.set_timeout(step, 200)
-                else:
-                    print("已經撞牆，停止移動！")
+                if not (0 <= next_x < self.world.width and 0 <= next_y < self.world.height):
+                    print("已經撞牆，停止移動！（超出邊界）")
                     next_done()
+                    return
+
+                current_coord = f"{self.x + 1},{self.y + 1}"
+                next_coord = f"{next_x + 1},{next_y + 1}"
+
+                # 判斷目前格子是否有面向移動方向的牆壁
+                walls_here = self.world.walls.get(current_coord, [])
+                if facing_dir in walls_here:
+                    print(f"已經撞牆，停止移動！（{current_coord} 有 {facing_dir} 牆）")
+                    next_done()
+                    return
+
+                # 判斷下一格是否有面向反方向的牆壁
+                opposite = {"north": "south", "south": "north", "east": "west", "west": "east"}
+                walls_next = self.world.walls.get(next_coord, [])
+                if opposite[facing_dir] in walls_next:
+                    print(f"已經撞牆，停止移動！（{next_coord} 有 {opposite[facing_dir]} 牆）")
+                    next_done()
+                    return
+
+                # 沒有牆壁阻擋，可以移動
+                self.x, self.y = next_x, next_y
+                self._draw_trace(from_x, from_y, self.x, self.y)
+                self._draw_robot()
+                steps -= 1
+                timer.set_timeout(step, 200)
+
             step()
         self.queue.append(action)
         self._run_queue()
