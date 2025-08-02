@@ -1,22 +1,4 @@
 from browser import document, html, timer
-'''
-from brython_robot import init
-from browser import document
-
-world, robot = init()
-
-robot.move(4)
-robot.turn_left()
-robot.move(3)
-
-def on_key(evt):
-    if evt.key == "j":
-        robot.move(1)
-    elif evt.key == "i":
-        robot.turn_left()
-
-document.bind("keydown", on_key)
-'''
 
 CELL_SIZE = 40
 WALL_THICKNESS = 6
